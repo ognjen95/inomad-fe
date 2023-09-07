@@ -1,0 +1,13 @@
+{
+  "name": "yup",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "yup": "^1.2.0"
+  }
+}

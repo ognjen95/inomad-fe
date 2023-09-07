@@ -1,0 +1,16 @@
+export enum TextVariant {
+  HEADING1 = "heading1",
+  HEADING2 = "heading2",
+  HEADING3 = "heading3",
+  HEADING4 = "heading4",
+  HEADING5 = "heading5",
+  HEADING6 = "heading6",
+  SUBTITLE = "subtitle",
+  OVERLINE = "overline",
+  BODY1 = "body1",
+  BODY2 = "body2",
+  BODY3 = "body3",
+  BODY4 = "body4",
+  BUTTON1 = "button1",
+  BUTTON2 = "button2",
+}

@@ -1,0 +1,27 @@
+query ProviderCompanyCaseRequests {
+  providerCompany {
+    caseRequests {
+      edges {
+        node {
+          applicantId
+          caseId
+          createdAt
+          id
+          providerCompanyId
+          status
+          updatedAt
+          case {
+            id
+            name
+            applicants {
+              firstName
+              lastName
+              id
+              email
+            }
+          }
+        }
+      }
+    }
+  }
+}

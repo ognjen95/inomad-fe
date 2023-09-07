@@ -1,0 +1,5 @@
+mutation UpdateCaseRequest($args: UpdateCaseRequestInput!) {
+  updateCaseRequest(args: $args) {
+    isCompleted
+  }
+}

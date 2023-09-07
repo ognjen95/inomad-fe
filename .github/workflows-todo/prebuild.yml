@@ -1,0 +1,65 @@
+name: Develop CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: 18
+  PROJECT_NAME: iNomad
+  NEXT_PUBLIC_BASE_API_URL: ${{ vars.BASE_API_URL }}
+  NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL: ${{ vars.AUTH0_ISSUER_BASE_URL }}
+  NEXT_PUBLIC_AUTH0_CLIENT_ID: ${{ vars.AUTH0_CLIENT_ID }}
+  NEXT_PUBLIC_AUTH0_AUDIENCE: ${{ vars.AUTH0_AUDIENCE }}
+  NEXT_PUBLIC_ADMIN_APP_BASE_URL: ${{ vars.ADMIN_APP_BASE_URL }}
+  # TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  # TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  # TURBO_REMOTE_ONLY: true
+
+jobs:
+  lint_all:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Use NodeJS ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: Install Packages
+        run: yarn install --frozen-lockfile
+        env:
+          CI: true
+
+      - name: Generate Api Client
+        run: yarn workspace admin generate-api-client
+
+      - name: Lint
+        run: yarn lint
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Use NodeJS ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: Install Packages
+        run: yarn install --frozen-lockfile
+        env:
+          CI: true
+
+      - name: Generate Api Client
+        run: yarn workspace admin generate-api-client
+
+      - name: Build
+        run: yarn build

@@ -1,0 +1,3 @@
+**/*.js
+src/graphql-api/index.ts
+gql-schema.json

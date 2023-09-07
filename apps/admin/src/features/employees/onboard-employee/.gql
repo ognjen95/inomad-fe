@@ -1,0 +1,6 @@
+mutation OnboardEmployee($args: CreateUserInput!) {
+  createUser(args: $args) {
+    isCompleted
+    errorMsg
+  }
+}

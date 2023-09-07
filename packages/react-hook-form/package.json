@@ -1,0 +1,13 @@
+{
+  "name": "react-hook-form",
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "react-hook-form": "7.44.3"
+  }
+}

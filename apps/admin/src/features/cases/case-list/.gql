@@ -1,0 +1,29 @@
+query Cases {
+  providerCompany {
+    id
+    cases {
+      edges {
+        node {
+          applicants {
+            firstName
+            id
+            lastName
+            middleName
+            email
+          }
+           providers {
+            firstName
+            id
+            lastName
+            middleName
+            email
+          }
+          id
+          status
+          createdAt
+          name
+        }
+      }
+    }
+  }
+}

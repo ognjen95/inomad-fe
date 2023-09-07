@@ -1,0 +1,6 @@
+mutation AssignEmployer($args: UpdateCaseInput!) {
+  updateCase(args: $args) {
+    isCompleted
+  }
+}
+

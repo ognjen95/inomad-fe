@@ -1,0 +1,53 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "AUTH0_CLIENT_SECRET",
+    "AUTH0_SECRET",
+    "AUTH0_ISSUER_BASE_URL",
+    "AUTH0_CLIENT_ID",
+    "AUTH0_AUDIENCE",
+    "NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL",
+    "NEXT_PUBLIC_AUTH0_CLIENT_ID",
+    "NEXT_PUBLIC_AUTH0_AUDIENCE",
+    "NEXT_PUBLIC_ADMIN_APP_BASE_URL",
+    "NEXT_PUBLIC_AUTH_APP_BASE_URL",
+    "NEXT_PUBLIC_BASE_API_URL"
+    ],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "storybook-static/**"]
+    },
+    "test": {
+      "dependsOn": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts"],
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "dependsOn": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts"],
+      "outputs": ["coverage/**"]
+    },
+    "lint": {
+      "outputs": [".next/cache/eslint", ".eslintcache"]
+    },
+    "lint:fix": {
+      "outputs": [".next/cache/eslint", ".eslintcache"]
+    },
+    "generate-api-client": {
+      "inputs": ["src/**/*.gql"],
+      "outputs": ["src/graphql-api/index.ts", "gql-schema.json"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

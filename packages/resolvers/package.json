@@ -1,0 +1,13 @@
+{
+  "name": "resolvers",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "version": "0.0.0",
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.1.1"
+  }
+}

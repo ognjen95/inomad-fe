@@ -1,0 +1,16 @@
+query Employees($args: UserQueryOptionsInput) {
+  providerCompany {
+    employees(args: $args) {
+      edges {
+        node {
+          id
+          email
+          lastName
+          firstName
+          userRole
+          providerCassesIds
+        }
+      }
+    }
+  }
+}

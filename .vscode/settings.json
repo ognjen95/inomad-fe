@@ -1,0 +1,24 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": false
+  },
+  "eslint.workingDirectories": [
+    "apps/admin",
+    "apps/coach",
+    "apps/employer",
+    "apps/auth",
+    "packages/ui-components",
+    "packages/react-hook-form",
+    "packages/resolvers",
+    "packages/yup",
+    "packages/eslint-config-custom"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescriptreact",
+    "typescript"
+  ],
+  "cSpell.words": ["clsx"]
+}
