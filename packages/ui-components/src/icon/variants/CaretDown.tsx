@@ -6,7 +6,6 @@ const CaretDown = () => (
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      fill="none"
     />
   </g>
 );

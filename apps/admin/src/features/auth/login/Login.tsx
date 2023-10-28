@@ -54,6 +54,7 @@ const LoginFeature = () => {
               />
               <div className="mt-2 w-full flex-col-center gap-3">
                 <Button
+                  shadow
                   size={ButtonSize.MEDIUM}
                   fullWidth
                   loading={loading}

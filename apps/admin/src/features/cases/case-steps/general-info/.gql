@@ -1,0 +1,5 @@
+mutation UpdateCaseGeneralInfo($args: UpdateCaseGeneralInfoInput!) {
+  updateCaseGeneralInfo(args: $args) {
+    isCompleted
+  }
+}

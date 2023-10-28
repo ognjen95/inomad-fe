@@ -19,13 +19,13 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
           </Text>
         </Link>
       ),
-      header: "Case Name",
-      size: 25,
+      header: "Name",
+      size: 15,
     }),
     columnHelper.accessor("applicant", {
       cell: (cell) => (
         <div className="flex flex-col">
-          <Text customClasses="text-gray-400">
+          <Text>
             {`${cell.getValue().firstName} ${cell.getValue().lastName}`}
           </Text>
           <Text truncate customClasses="text-gray-400">
@@ -39,7 +39,7 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
     columnHelper.accessor("employee", {
       cell: (cell) => (
         <div className="flex flex-col">
-          <Text customClasses="text-gray-400">
+          <Text>
             {`${cell.getValue().firstName} ${cell.getValue().lastName}`}
           </Text>
           <Text truncate customClasses="text-gray-400">
@@ -51,13 +51,23 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
       size: 20,
     }),
     columnHelper.accessor("status", {
-      cell: (cell) => <CaseStatusBadge status={cell.getValue()} />,
+      cell: (cell) => (
+        <div className="pr-5">
+          <CaseStatusBadge status={cell.getValue()} />
+        </div>
+      ),
       header: "Status",
-      size: 15,
+      size: 10,
     }),
     columnHelper.accessor("id", {
-      cell: (cell) => <CaseActions modal={modal} case={cell.row.original} />,
-      header: "Actions",
+      cell: (cell) => (
+        <CaseActions
+          modal={modal}
+          case={cell.row.original}
+          employee={cell.row.original.employee}
+        />
+      ),
+      header: "",
       size: 5,
     }),
   ];

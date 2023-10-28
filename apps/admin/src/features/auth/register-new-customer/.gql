@@ -1,0 +1,6 @@
+mutation RegisterCustomer($args: CreateUserInput!) {
+  registerCustomer(args: $args) {
+    isCompleted
+    error
+  }
+}

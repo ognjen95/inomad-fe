@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import {
   FileUploadInput,
+  FileUploadInputField,
   Form,
   InputField,
   InputType,
@@ -41,12 +42,10 @@ const WorkInfoForm: FC<WorkInfoFormProps> = ({ form, onSubmit, formName }) => (
             },
           ]}
         />
-        <FileUploadInput
-          onChange={(e) => console.log(e)}
-          value={new File([], "Ognjen_Atlagic_CV.pdf")}
+        <FileUploadInputField
           label="Upload your Contract"
-          // control={control}
-          // fieldName="contractFileId"
+          control={control}
+          fieldName="contractFileId"
         />
         <Text variant={TextVariant.HEADING6} customClasses="pt-5">
           Current Job Position
@@ -59,19 +58,19 @@ const WorkInfoForm: FC<WorkInfoFormProps> = ({ form, onSubmit, formName }) => (
           options={[
             {
               label: "0-3 Months",
-              value: "3",
+              value: "0-3 Months",
             },
             {
               label: "<= 1 year",
-              value: "12",
+              value: "<= 1 year",
             },
             {
               label: "1-3 years",
-              value: "36",
+              value: "1-3 years",
             },
             {
               label: "3-5 years",
-              value: "60",
+              value: "3-5 years",
             },
           ]}
         />
@@ -81,19 +80,15 @@ const WorkInfoForm: FC<WorkInfoFormProps> = ({ form, onSubmit, formName }) => (
           control={control}
           type={InputType.NUMBER}
         />
-        <FileUploadInput
-          onChange={(e) => console.log(e)}
-          value={undefined}
+        <FileUploadInputField
           label="Upload your CV"
-          // control={control}
-          // fieldName="cvFileId"
+          control={control}
+          fieldName="cvFileId"
         />
-        <FileUploadInput
-          onChange={(e) => console.log(e)}
-          value={undefined}
+        <FileUploadInputField
           label="Upload 3 last Salary Slips or Invoices"
-          // control={control}
-          // fieldName="invoicesId"
+          control={control}
+          fieldName="invoicesId"
         />
       </FormContainer>
     )}

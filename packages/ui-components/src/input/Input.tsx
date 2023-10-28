@@ -26,6 +26,7 @@ export type InputProps = {
   strokeColor?: string;
   onIconClick?: () => void;
   iconPlacement?: IconPlacement;
+  iconSize?: IconSize;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -46,6 +47,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       iconColor,
       strokeColor,
       onIconClick,
+      iconSize,
       // border = true,
       ...props
     },
@@ -77,6 +79,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             onClick={onIconClick}
           >
             <Icon
+              size={iconSize}
               type={iconType}
               fill={iconColor}
               stroke={strokeColor || iconColor}
@@ -104,6 +107,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             onClick={onIconClick}
           >
             <Icon
+              size={iconSize}
               type={iconType}
               fill={iconColor}
               stroke={strokeColor || iconColor}

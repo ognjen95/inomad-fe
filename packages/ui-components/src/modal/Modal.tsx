@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { Portal } from "react-portal";
 
@@ -23,6 +24,7 @@ export type ModalProps = {
   hideConfirmButton?: boolean;
   modalIcon?: ModalIcon;
   boldedEndOfDescription?: string;
+  bgTransparent?: boolean;
 };
 
 const Modal: FCWithChildren<ModalProps> = ({
@@ -38,6 +40,7 @@ const Modal: FCWithChildren<ModalProps> = ({
   closeButtonStyle,
   modalIcon,
   boldedEndOfDescription,
+  bgTransparent = false,
 }) => {
   const [ref, setRef] = useState<HTMLElement | null>(null);
 
@@ -56,7 +59,13 @@ const Modal: FCWithChildren<ModalProps> = ({
         <Portal node={ref}>
           <div
             {...(closeOnOverlayClick && { onClick: close })}
-            className="absolute w-screen h-screen top-0 flex flex-col items-center justify-center z-50 bg-white/90 backdrop-blur"
+            className={clsx(
+              "absolute w-screen h-screen top-0 flex flex-col items-center justify-center z-50 backdrop-blur",
+              {
+                "bg-white/80": !bgTransparent,
+                "bg-black/10": bgTransparent,
+              }
+            )}
           >
             <div className="max-h-[85vh] w-[90vw] flex flex-col space-y-2 items-center justify-center">
               {modalIcon && (

@@ -21,8 +21,8 @@ const EmployeeTabs: FC<EmployeeTabsProps> = ({
   caseId,
 }) => {
   const { employeeList, loading: listLoading } = useEmployeeList();
-  const columns = useTableColumns(caseId);
   const { form, onSubmit, loading } = useOnboardEmployee();
+  const columns = useTableColumns(caseId);
 
   return (
     <div className="h-full w-full flex flex-col flex-grow">
@@ -34,40 +34,28 @@ const EmployeeTabs: FC<EmployeeTabsProps> = ({
             feature: listLoading ? (
               <Loader centered />
             ) : (
-              <Paper
-                title="Employee List"
-                color={PaperColor.TRANSPARENT}
-                showShadow={false}
-                fullHeight
-                fullWidth
-              >
-                <div className="px-2 flex flex-1 overflow-y-auto flex-col no-scrollbar">
-                  <SimpleTable<EmployeeListModel>
-                    columns={columns}
-                    data={employeeList}
-                    showHeader={showHeader}
-                    isTransparent={rowIsTransparent}
-                  />
-                </div>
-              </Paper>
+              <div className="px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
+                <SimpleTable<EmployeeListModel>
+                  columns={columns}
+                  data={employeeList}
+                  showHeader={showHeader}
+                  isTransparent={rowIsTransparent}
+                />
+              </div>
             ),
           },
           {
             text: "ONBOARD NEW EMPLOYEE",
             feature: (
-              <Paper
-                title="Onboard New Employee"
-                color={PaperColor.TRANSPARENT}
-                showShadow={false}
-                fullHeight
-                fullWidth
-              >
-                <OnboardEmployeeForm
-                  loading={loading}
-                  form={form}
-                  onSubmit={onSubmit}
-                />
-              </Paper>
+              <div className="p-2 pb-5 h-full w-full">
+                <Paper showShadow fullHeight fullWidth>
+                  <OnboardEmployeeForm
+                    loading={loading}
+                    form={form}
+                    onSubmit={onSubmit}
+                  />
+                </Paper>
+              </div>
             ),
           },
         ]}

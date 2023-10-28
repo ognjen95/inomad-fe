@@ -24,6 +24,7 @@ export type DropdownMenuProps = {
   isIconButton?: boolean;
   triggerClassNames?: string;
   onClearButtonClick?: () => void;
+  isScrollable?: boolean;
 };
 
 const DropdownMenu: FC<DropdownMenuProps> = ({
@@ -38,6 +39,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
   showSelectedLabel = true,
   triggerClassNames,
   onClearButtonClick,
+  isScrollable = true,
 }) => {
   const [selectedItemLabel, setSelectedItemLabel] = useState<string>(
     items.length > 0 ? items[0].label : ""

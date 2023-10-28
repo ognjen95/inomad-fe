@@ -22,7 +22,7 @@ const COLOR_CLASS_MAPPER: Record<ButtonType, Record<ButtonColor, string>> = {
     [ButtonColor.SECONDARY]:
       "bg-secondary-700 hover:bg-secondary-800 active:bg-secondary-900 disabled:bg-secondary-50 text-white disabled:text-secondary-700",
     [ButtonColor.GREY]:
-      "bg-grey-100 hover:bg-grey-200 active:bg-grey-300 disabled:bg-grey-50 text-grey-900 disabled:text-grey-600",
+      "border border-gray-100 bg-grey-50 hover:bg-grey-100 active:bg-grey-200 disabled:bg-grey-50 text-grey-900 disabled:text-grey-600",
     [ButtonColor.RED]:
       "bg-red-500 hover:bg-red-600 active:bg-red-700 disabled:bg-red-50 text-white disabled:text-red-500",
     [ButtonColor.TRANSPARENT]:

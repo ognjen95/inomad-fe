@@ -32,10 +32,11 @@ const useLogin: UseLogin = (): UseLoginReturn => {
   const onSubmit: SubmitHandler<LoginFormModel> = ({ email, password }) => {
     login({
       onCompleted: ({ login: loginData }) => {
-        const { accessToken, refreshToken } = loginData || {};
+        const { accessToken, refreshToken, idToken } = loginData || {};
 
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("idToken", idToken);
 
         push("/dashboard");
       },

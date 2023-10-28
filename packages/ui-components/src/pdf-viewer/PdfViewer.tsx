@@ -37,7 +37,7 @@ const PdfViewer: FC<PdfViewerProps> = ({ src, file }) => {
 
   return (
     <div
-      className="overflow-y-auto w-full h-full"
+      className="overflow-y-auto w-full h-full overflow-x-hidden"
       ref={(el) => {
         ref.current = el;
       }}

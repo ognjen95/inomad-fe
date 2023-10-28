@@ -1,0 +1,32 @@
+mutation CreateTask($createTaskInput: CreateTaskInput!) {
+  createTask(createTaskInput: $createTaskInput) {
+    id
+  }
+}
+
+query Tasks($options: TaskQueryOptionsInput) {
+  tasks(options: $options) {
+    edges {
+      node {
+        assignees {
+          id
+          firstName
+          lastName
+        }
+        assigneesIds
+        caseName
+        caseId
+        createdById
+        createdByName
+        description
+        endDate
+        id
+        name
+        startDate
+        taskStatus
+        priority
+        taskType
+      }
+    }
+  }
+}

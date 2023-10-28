@@ -98,10 +98,10 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
                     !errorMessage && !isOpened,
                 }
               ),
-            valueContainer: () => "flex flex-wrap",
+            valueContainer: () => "flex flex-wrap px-2",
             multiValue: () =>
-              "bg-primary-500 rounded-full text-gray-900 px-3 text-xs py-2 m-1 font-semibold uppercase",
-            multiValueRemove: () => "ml-2 text-primary-800 scale-[150%]",
+              "bg-primary-500 rounded-full text-white px-4 text-xs py-2 m-1 font-semibold uppercase",
+            multiValueRemove: () => "ml-2 text-white scale-[150%]",
             input: () => "w-fit p-2",
             dropdownIndicator: () =>
               clsx(
@@ -111,7 +111,7 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
             option: () => "p-2 cursor-pointer hover:bg-primary-50",
             menuList: () =>
               clsx(
-                "overflow-hidden z-[99999] bg-white rounded-[5px] shadow w-full",
+                "overflow-hidden !z-[999999999] bg-white rounded-[5px] shadow w-full",
                 menuPlacement === MenuPlacementOptions.Top ? "mb-2" : "mt-1"
               ),
             control: () =>

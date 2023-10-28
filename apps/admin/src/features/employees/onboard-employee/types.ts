@@ -8,6 +8,7 @@ export type OnboardEmployeeFormModel = {
   role: UserRoles.EMPLOYER_EMPLOYEE | UserRoles.PROVIDER_EMPLOYEE;
   password: string;
   confirmPassword: string;
+  birthday: Date;
 };
 
 export type UseOnboardEmployeeReturn = {

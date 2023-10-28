@@ -1,0 +1,6 @@
+query ChatAccessToken {
+  chatAccessToken {
+    token
+    userId
+  }
+}

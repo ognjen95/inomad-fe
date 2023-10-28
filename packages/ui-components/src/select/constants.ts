@@ -1,7 +1,7 @@
 import { SelectColor, SelectSize } from "./enums";
 
 export const SIZE_CLASS_MAPPER: Record<SelectSize, string> = {
-  [SelectSize.RESPONSIVE]: "h-[56px] sm:h-[48px]",
+  [SelectSize.RESPONSIVE]: "min-h-[56px] sm:min-h-[48px]",
   [SelectSize.MEDIUM]: "min-h-[56px]",
   [SelectSize.SMALL]: "min-h-[48px]",
 };

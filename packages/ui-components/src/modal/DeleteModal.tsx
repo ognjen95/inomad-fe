@@ -29,6 +29,10 @@ const DeleteModal: FCWithChildren<
       text: "Delete",
       color: ButtonColor.RED,
     }}
+    closeButtonStyle={{
+      color: ButtonColor.TRANSPARENT,
+      text: "Cancel",
+    }}
     boldedEndOfDescription={boldedEndOfDescription}
   >
     {children}

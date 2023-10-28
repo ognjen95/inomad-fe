@@ -4,9 +4,12 @@ import { forwardRef, memo, SyntheticEvent, useState } from "react";
 import { SIZE_CLASS_MAPPER, SIZE_REGISTER } from "./constants";
 import { IconSize, IconType } from "./enums";
 import Slideshow from "./Slideshow";
+import AddPlusCircle from "./variants/AddPlusCircle";
 import ArrowLeftLg from "./variants/ArrowLeftLg";
 import ArrowRight from "./variants/ArrowRight";
+import Calendar from "./variants/Calendar";
 import CaretDown from "./variants/CaretDown";
+import Check from "./variants/Check";
 import ChevronLeft from "./variants/ChevronLeft";
 import ChevronRight from "./variants/ChevronRight";
 import CircleCheck from "./variants/CircleCheck";
@@ -15,6 +18,7 @@ import CircleWarning from "./variants/CircleWarning";
 import Close from "./variants/Close";
 import Coaches from "./variants/Coaches";
 import Content from "./variants/Content";
+import Copy from "./variants/Copy";
 import Customers from "./variants/Customers";
 import Dashboard from "./variants/Dashboard";
 import EditPencil1 from "./variants/EditPencil1";
@@ -25,24 +29,31 @@ import FilePlay from "./variants/FilePlay";
 import Filter from "./variants/Filter";
 import FolderAdd from "./variants/FolderAdd";
 import FolderColored from "./variants/FolderColored";
+import FolderDocument from "./variants/FolderDocument";
 import HideEye from "./variants/HideEye";
 import HideEyeRed from "./variants/HideEyeRed";
 import Image1 from "./variants/Image1";
 import Info from "./variants/Info";
+import ListAdd from "./variants/ListAdd";
 import LogOut from "./variants/LogOut";
 import MapPin from "./variants/MapPin";
+import Message from "./variants/Message";
 import MoreVertical from "./variants/MoreVertical";
 import Notification from "./variants/Notification";
 import PdfFile from "./variants/PdfFile";
 import PlayVideo from "./variants/PlayVideo";
 import Plus from "./variants/Plus";
+import Redo from "./variants/Redo";
+import RemoveMinusCircle from "./variants/RemoveMinusCircle";
 import Search from "./variants/Search";
+import Send from "./variants/Send";
 import SquareWarning from "./variants/SquareWarning";
 import Template from "./variants/Template";
 import TrashFull from "./variants/TrashFull";
 import TriangleWarning from "./variants/TriangleWarning";
 import TwoUsersOutlined from "./variants/TwoUsersOutlined";
 import UpAndDownArrows from "./variants/UpAndDownArrows";
+import UserCardId from "./variants/UserCardId";
 import Users from "./variants/Users";
 import UserVoice from "./variants/UserVoice";
 import { colors } from "../config/tailwind-config";
@@ -62,6 +73,7 @@ export const ICON_REGISTER = {
   [IconType.NOTIFICATION]: <Notification />,
   [IconType.LOGOUT]: <LogOut />,
   [IconType.FILTER]: <Filter />,
+  [IconType.CHECK]: <Check />,
   [IconType.CIRCLE_CHECK]: <CircleCheck />,
   [IconType.TRIANGLE_WARNING]: <TriangleWarning />,
   [IconType.INFO]: <Info />,
@@ -80,8 +92,11 @@ export const ICON_REGISTER = {
   [IconType.CHEVRON_LEFT]: <ChevronLeft />,
   [IconType.SEARCH]: <Search />,
   [IconType.UP_AND_DOWN_ARROWS]: <UpAndDownArrows />,
+  [IconType.ADD_PLUS_CIRCLE]: <AddPlusCircle />,
+  [IconType.REMOVE_MINUS_CIRCLE]: <RemoveMinusCircle />,
   [IconType.FILE_ADD]: <FileAdd />,
   [IconType.FOLDER_ADD]: <FolderAdd />,
+  [IconType.FOLDER_DOCUMENT]: <FolderDocument />,
   [IconType.ARROW_LEFT_LG]: <ArrowLeftLg />,
   [IconType.FOLDER_COLORED]: <FolderColored />,
   [IconType.MORE_VERTICAL]: <MoreVertical />,
@@ -90,6 +105,13 @@ export const ICON_REGISTER = {
   [IconType.EDIT_PENCIL_1]: <EditPencil1 />,
   [IconType.PDF_FILE]: <PdfFile />,
   [IconType.SLIDE_SHOW]: <Slideshow />,
+  [IconType.USER_CARD_ID]: <UserCardId />,
+  [IconType.REDO]: <Redo />,
+  [IconType.COPY]: <Copy />,
+  [IconType.LIST_ADD]: <ListAdd />,
+  [IconType.SEND]: <Send />,
+  [IconType.MESSAGE]: <Message />,
+  [IconType.CALENDAR]: <Calendar />,
 };
 
 export type IconProps = {

@@ -1,0 +1,123 @@
+query ProviderCompanyCase($caseId: String!) {
+  providerCompany {
+    case(id: $caseId) {
+      id
+      name
+      documents {
+        caseId
+        createdAt
+        customerId
+        documentType
+        fileId
+        id
+        name
+        providerCompanyId
+      }
+      generalInfo {
+        birthday
+        email
+        firstName
+        lastName
+        middleName
+        nationality
+        passportFileId
+        phone
+      }
+      applicantsIds
+      education {
+        confirmationLetterFileId
+        degree
+        diplomaFileId
+        university
+      }
+      workInfo {
+        contractFileId
+        contractType
+        cvFileId
+        invoicesFilesIds
+        jobTitle
+        monthlyIncome
+        yearsOfExperience
+      }
+      familyInfo {
+        familyMembers
+        spouse {
+          name
+          lastName
+          middleName
+          birthday
+        }
+        children {
+          name
+          lastName
+          middleName
+          birthday
+        }
+      }
+      status
+    }
+  }
+}
+
+query CustomerCases($options: CaseQueryOptionsInput!) {
+  cases(options: $options) {
+    edges {
+      node {
+        id
+        name
+        documents {
+          caseId
+          createdAt
+          customerId
+          documentType
+          fileId
+          id
+          name
+          providerCompanyId
+        }
+        generalInfo {
+          birthday
+          email
+          firstName
+          lastName
+          middleName
+          nationality
+          passportFileId
+          phone
+        }
+        applicantsIds
+        education {
+          confirmationLetterFileId
+          degree
+          diplomaFileId
+          university
+        }
+        workInfo {
+          contractFileId
+          contractType
+          cvFileId
+          invoicesFilesIds
+          jobTitle
+          monthlyIncome
+          yearsOfExperience
+        }
+        familyInfo {
+          familyMembers
+          spouse {
+            name
+            lastName
+            middleName
+            birthday
+          }
+          children {
+            name
+            lastName
+            middleName
+            birthday
+          }
+        }
+        status
+      }
+    }
+  }
+}

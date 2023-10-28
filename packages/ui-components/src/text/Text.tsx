@@ -21,6 +21,7 @@ export type TextProps = {
   customClasses?: string;
   truncate?: boolean;
   light?: boolean;
+  bolded?: boolean;
 };
 
 const Text: FCWithChildren<TextProps> = ({
@@ -30,6 +31,7 @@ const Text: FCWithChildren<TextProps> = ({
   customClasses = "",
   truncate = false,
   light,
+  bolded = false,
 }) => {
   const classes = twMerge(
     clsx(
@@ -37,6 +39,7 @@ const Text: FCWithChildren<TextProps> = ({
       FONT_WEIGHT_CLASS_MAPPER[variant],
       color,
       {
+        "font-semibold": bolded,
         "tracking-[0.02em]": [
           TextVariant.BODY1,
           TextVariant.BODY2,

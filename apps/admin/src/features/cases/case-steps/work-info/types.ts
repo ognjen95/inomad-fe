@@ -1,16 +1,26 @@
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
+import { Option } from "ui-components/src/select/types";
+
+import { CaseWorkInfo } from "../types";
 
 export type WorkInfoFormModel = {
   contractType: string;
-  contractFileId: string;
+  contractFileId: File | undefined;
   jobTitle: string;
-  yearsOfExperience: string;
+  yearsOfExperience: Option;
   monthlyIncome: number;
-  cvFileId: string;
-  invoicesId: string | string[];
+  cvFileId: File | undefined;
+  invoicesId: File | File[] | undefined;
 };
 
-export type UseFormInfoForm = {
+export type UseFormInfoFormReturn = {
   form: UseFormReturn<WorkInfoFormModel>;
   onSubmit: SubmitHandler<WorkInfoFormModel>;
+  loading: boolean;
 };
+
+export type UseFormInfoForm = (
+  caseId: string,
+  workInfo: CaseWorkInfo | null,
+  nextStep: () => void
+) => UseFormInfoFormReturn;

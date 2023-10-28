@@ -2,7 +2,7 @@ module.exports = {
   reactStrictMode: true,
   transpilePackages: ["ui-components", "yup", "react-hook-form", "resolvers"],
   images: {
-    domains: ["img.freepik.com"]
+    domains: ["img.freepik.com", "media.istockphoto.com"]
   },
   webpack: (config) => {
     config.module.rules.push({

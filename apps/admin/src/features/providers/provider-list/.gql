@@ -1,0 +1,23 @@
+query ProviderCompanies {
+  providerCompanies {
+    edges {
+      cursor
+      node {
+        id
+        createdAt
+        email
+        id
+        name
+        rating
+        updatedAt
+        website
+      }
+    }
+  }
+}
+
+mutation SendCaseApplication($providerCompanyId: String!) {
+  createCaseRequest(providerCompanyId: $providerCompanyId) {
+    isCompleted
+  }
+}

@@ -24,16 +24,14 @@ const useCaseRequestColumns = () => {
     }),
     columnHelper.accessor("applicantName", {
       cell: (cell) => (
-        <Text customClasses="text-gray-400">{cell.getValue()}</Text>
+        <div className="flex flex-col">
+          <Text customClasses="text-gray-400">{cell.getValue()}</Text>
+          <Text customClasses="text-gray-400">
+            {cell.row.original.applicantEmail}
+          </Text>
+        </div>
       ),
-      header: "Applicant Name",
-      size: 20,
-    }),
-    columnHelper.accessor("applicantEmail", {
-      cell: (cell) => (
-        <Text customClasses="text-gray-400">{cell.getValue()}</Text>
-      ),
-      header: "Applicant Email",
+      header: "Applicant",
       size: 20,
     }),
     columnHelper.accessor("createdAt", {

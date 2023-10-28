@@ -1,5 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Avatar, Button, Text } from "ui-components";
 import { ButtonType } from "ui-components/src/button/enums";
 
@@ -10,7 +11,10 @@ import EmployeeListActions from "./employee-list-actions/EmployeeListActions";
 import { EmployeeListModel } from "./types";
 
 const useTableColumns = (caseId?: string) => {
+  const { get } = useSearchParams();
+
   const columnHelper = createColumnHelper<EmployeeListModel>();
+
   const columns = [
     columnHelper.accessor("id", {
       cell: () => <Avatar />,
@@ -47,7 +51,13 @@ const useTableColumns = (caseId?: string) => {
     }),
     columnHelper.accessor("id", {
       cell: (cell) => (
-        <EmployeeListActions employeeId={cell.getValue()} caseId={caseId} />
+        <EmployeeListActions
+          employeeId={cell.getValue()}
+          caseId={caseId}
+          isAssigned={cell.row.original.caseIds.includes(
+            get("caseId") as string
+          )}
+        />
       ),
       header: "Actions",
       size: 5,

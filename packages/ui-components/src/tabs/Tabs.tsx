@@ -44,18 +44,17 @@ const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange }) => {
                   COLOR_CLASS_MAPPER[ButtonType.BUTTON][
                     ButtonColor.TRANSPARENT
                   ],
-                  "border p-2 transition-all ease-out rounded-xl",
+                  "border p-1 transition-all ease-out rounded-lg",
                   {
-                    "bg-white border-transparent": isActive,
+                    "!bg-primary-600 border-transparent text-white shadow-sm shadow-primary-500":
+                      isActive,
                     "border-transparent hover:bg-primary-100": !isActive,
                   }
                 )}
               >
                 <Text
                   color={
-                    isActive
-                      ? "text-primary-700 font-semibold"
-                      : "text-primary-700"
+                    isActive ? "text-white font-semibold" : "text-primary-700"
                   }
                 >
                   {tab.text}
@@ -84,7 +83,7 @@ const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange }) => {
 
   return (
     <TabsRadix.Root defaultValue={defaultTab} className="h-full flex flex-col">
-      <TabsRadix.List className="flex justify-between space-x-2 mb-5 mx-4 p-1 bg-primary-50 rounded-2xl border border-primary-100">
+      <TabsRadix.List className="flex justify-between space-x-2 mb-5 mx-4 p-1 bg-primary-50 rounded-xl">
         {tabsAndFeatures.tabs}
       </TabsRadix.List>
       {tabsAndFeatures.features}

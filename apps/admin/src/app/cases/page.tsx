@@ -7,7 +7,7 @@ import CaseAndTasksSidebar from "~components/sidebars/case-and-tasks-sidebar/Cas
 import CaseTabs from "~features/cases/case-tabs/CaseTabs";
 
 const CasePage: NextPage = () => (
-  <LayoutWithRightSidebar sidebar={<CaseAndTasksSidebar />}>
+  <LayoutWithRightSidebar mainNoBottomPadding sidebar={<CaseAndTasksSidebar />}>
     <CaseTabs />
   </LayoutWithRightSidebar>
 );

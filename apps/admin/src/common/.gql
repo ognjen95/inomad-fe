@@ -1,0 +1,6 @@
+query PresignedUrl($fileNames: [String!]!) {
+  presignedUrl(fileNames: $fileNames) {
+    id
+    link
+  }
+}

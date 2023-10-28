@@ -1,6 +1,5 @@
 mutation AssignEmployer($args: UpdateCaseInput!) {
-  updateCase(args: $args) {
+  assignEmployeeToCase(args: $args) {
     isCompleted
   }
 }
-

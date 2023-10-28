@@ -17,7 +17,7 @@ const CaseRequestActions: FC<CaseRequestActionsProps> = ({ caseRequestId }) => {
     <DropdownMenu
       isIconButton
       showSelectedLabel={false}
-      iconType={IconType.CARET_DOWN}
+      iconType={IconType.MORE_VERTICAL}
       items={[
         {
           iconType: IconType.CIRCLE_CHECK,

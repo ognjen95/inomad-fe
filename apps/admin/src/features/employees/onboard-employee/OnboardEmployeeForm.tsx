@@ -1,7 +1,14 @@
 import { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { UserRoles } from "src/common/enums";
-import { Button, Form, InputField, InputType, RadioField } from "ui-components";
+import {
+  Button,
+  DatePickerField,
+  Form,
+  InputField,
+  InputType,
+  RadioField,
+} from "ui-components";
 import { ButtonSize } from "ui-components/src/button/enums";
 
 import { OnboardEmployeeFormModel } from "./types";
@@ -26,8 +33,16 @@ const OnboardEmployeeForm: FC<OnboardEmployeeFormProps> = ({
           control={control}
         />
         <InputField fieldName="lastName" label="Last Name" control={control} />
-
-        <InputField fieldName="email" label="Email" control={control} />
+        <div className="flex items-center space-x-5">
+          <InputField fieldName="email" label="Email" control={control} />
+          <div className="w-1/3">
+            <DatePickerField
+              fieldName="birthday"
+              label="Date of Birth"
+              control={control}
+            />
+          </div>
+        </div>
         <RadioField
           fieldName="role"
           label="Employee Role"
@@ -45,6 +60,7 @@ const OnboardEmployeeForm: FC<OnboardEmployeeFormProps> = ({
           ]}
           control={control}
         />
+
         <InputField
           type={InputType.PASSWORD}
           fieldName="password"

@@ -13,9 +13,10 @@ export type StepperProps = {
   steps: Step[];
   activeStepIndex: number;
   prevStep: () => void;
-  nextStep: () => void;
+  nextStep?: () => void;
   showTitle?: boolean;
   onCancel?: () => void;
+  loading?: boolean;
 };
 
 const Stepper: FC<StepperProps> = ({
@@ -25,9 +26,9 @@ const Stepper: FC<StepperProps> = ({
   activeStepIndex,
   showTitle = true,
   onCancel,
+  loading,
 }) => {
   const activeStep = steps[activeStepIndex];
-
   const isLastStep = activeStepIndex === steps.length - 1;
   const isFirstStep = activeStepIndex === 0;
 
@@ -49,6 +50,7 @@ const Stepper: FC<StepperProps> = ({
         <div className="w-1/4">
           <Button
             fullWidth
+            disabled={loading}
             color={ButtonColor.TRANSPARENT}
             size={ButtonSize.MEDIUM}
             onClick={onCancel}
@@ -62,7 +64,7 @@ const Stepper: FC<StepperProps> = ({
             color={ButtonColor.GREY}
             size={ButtonSize.MEDIUM}
             onClick={prevStep}
-            disabled={isFirstStep}
+            disabled={isFirstStep || loading}
           >
             Previous Step
           </Button>
@@ -70,9 +72,10 @@ const Stepper: FC<StepperProps> = ({
             formName={activeStep?.formName}
             fullWidth
             size={ButtonSize.MEDIUM}
-            onClick={nextStep}
+            loading={loading}
+            onClick={activeStep?.formName ? undefined : nextStep}
           >
-            {isLastStep ? "Submit" : "Next Step"}
+            {isLastStep ? "Complete" : "Save and Continue"}
           </Button>
         </div>
       </div>

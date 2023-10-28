@@ -7,10 +7,12 @@ export type GeneralInfoFormModel = {
   nationality: string;
   email: string;
   phone: string;
-  passport: string;
+  passport: File | null;
+  birthday: Date;
 };
 
 export type UseGeneralInfoForm = {
   form: UseFormReturn<GeneralInfoFormModel>;
   onSubmit: SubmitHandler<GeneralInfoFormModel>;
+  loading: boolean;
 };

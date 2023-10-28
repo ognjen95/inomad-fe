@@ -1,6 +1,7 @@
 import clsx from "clsx";
 
 import { CHIP_SIZE_VARIANTS, ChipSize } from "./constants";
+import { colors } from "../config/tailwind-config";
 import { IconType } from "../icon/enums";
 import Icon from "../icon/Icon";
 
@@ -32,7 +33,7 @@ const Chip = ({
     <span>{text}</span>
     {size === CHIP_SIZE_VARIANTS.large && (
       <div className="flex justify-center items-center">
-        <Icon type={IconType.CLOSE} />
+        <Icon type={IconType.CLOSE} stroke={colors.primary[800]} />
       </div>
     )}
   </div>

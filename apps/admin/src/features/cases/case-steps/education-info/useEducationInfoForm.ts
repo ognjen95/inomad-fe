@@ -1,24 +1,122 @@
+import { useToastContext } from "context/toast/ToastContext";
+import { set } from "date-fns";
+import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "ui-components";
 
-import { EducationInfoFormModel, UseEducationInfoForm } from "./types";
+import { useUpdateCaseEducationInfoMutation } from "~graphql-api";
+import useFileUpload from "~hooks/useFileUpload";
 
-const useEducationInfoForm = (): UseEducationInfoForm => {
+import {
+  EducationInfoFormModel,
+  UseEducationInfoForm,
+  UseEducationInfoFormReturn,
+} from "./types";
+
+const useEducationInfoForm: UseEducationInfoForm = (
+  caseId,
+  educationInfo,
+  nextStep
+): UseEducationInfoFormReturn => {
   const form = useForm<EducationInfoFormModel>({
     defaultValues: {
       degree: "",
       university: "",
-      diplomaFileId: "",
-      confirmationLetterFileId: "",
+      diplomaFileId: undefined,
+      confirmationLetterFileId: undefined,
     },
   });
 
-  const onSubmit: SubmitHandler<EducationInfoFormModel> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const [updateEducationInfo, { loading }] =
+    useUpdateCaseEducationInfoMutation();
+  const { getPresignedUrls, uploadFile } = useFileUpload();
+  const { success } = useToastContext();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (form.getValues().university || !educationInfo?.university) return;
+
+    form.reset({
+      degree: educationInfo?.degree,
+      university: educationInfo?.university,
+      diplomaFileId: educationInfo?.diplomaFileId,
+      confirmationLetterFileId: educationInfo?.confirmationLetterFileId,
+    });
+  }, [educationInfo, form]);
+
+  const onSubmit: SubmitHandler<EducationInfoFormModel> = async (data) => {
+    const isFormDirty =
+      !form.formState.isDirty &&
+      educationInfo?.diplomaFileId?.name === data.diplomaFileId?.name &&
+      educationInfo?.confirmationLetterFileId?.name ===
+        data.confirmationLetterFileId?.name;
+    const isDiplomaFileDirty =
+      educationInfo?.diplomaFileId?.name !== data.diplomaFileId?.name &&
+      data?.diplomaFileId?.name;
+    const isConfirmationLetterFileDirty =
+      educationInfo?.confirmationLetterFileId?.name !==
+        data.confirmationLetterFileId?.name &&
+      data?.confirmationLetterFileId?.name;
+
+    if (isFormDirty) {
+      nextStep();
+      return;
+    }
+
+    setIsLoading(true);
+
+    let diplomaFileId = educationInfo?.diplomaFileId?.name ?? "'";
+    let confirmationLetterFileId =
+      educationInfo?.confirmationLetterFileId?.name ?? "";
+
+    if (isDiplomaFileDirty) {
+      const file = data?.diplomaFileId;
+
+      if (file) {
+        const [{ link, id }] = await getPresignedUrls([file.name]);
+        diplomaFileId = id;
+        await uploadFile(file, link);
+      }
+    }
+
+    if (isConfirmationLetterFileDirty) {
+      const file = data?.confirmationLetterFileId;
+
+      if (file) {
+        const [{ link, id }] = await getPresignedUrls([file.name]);
+        confirmationLetterFileId = id;
+        await uploadFile(file, link);
+      }
+    }
+
+    const args = {
+      id: caseId,
+      degree: data.degree,
+      university: data.university,
+      diplomaFileId,
+      confirmationLetterFileId,
+    };
+
+    const onCompleted = () => {
+      form.reset({
+        ...args,
+        diplomaFileId: new File([], args.diplomaFileId),
+        confirmationLetterFileId: new File([], args.confirmationLetterFileId),
+      });
+      success("Education info updated");
+      setIsLoading(false);
+      nextStep();
+    };
+
+    updateEducationInfo({
+      onCompleted,
+      variables: {
+        args,
+      },
+    });
   };
 
-  return { form, onSubmit };
+  return { form, onSubmit, loading: isLoading || loading };
 };
 
 export default useEducationInfoForm;

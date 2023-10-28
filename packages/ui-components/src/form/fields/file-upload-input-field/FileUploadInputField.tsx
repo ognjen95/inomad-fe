@@ -23,13 +23,14 @@ const FileUploadInputField = <TFormValues extends FieldValues = FieldValues>({
     field,
     fieldState: { error },
   } = useFormController<TFormValues>({ fieldName, control });
+
   return (
     <FileUploadInput
       {...fileUploadInputProps}
       {...field}
-      value={undefined}
-      onChange={field.onChange}
       errorMessage={error?.message}
+      onChange={(files) => field.onChange(files?.[0])}
+      value={field.value}
       id={field.name}
     />
   );

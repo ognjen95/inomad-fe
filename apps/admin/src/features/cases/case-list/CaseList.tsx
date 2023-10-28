@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Loader } from "ui-components";
 
-import SimpleTable from "~components/tables/SimpleTable";
+import DefaultTable from "~components/tables/DefaultTable";
 
 import { CaseListModel } from "./types";
 import useCaseList from "./use-case-list";
@@ -10,13 +10,9 @@ import AssignCaseModal from "../assign-case/AssignCaseModal";
 
 export type CaseTableTableProps = {
   showHeader?: boolean;
-  rowIsTransparent?: boolean;
 };
 
-const CaseTableTable: FC<CaseTableTableProps> = ({
-  showHeader,
-  rowIsTransparent = true,
-}) => {
+const CaseTableTable: FC<CaseTableTableProps> = ({ showHeader }) => {
   const { caseList, loading, modal } = useCaseList();
 
   const columns = useTableColumns(modal);
@@ -25,11 +21,10 @@ const CaseTableTable: FC<CaseTableTableProps> = ({
 
   return (
     <div className="px-2 h-0 flex flex-1 overflow-y-auto flex-col no-scrollbar">
-      <SimpleTable<CaseListModel>
+      <DefaultTable<CaseListModel>
         columns={columns}
         data={caseList}
         showHeader={showHeader}
-        isTransparent={rowIsTransparent}
       />
       <AssignCaseModal
         caseId={modal.params?.id ?? ""}

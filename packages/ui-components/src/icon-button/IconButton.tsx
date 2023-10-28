@@ -6,18 +6,23 @@ import Icon, { IconProps } from "../icon/Icon";
 
 export type IconButtonProps = {
   iconProps: IconProps;
+  disabled?: boolean;
   isActive?: boolean;
+  onClick?: () => void;
 };
 
-const IconButton: FC<IconButtonProps> = ({ iconProps, isActive = false }) => (
+const IconButton: FC<IconButtonProps> = ({
+  iconProps,
+  disabled = false,
+  isActive = false,
+  onClick,
+}) => (
   <div
-    className={clsx(
-      "p-2 rounded-lg hover:bg-primary-100 cursor-pointer transition-all ease-in-out duration-200",
-      {
-        "bg-primary-200": isActive,
-        "bg-primary-50": !isActive,
-      }
-    )}
+    onClick={onClick}
+    className={clsx("p-2 rounded-lg cursor-pointer", {
+      "bg-primary-50": isActive,
+      "hover:bg-grey-50": !disabled,
+    })}
   >
     <Icon
       {...iconProps}

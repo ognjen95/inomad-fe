@@ -45,7 +45,6 @@ const PieChart: FC<PieChartProps> = ({
           )}
         />
         <Pie
-          // width={100}
           data={data}
           innerRadius={50}
           outerRadius={80}

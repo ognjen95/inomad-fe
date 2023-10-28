@@ -1,0 +1,5 @@
+mutation UpdateCaseFamilyInfo($args: UpdateCaseFamilyInfoInput!) {
+  updateCaseFamilyInfo(args: $args) {
+    isCompleted
+  }
+}

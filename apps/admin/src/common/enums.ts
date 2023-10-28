@@ -46,3 +46,12 @@ export enum DocumentType {
   CV = "CV",
   OTHER = "Other",
 }
+
+export enum ApplicantFamilyMembers {
+  Alone = "ALONE",
+  Child = "CHILD",
+  Partner = "PARTNER",
+  PartnerAndChild = "PARTNER_AND_CHILD",
+  Spouse = "SPOUSE",
+  SpouseAndChild = "SPOUSE_AND_CHILD",
+}

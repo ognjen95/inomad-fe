@@ -42,12 +42,7 @@ const Header: FC<HeaderProps> = ({ firstName, lastName, email }) => (
             iconColor="white"
             triggerButtonColor={ButtonColor.TRANSPARENT_LIGHT}
             iconType={IconType.FILTER}
-            items={[
-              { key: "this-week", label: "This week", onClick: () => {} },
-              { key: "last-week", label: "Last week", onClick: () => {} },
-              { key: "this-month", label: "This month", onClick: () => {} },
-              { key: "last-month", label: "Last month", onClick: () => {} },
-            ]}
+            items={[]}
           />
         </div>
         <div className="h-4 w-[1px] bg-white" />

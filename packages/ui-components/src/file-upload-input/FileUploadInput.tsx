@@ -4,7 +4,10 @@ import { FC, SyntheticEvent, useState } from "react";
 import { Accept, useDropzone } from "react-dropzone";
 
 import { FileErrorText, FileErrorType, FileType } from "./enums";
-import { getContentTypeFromFileType } from "./helpers";
+import {
+  getContentTypeFromFileType,
+  getContentTypeByFileName,
+} from "./helpers";
 import { formatBytes } from "../common/helpers";
 import { colors } from "../config/tailwind-config";
 import ContentPreviewModal from "../content-preview-modal";
@@ -19,6 +22,9 @@ export type FileUploadInputProps = {
   accept?: Accept;
   onChange: (files: File[]) => void;
   type?: FileType;
+  errorMessage?: string;
+  id?: string;
+  fullWidth?: boolean;
 };
 
 const FileUploadInput: FC<FileUploadInputProps> = ({
@@ -26,6 +32,7 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
   accept,
   value,
   type = FileType.FILE,
+  fullWidth = false,
   onChange,
 }) => {
   const [error, setError] = useState("");
@@ -61,7 +68,7 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
     onChange([]);
   };
 
-  const fileNameClick = (event: SyntheticEvent<HTMLDivElement, Event>) => {
+  const previewFile = (event: SyntheticEvent<HTMLDivElement, Event>) => {
     event.stopPropagation();
     setIsPreviewModalOpen(true);
   };
@@ -83,8 +90,10 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
             tabIndex: 0,
             role: "button",
             className: clsx(
-              "border border-grey-300 w-[640px] rounded-2xl p-4",
+              "border border-grey-200  rounded-2xl p-4 min-h-[78px] flex flex-col justify-center bg-white hover:bg-gray-100 transition-all ease-in-out duration-200",
               {
+                "w-[640px]": !fullWidth,
+                "w-full": fullWidth,
                 "border-dashed": !value && !error,
                 "border-solid": !!value || !!error,
                 "border-red-500": !!error,
@@ -113,7 +122,7 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
                 <Text variant={TextVariant.HEADING6} color="text-grey-600">
                   {`Drag and drop an ${
                     type === FileType.FILE ? "file" : "image"
-                  }, or`}{" "}
+                  }, or `}
                   <Text color="text-primary-600" variant={TextVariant.HEADING6}>
                     Browse
                   </Text>
@@ -127,11 +136,11 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
             </div>
           )}
           {value && (
-            <div className="flex justify-between">
+            <div className="flex justify-between" onClick={previewFile}>
               <div className="flex gap-3 items-center">
                 {type === FileType.FILE && (
                   <Icon
-                    type={IconType.PLAY_VIDEO}
+                    type={IconType.PDF_FILE}
                     size={IconSize.LARGE}
                     stroke="none"
                     fill="none"
@@ -146,17 +155,22 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
                   />
                 )}
                 <div className="flex flex-col gap-1 items-start">
-                  <div onClick={fileNameClick}>
-                    <Text variant={TextVariant.BODY3} customClasses="underline">
+                  <div>
+                    <Text
+                      variant={TextVariant.BODY3}
+                      customClasses="underline  underline-offset-2"
+                    >
                       {value.name}
                     </Text>
                   </div>
-                  <Text variant={TextVariant.BODY4} color="text-grey-600">
-                    {formatBytes(value.size)}
-                  </Text>
+                  {!!value.size && (
+                    <Text variant={TextVariant.BODY4} color="text-grey-600">
+                      {formatBytes(value.size)}
+                    </Text>
+                  )}
                 </div>
               </div>
-              <div className="self-center">
+              <div className="pl-2 self-center">
                 <Icon
                   type={IconType.TRASH_FULL}
                   stroke={colors.red[500]}
@@ -188,7 +202,9 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
           content={{
             file: value,
             title: value.name,
-            type: getContentTypeFromFileType(value.type),
+            type: value.type
+              ? getContentTypeFromFileType(value.type)
+              : getContentTypeByFileName(value.name)!,
             isDescriptionVisible: false,
           }}
         />

@@ -10,10 +10,11 @@ import Icon from "../icon/Icon";
 import Text from "../text";
 import { TextVariant } from "../text/enums";
 
-type Nav = {
+export type Nav = {
   iconType: IconType;
   text: string;
   link: string;
+  fill?: string;
   notificationNumber?: number;
   onClick?: () => void;
 };
@@ -88,13 +89,13 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
           </Link>
           <div className="flex flex-1 flex-col justify-between py-10 mt-10">
             <div className="flex  flex-col space-y-3">
-              {mainNav.map(({ text, link, iconType }) => (
+              {mainNav.map(({ text, link, iconType, fill }) => (
                 <Link key={text} href={link}>
                   <div className={NAV_CLASSES}>
                     <Icon
                       type={iconType}
                       size={IconSize.LARGE}
-                      fill={colors.primary[600]}
+                      fill={fill ?? colors.primary[600]}
                       stroke="white"
                     />
                     <div

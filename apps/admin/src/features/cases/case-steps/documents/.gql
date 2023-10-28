@@ -1,0 +1,5 @@
+mutation UpdateCaseAdditionalDocuments($args: UpdateCaseAdditionalDocumentsInput!) {
+  updateCaseAdditionalDocuments(args: $args) {
+    isCompleted
+  }
+}

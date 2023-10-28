@@ -1,9 +1,24 @@
 import clsx from "clsx";
-import { isThisMonth, isToday } from "date-fns";
+import {
+  addDays,
+  subDays,
+  isAfter,
+  isBefore,
+  isThisMonth,
+  isToday,
+} from "date-fns";
+import { FC } from "react";
 import ReactCalendar from "react-calendar";
 import { Icon, IconSize, IconType, Text, TextVariant } from "ui-components";
 
-const Calendar = () => (
+import { Task } from "../types";
+
+type CalendarProps = {
+  tasks: Array<Task>;
+  previewTask: (task: Task) => void;
+};
+
+const Calendar: FC<CalendarProps> = ({ tasks, previewTask }) => (
   <ReactCalendar
     onChange={() => {}}
     className="w-full"
@@ -28,7 +43,18 @@ const Calendar = () => (
       const today = isToday(prop.date);
       const thisMonth = isThisMonth(prop.date);
 
-      const hasTask = prop.date.getDay() % 3 === 0;
+      const hasTask = tasks.some((task) => {
+        if (
+          (isToday(task.startDate) && today && thisMonth) ||
+          (isToday(task.endDate) && today && thisMonth) ||
+          (isAfter(task.startDate, subDays(prop.date, 1)) &&
+            isBefore(task.endDate, addDays(prop.date, 1)))
+        ) {
+          return true;
+        }
+        return false;
+      });
+
       return (
         <div
           className={clsx(

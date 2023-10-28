@@ -6,18 +6,24 @@ import useEmployeeAction from "./use-employee-list-actions";
 export type EmployeeListActionsProps = {
   caseId?: string;
   employeeId: string;
+  isAssigned?: boolean;
 };
 
 const EmployeeListActions: FC<EmployeeListActionsProps> = ({
   caseId,
   employeeId,
+  isAssigned,
 }) => {
-  const { assign, loading } = useEmployeeAction();
+  const { assign, loading, onOpenChat } = useEmployeeAction();
 
   if (caseId)
     return (
-      <Button loading={loading} onClick={() => assign(employeeId, caseId)}>
-        Assign
+      <Button
+        disabled={isAssigned}
+        loading={loading}
+        onClick={() => assign(employeeId, caseId)}
+      >
+        {isAssigned ? "Assigned" : "Assign"}
       </Button>
     );
 
@@ -25,25 +31,13 @@ const EmployeeListActions: FC<EmployeeListActionsProps> = ({
     <DropdownMenu
       isIconButton
       showSelectedLabel={false}
-      iconType={IconType.CARET_DOWN}
+      iconType={IconType.MORE_VERTICAL}
       items={[
-        {
-          iconType: IconType.EDIT_PENCIL_1,
-          label: "Edit Employee",
-          onClick: () => console.log(`Edit$}`),
-        },
-        {
-          iconType: IconType.FILE_DOCUMENT,
-          iconFill: "none",
-          label: "Assign to Case",
-          onClick: () => console.log(`Open$}`),
-        },
-
         {
           iconType: IconType.USER_VOICE,
           iconFill: "none",
           label: "Message Employee",
-          onClick: () => console.log(`Open$`),
+          onClick: () => onOpenChat(employeeId),
         },
       ]}
     />

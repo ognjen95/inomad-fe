@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef } from "react";
 import { FieldValues } from "react-hook-form";
 
 import TextArea, { TextAreaProps } from "../../../text-area";
@@ -23,4 +24,10 @@ const TextAreaField = <TFormValues extends FieldValues = FieldValues>({
   );
 };
 
-export default TextAreaField;
+export default forwardRef(TextAreaField) as <
+  TFormValues extends FieldValues = FieldValues
+>(
+  props: TextAreaFieldProps<TFormValues> & {
+    ref?: ForwardedRef<HTMLTextAreaElement>;
+  }
+) => ReturnType<typeof TextAreaField>;

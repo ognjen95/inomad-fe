@@ -1,18 +1,14 @@
 import { UserRoles } from "src/common/enums";
 
-import { useEmployeesQuery, UserRoles as UserRolesGQL } from "~graphql-api";
+import { useEmployeesQuery } from "~graphql-api";
 
+import { DEFAULT_EMPLOYEES } from "./constants";
 import { UseEmployeeListReturn } from "./types";
 
 const useEmployeeList = (): UseEmployeeListReturn => {
   const { data, loading } = useEmployeesQuery({
     variables: {
-      args: {
-        userRoles: [
-          UserRolesGQL.ProviderEmployee,
-          UserRolesGQL.ProviderSupervisor,
-        ],
-      },
+      args: DEFAULT_EMPLOYEES,
     },
   });
 

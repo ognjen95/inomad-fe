@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import {
   FileUploadInput,
+  FileUploadInputField,
   Form,
   InputField,
   InputType,
@@ -10,6 +11,7 @@ import {
   Text,
   TextVariant,
 } from "ui-components";
+import { FileType } from "ui-components/src/file-upload-input/enums";
 
 import { EducationInfoFormModel } from "./types";
 import FormContainer from "../FormContainer";
@@ -35,12 +37,11 @@ const EducationInfoForm: FC<EducationInfoFormProps> = ({
           label="University"
           control={control}
         />
-        <FileUploadInput
-          onChange={(e) => console.log(e)}
-          value={undefined}
+        <FileUploadInputField
           label="Upload your diploma"
-          // control={control}
-          // fieldName="diplomaFileId"
+          control={control}
+          fieldName="diplomaFileId"
+          type={FileType.FILE}
         />
         <div className="text-center">
           <Text light>
@@ -48,12 +49,11 @@ const EducationInfoForm: FC<EducationInfoFormProps> = ({
             this field for last 3 years.
           </Text>
         </div>
-        <FileUploadInput
-          onChange={(e) => console.log(e)}
-          value={undefined}
+        <FileUploadInputField
           label="Upload Confirmation letter"
-          // control={control}
-          // fieldName="confirmationLetterFileId"
+          control={control}
+          fieldName="confirmationLetterFileId"
+          type={FileType.FILE}
         />
       </FormContainer>
     )}

@@ -1,4 +1,11 @@
-import { SubmitHandler, UseFormReturn } from "react-hook-form";
+import {
+  FieldArrayWithId,
+  SubmitHandler,
+  UseFormReturn,
+} from "react-hook-form";
+import { ApplicantFamilyMembers } from "src/common/enums";
+
+import { CaseFamilyInfo } from "../types";
 
 export type Spouse = {
   name: string;
@@ -15,13 +22,24 @@ export type Child = {
 };
 
 export type FamilyInfoFormModel = {
-  familyMembers: string;
-  familyMembersCount: number;
-  spouse: Spouse;
-  children: Array<Child>;
+  familyMembers: ApplicantFamilyMembers | null;
+  spouse: Spouse | null;
+  children: Array<Child> | null;
 };
 
-export type UseFamilyInfoForm = {
+export type UseFamilyInfoFormReturn = {
   form: UseFormReturn<FamilyInfoFormModel>;
   onSubmit: SubmitHandler<FamilyInfoFormModel>;
+  fields: Array<FieldArrayWithId<FamilyInfoFormModel, "children", "id">>;
+  addNewChild: () => void;
+  removeChild: (index: number) => void;
+  hasChildren: boolean;
+  hasSpouse: boolean;
+  hasPartner: boolean;
 };
+
+export type UseFamilyInfoForm = (
+  caseId: string,
+  familyInfo: CaseFamilyInfo | null,
+  nextStep: () => void
+) => UseFamilyInfoFormReturn;

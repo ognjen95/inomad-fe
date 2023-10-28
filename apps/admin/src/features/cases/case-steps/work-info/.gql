@@ -1,0 +1,5 @@
+mutation UpdateCaseWorkInfo($args: UpdateCaseWorkInfoInput!) {
+  updateCaseWorkInfo(args: $args) {
+    isCompleted
+  }
+}

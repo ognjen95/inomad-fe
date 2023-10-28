@@ -2,8 +2,7 @@ import Link from "next/link";
 import { Paper, Text, Button, TextVariant } from "ui-components";
 import { ButtonSize } from "ui-components/src/button/enums";
 
-import Calendar from "~components/calendar/Calendar";
-import TaskListFeature from "~features/tasks/task-list/TaskList";
+import TaskListWithCalendar from "~features/tasks/TaskListWithCalendar";
 
 const CaseAndTasksSidebar = () => (
   <div className="flex flex-col space-y-5 h-full overflow-hidden">
@@ -26,10 +25,7 @@ const CaseAndTasksSidebar = () => (
         </div>
       </Paper>
     </div>
-    <div className="h3">
-      <Calendar />
-    </div>
-    <TaskListFeature />
+    <TaskListWithCalendar />
   </div>
 );
 
