@@ -28,7 +28,7 @@ const Tooltip: FC<TooltipProps> = ({
       <RadixTooltip.Portal>
         <RadixTooltip.Content
           side={placement}
-          className="inline-flex p-4 justify-center items-center rounded-lg  shadow-primary-500 bg-primary-800 shadow-md z-50 data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade select-none px-[15px] py-[10px] leading-none shadow-sm will-change-[transform,opacity]"
+          className="inline-flex p-4 justify-center items-center rounded-lg  shadow-primary-500 bg-gradient-to-br from-primary-600 to-secondary-600 shadow-md z-50 data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade select-none px-[15px] py-[10px] leading-none shadow-sm will-change-[transform,opacity]"
           sideOffset={5}
         >
           {contentEl || <Text customClasses="text-white">{text}</Text>}

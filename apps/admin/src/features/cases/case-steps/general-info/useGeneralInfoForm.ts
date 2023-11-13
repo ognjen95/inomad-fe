@@ -59,8 +59,14 @@ const useGeneralInfoForm = (
     ) {
       const file = data?.passport;
       if (file) {
-        const [{ link, id }] = await getPresignedUrls([file.name]);
+        const [url] = await getPresignedUrls([file.name]);
+
+        const { link, id } = url || {};
+
+        if (!link || !id) return;
+
         passportField = id;
+
         await uploadFile(file, link);
       }
     }

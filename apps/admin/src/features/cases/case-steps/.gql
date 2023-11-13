@@ -65,6 +65,7 @@ query CustomerCases($options: CaseQueryOptionsInput!) {
       node {
         id
         name
+        status
         documents {
           caseId
           createdAt
@@ -75,49 +76,88 @@ query CustomerCases($options: CaseQueryOptionsInput!) {
           name
           providerCompanyId
         }
-        generalInfo {
-          birthday
-          email
-          firstName
-          lastName
-          middleName
-          nationality
-          passportFileId
-          phone
-        }
-        applicantsIds
-        education {
-          confirmationLetterFileId
-          degree
-          diplomaFileId
-          university
-        }
-        workInfo {
-          contractFileId
-          contractType
-          cvFileId
-          invoicesFilesIds
-          jobTitle
-          monthlyIncome
-          yearsOfExperience
-        }
-        familyInfo {
-          familyMembers
-          spouse {
-            name
-            lastName
-            middleName
-            birthday
-          }
-          children {
-            name
-            lastName
-            middleName
-            birthday
-          }
-        }
-        status
       }
     }
+  }
+}
+
+query CaseQestionsAndDocuments($queryOptionsInput: TestQueryOptionsInput, $caseId: String!) {
+  templates(QueryOptionsInput: $queryOptionsInput) {
+    edges {
+      node {
+        id
+        name
+        percentageScored
+        percentageToPass
+        startedAt
+        caseId
+        createdAt
+        questionGroups {
+          id
+          name
+          providerCompanyId
+          questions {
+            answerType
+            answers {
+              answered
+              isCorrect
+              text
+            }
+            comments
+            documentId
+            hasErrors
+            id
+            options
+            points
+            providerCompanyId
+            text
+            type
+            documentName
+            documentType
+            documentFileId
+            document {
+              caseId
+              createdAt
+              customerId
+              documentType
+              fileId
+              id
+              name
+              providerCompanyId
+            }
+          }
+        }
+      }
+    }
+  }
+  case(id: $caseId) {
+    id
+    status
+    name
+    applicants {
+      birthday
+      createdAt
+      email
+      firstName
+      id
+      middleName
+      lastName
+    }
+    generalInfo {
+      birthday
+      email
+      firstName
+      lastName
+      middleName
+      nationality
+      passportFileId
+      phone
+    }
+  }
+}
+
+mutation UpdateQuestionGroup($args: UpdateQuestionGroupInput!) {
+  updateQuestionGroup(args: $args) {
+     id
   }
 }

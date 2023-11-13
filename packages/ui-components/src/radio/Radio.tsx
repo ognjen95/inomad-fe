@@ -28,18 +28,18 @@ const Radio: FC<RadioProps> = ({
       defaultValue={selectedValue}
       disabled={disabled}
       onValueChange={onChange}
-      className={clsx("flex gap-2", {
-        "flex-col": !isLargeSize,
+      className={clsx("flex gap-2 w-full", {
+        "flex flex-wrap": !isLargeSize,
         "flex justify-between w-full flex-wrap": isLargeSize,
       })}
     >
-      {options.map(({ value, content }) => (
+      {options.map(({ value, label: content }) => (
         <div
           key={value}
           className={clsx(
             "flex flex-row justify-start gap-2",
             {
-              "relative  p-3 border rounded-2xl w-[312px] h-[120px] items-start":
+              "relative  p-3 border rounded-2xl w-[200px] h-[100px] items-start":
                 isLargeSize,
               "items-center": !isLargeSize,
             },

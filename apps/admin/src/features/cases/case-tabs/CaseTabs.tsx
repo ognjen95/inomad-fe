@@ -1,135 +1,170 @@
 import { useSearchParams } from "next/navigation";
 import React, { FC } from "react";
-import {
-  IconPlacement,
-  IconType,
-  Input,
-  InputSize,
-  Loader,
-  Paper,
-  PaperColor,
-  Tabs,
-  TextVariant,
-  useModal,
-  Text,
-} from "ui-components";
-import { colors } from "ui-components/src/config/tailwind-config";
+import { Loader, Paper, Tabs, useModal } from "ui-components";
 
-import FilterDropdown from "~components/filter-dropdown/FilterDropdown";
+import SearchInput from "~components/search/SearchInput";
 import SimpleTable from "~components/tables/SimpleTable";
+import { CreateCaseProposalDocument } from "~graphql-api";
 
+import { tabMapper } from "./tabs-mapper";
 import AssignCaseModal from "../assign-case/AssignCaseModal";
 import { CaseListModel } from "../case-list/types";
+import useAvailableCaseTableColumns from "../case-list/use-available-case-columns";
+import useAvailableCaseList from "../case-list/use-available-case-list";
 import useCaseList from "../case-list/use-case-list";
 import useCaseTableColumns from "../case-list/use-columns";
+import CreateCaseProposalModal from "../case-proposals/create-case-proposal/CreateCaseProposalModal";
 import { CaseRequestListModel } from "../case-request-list/types";
 import useCaseRequestColumns from "../case-request-list/use-case-request-columns";
 import useCaseRequestList from "../case-request-list/use-case-request-list";
 
 const CaseTabs: FC = () => {
   const modal = useModal<Partial<CaseListModel>>();
-  const { get } = useSearchParams();
+  const availableCaseModal = useModal<Partial<CaseListModel>>();
 
+  const { get } = useSearchParams();
+  const [selectedTab, setSelectedTab] = React.useState<string>(
+    tabMapper(get("tab") as string)
+  );
+
+  const { caseList: availableCaseList, loading: availableLoading } =
+    useAvailableCaseList();
   const { caseList, loading: casesLoading } = useCaseList();
   const { caseRequestList, loading: requestsLoading } = useCaseRequestList();
 
   const caseTableColumns = useCaseTableColumns(modal);
   const caseRequestsTableColumns = useCaseRequestColumns();
+  const availableCaseColumns = useAvailableCaseTableColumns(availableCaseModal);
 
   return (
     <Tabs
-      defaultTab={get("tab") === "requests" ? "CASE REQUESTS" : "CASE LIST"}
+      defaultTab={selectedTab}
+      onTabChange={(tab) => {
+        setSelectedTab(tab);
+      }}
       tabs={[
         {
-          text: "CASE LIST",
+          text: "MY CASES",
           feature: (
-            <Paper
-              fullHeight
-              fullWidth
-              color={PaperColor.TRANSPARENT}
-              showShadow={false}
-              noPadding
-            >
-              {!casesLoading ? (
-                <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
-                  <div className="w-full flex justify-end">
-                    <div className="w-96 flex justify-end items-center space-x-2">
-                      <Input
-                        size={InputSize.SMALL}
-                        iconType={IconType.SEARCH}
-                        iconColor="transparent"
-                        strokeColor={colors.gray[400]}
-                        iconPlacement={IconPlacement.LEFT}
-                        placeholder="Search..."
-                      />
-                      <FilterDropdown
-                        items={[]}
-                        onApplyClick={() => {}}
-                        onCancelClick={() => {}}
-                        onClearButtonClick={() => {}}
-                      />
-                    </div>
+            <div className="p-2 pb-5 h-full">
+              <Paper
+                fullHeight
+                fullWidth
+                textWrapperClassName="px-5 pt-5"
+                title="Company cases"
+                noPadding
+                action={<SearchInput />}
+              >
+                {!casesLoading ? (
+                  <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
+                    <SimpleTable<CaseListModel>
+                      columns={caseTableColumns}
+                      data={caseList}
+                      showHeader
+                      isTransparent={false}
+                    />
+                    <AssignCaseModal
+                      caseId={modal.params?.id ?? ""}
+                      isOpen={modal.isOpen}
+                      close={modal.close}
+                      name={modal.params?.name ?? ""}
+                    />
                   </div>
-                  <SimpleTable<CaseListModel>
-                    columns={caseTableColumns}
-                    data={caseList}
-                    showHeader
-                    isTransparent={false}
-                  />
-                  <AssignCaseModal
-                    caseId={modal.params?.id ?? ""}
-                    isOpen={modal.isOpen}
-                    close={modal.close}
-                    name={modal.params?.name ?? ""}
-                  />
-                </div>
-              ) : (
-                <Loader centered />
-              )}
-            </Paper>
+                ) : (
+                  <Loader centered />
+                )}
+              </Paper>
+            </div>
           ),
         },
         {
-          text: "CASE REQUESTS",
+          text: "AVAILABLE CASES",
           feature: (
-            <Paper
-              fullHeight
-              fullWidth
-              color={PaperColor.TRANSPARENT}
-              showShadow={false}
-              noPadding
-            >
-              {!requestsLoading ? (
-                <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
-                  <div className="w-full flex justify-end">
-                    <div className="w-96 flex justify-end items-center space-x-2">
-                      <Input
-                        size={InputSize.SMALL}
-                        iconType={IconType.SEARCH}
-                        iconColor="transparent"
-                        strokeColor={colors.gray[400]}
-                        iconPlacement={IconPlacement.LEFT}
-                        placeholder="Search..."
-                      />
-                      <FilterDropdown
-                        items={[]}
-                        onApplyClick={() => {}}
-                        onCancelClick={() => {}}
-                        onClearButtonClick={() => {}}
-                      />
-                    </div>
+            <div className="p-2 pb-5 h-full">
+              <Paper
+                fullHeight
+                fullWidth
+                textWrapperClassName="px-5 pt-5"
+                title="Available cases"
+                noPadding
+                action={<SearchInput />}
+              >
+                {!availableLoading ? (
+                  <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
+                    <SimpleTable<Omit<CaseListModel, "employee">>
+                      columns={availableCaseColumns}
+                      data={availableCaseList}
+                      showHeader
+                      isTransparent={false}
+                    />
+                    <CreateCaseProposalModal
+                      caseId={availableCaseModal.params?.id ?? ""}
+                      isOpen={availableCaseModal.isOpen}
+                      close={availableCaseModal.close}
+                      name={availableCaseModal.params?.name ?? ""}
+                    />
                   </div>
-                  <SimpleTable<CaseRequestListModel>
-                    columns={caseRequestsTableColumns}
-                    data={caseRequestList}
-                    showHeader
-                    isTransparent={false}
-                  />
-                </div>
-              ) : (
-                <Loader centered />
-              )}
-            </Paper>
+                ) : (
+                  <Loader centered />
+                )}
+              </Paper>
+            </div>
+          ),
+        },
+        {
+          text: "REQUESTS",
+          feature: (
+            <div className="p-2 pb-5 h-full">
+              <Paper
+                fullHeight
+                fullWidth
+                textWrapperClassName="px-5 pt-5"
+                title="Requests"
+                noPadding
+                action={<SearchInput />}
+              >
+                {!requestsLoading ? (
+                  <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
+                    <SimpleTable<CaseRequestListModel>
+                      columns={caseRequestsTableColumns}
+                      data={caseRequestList}
+                      showHeader
+                      isTransparent={false}
+                    />
+                  </div>
+                ) : (
+                  <Loader centered />
+                )}
+              </Paper>
+            </div>
+          ),
+        },
+        {
+          text: "PROPOSALS",
+          feature: (
+            <div className="p-2 pb-5 h-full">
+              <Paper
+                fullHeight
+                fullWidth
+                textWrapperClassName="px-5 pt-5"
+                title="Proposals"
+                noPadding
+                action={<SearchInput />}
+              >
+                {!requestsLoading ? (
+                  <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
+                    <SimpleTable<CaseRequestListModel>
+                      columns={caseRequestsTableColumns}
+                      data={caseRequestList}
+                      showHeader
+                      isTransparent={false}
+                    />
+                  </div>
+                ) : (
+                  <Loader centered />
+                )}
+              </Paper>
+            </div>
           ),
         },
       ]}

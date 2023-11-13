@@ -9,6 +9,7 @@ export enum ButtonSize {
 
 export enum ButtonColor {
   PRIMARY = "primary",
+  GRADIENT = "gradient",
   PRIMARY_LIGHT = "primary-light",
   SECONDARY = "secondary",
   GREY = "grey",

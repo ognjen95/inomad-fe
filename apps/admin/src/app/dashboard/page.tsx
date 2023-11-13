@@ -1,17 +1,21 @@
 "use client";
 
 import { NextPage } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { UserRoles } from "src/common/enums";
 import LayoutWithRightSidebar from "src/layouts/LayoutWithRightSidebar";
 import { Button, Paper, PaperColor, Text, TextVariant } from "ui-components";
-import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
+import {
+  ButtonColor,
+  ButtonSize,
+  ButtonType,
+} from "ui-components/src/button/enums";
 import { colors } from "ui-components/src/config/tailwind-config";
 
 import { useUserInfoAtomValue } from "~components/auth-guard/atoms";
-import LineAreaChart from "~components/charts/LineAreaChart";
 import PieChart from "~components/charts/PieChart";
 import SimpleLineChart from "~components/charts/SimpleLineChart";
 import CaseAndTasksSidebar from "~components/sidebars/case-and-tasks-sidebar/CaseAndTasksSidebar";
@@ -30,43 +34,63 @@ const DashboardPage: NextPage = () => {
   if (userInfo.userRole === UserRoles.CUSTOMER) return null;
 
   return (
-    <LayoutWithRightSidebar sidebar={<CaseAndTasksSidebar />}>
+    <LayoutWithRightSidebar sidebarNoPadding sidebar={<CaseAndTasksSidebar />}>
       <div className="flex items-center space-x-5 h-1/3">
-        <div className="w-2/3 h-full">
-          <Paper
-            color={PaperColor.TRANSPARENT}
-            fullWidth
-            fullHeight
-            title="Employees"
-            noPadding
-            showShadow={false}
-            textWrapperClassName="px-6 pt-6"
-          >
-            <LineAreaChart
-              data={[
-                {
-                  name: "2020",
-                  count: 4,
-                  color: colors.green[400],
-                },
-                {
-                  name: "2021",
-                  count: 12,
-                  color: colors.green[400],
-                },
-                {
-                  name: "2023",
-                  count: 15,
-                  color: colors.yellow[400],
-                },
-                {
-                  name: "2023",
-                  count: 30,
-                  color: colors.red[400],
-                },
-              ]}
-            />
-          </Paper>
+        <div className="w-2/3 h-full relative shadow shadow-primary-300 hover:shadow-primary-400 transition-all ease-in-out duration-250 rounded-2xl">
+          <div className="p-5 bg-gradient-to-r from-primary-700 to-secondary-900 w-full h-full flex rounded-xl">
+            <div className="flex-grow flex flex-col justify-between h-full">
+              <Text
+                customClasses="text-white"
+                bolded
+                variant={TextVariant.HEADING2}
+              >
+                NEW CASES TODAY !
+              </Text>
+              <div className="w-2/3 flex flex-col">
+                <Text customClasses="text-gray-100" variant={TextVariant.BODY1}>
+                  Today on platform we found{" "}
+                  <Text
+                    customClasses="text-white underline"
+                    variant={TextVariant.HEADING5}
+                    bolded
+                  >
+                    6
+                  </Text>{" "}
+                  new cases you could be interested in.
+                </Text>
+                <div>
+                  <Text
+                    customClasses="text-gray-100"
+                    variant={TextVariant.BODY1}
+                  >
+                    Click below and be first to apply!
+                  </Text>
+                </div>
+                <div className="mt-5">
+                  <Button
+                    onClick={() => {
+                      push("/cases?tab=available");
+                    }}
+                    shadow
+                    size={ButtonSize.MEDIUM}
+                    color={ButtonColor.GREY}
+                  >
+                    SEND PROPOSAL
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-end absolute -right-[60px] -top-[30px] ease-in-out transition-all duration-300 hover:-top-[35px] drop-shadow-2xl">
+              <Image
+                src="/images/rocket.png"
+                alt="rocket"
+                width={350}
+                height={350}
+                loading="eager"
+              />
+            </div>
+          </div>
         </div>
         <div className="w-1/3 h-full">
           <Paper fullWidth fullHeight title="Cases">
@@ -235,15 +259,10 @@ const DashboardPage: NextPage = () => {
         </div>
       </div>
       <div className="h-1/3">
-        <Paper
-          title="Cases"
-          fullHeight
-          fullWidth
-          showShadow={false}
-          color={PaperColor.TRANSPARENT}
-          noPadding
-          textWrapperClassName="px-2"
-          action={
+        <Paper fullHeight fullWidth noPadding textWrapperClassName="px-2">
+          <div className="w-full flex items-center justify-between pt-3 px-5">
+            <Text variant={TextVariant.HEADING5}>Cases</Text>
+
             <Link href="/cases">
               <Button
                 size={ButtonSize.SMALL}
@@ -252,8 +271,7 @@ const DashboardPage: NextPage = () => {
                 See all
               </Button>
             </Link>
-          }
-        >
+          </div>
           <CaseTableFeature />
         </Paper>
       </div>

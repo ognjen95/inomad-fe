@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -8,10 +9,23 @@ export type EmptyListProps = {
   title: string;
   description: string;
   url: string;
+  disableFullHeight?: boolean;
 };
 
-const EmptyList: FC<EmptyListProps> = ({ title, description, url }) => (
-  <div className="flex flex-col items-center justify-center space-y-3 w-96 text-center h-full">
+const EmptyList: FC<EmptyListProps> = ({
+  title,
+  description,
+  url,
+  disableFullHeight,
+}) => (
+  <div
+    className={clsx(
+      "flex flex-col  w-full items-center justify-center space-y-3 w-96 text-center",
+      {
+        "h-full": !disableFullHeight,
+      }
+    )}
+  >
     <Image height={104} width={104} src={url} alt="Nothing to display" />
     <Text variant={TextVariant.HEADING5}>{title}</Text>
     <Text variant={TextVariant.BODY4}>{description}</Text>

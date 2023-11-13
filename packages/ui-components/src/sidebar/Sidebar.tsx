@@ -35,7 +35,7 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
     <div className="p-5 pr-0 h-screen">
       <div
         className={clsx(
-          "bg-primary-600 relative h-full inline-flex flex-col  z-10 shadow-md transition-all ease-in-out duration-150 border-r rounded-2xl",
+          "bg-primary-600 relative h-full inline-flex flex-col  z-10 transition-all ease-in-out duration-150 border-r rounded-2xl",
           sidebarOpen ? "w-[225px] min-w-[225px]" : "w-[88px] min-w-[88px]"
         )}
       >
@@ -95,7 +95,7 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
                     <Icon
                       type={iconType}
                       size={IconSize.LARGE}
-                      fill={fill ?? colors.primary[600]}
+                      fill={fill ?? "none"}
                       stroke="white"
                     />
                     <div
@@ -112,13 +112,20 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
             </div>
             <div>
               {bottomNav.map(
-                ({ text, link, iconType, notificationNumber, onClick }) => (
+                ({
+                  text,
+                  link,
+                  iconType,
+                  notificationNumber,
+                  onClick,
+                  fill,
+                }) => (
                   <Link key={text} href={link}>
                     <div className={NAV_CLASSES} onClick={onClick}>
                       <Icon
                         type={iconType}
                         size={IconSize.LARGE}
-                        fill={colors.primary[600]}
+                        fill={fill ?? "none"}
                         stroke="white"
                       />
                       <div

@@ -6,7 +6,7 @@ import { ModalButton, ModalIcon } from "./types";
 import Button from "../button";
 import { ButtonColor, ButtonSize } from "../button/enums";
 import { FCWithChildren } from "../common/types";
-import { IconSize } from "../icon/enums";
+import { IconSize, IconType } from "../icon/enums";
 import Icon from "../icon/Icon";
 import Text from "../text";
 import { TextVariant } from "../text/enums";
@@ -14,9 +14,11 @@ import { TextVariant } from "../text/enums";
 export type ModalProps = {
   isOpen: boolean;
   title: string;
+  formName?: string;
   description?: string;
   close: () => void;
   onConfirm?: () => void;
+  confirmationButtonDisabled?: boolean;
   closeOnOverlayClick?: boolean;
   confirmButtonStyle?: ModalButton;
   closeButtonStyle?: ModalButton;
@@ -25,12 +27,15 @@ export type ModalProps = {
   modalIcon?: ModalIcon;
   boldedEndOfDescription?: string;
   bgTransparent?: boolean;
+  confirmButtonLoading?: boolean;
+  fullHeight?: boolean;
 };
 
 const Modal: FCWithChildren<ModalProps> = ({
   isOpen = false,
   title,
   description,
+  formName,
   children,
   close,
   onConfirm,
@@ -41,6 +46,9 @@ const Modal: FCWithChildren<ModalProps> = ({
   modalIcon,
   boldedEndOfDescription,
   bgTransparent = false,
+  confirmationButtonDisabled = false,
+  confirmButtonLoading,
+  fullHeight = false,
 }) => {
   const [ref, setRef] = useState<HTMLElement | null>(null);
 
@@ -60,14 +68,37 @@ const Modal: FCWithChildren<ModalProps> = ({
           <div
             {...(closeOnOverlayClick && { onClick: close })}
             className={clsx(
-              "absolute w-screen h-screen top-0 flex flex-col items-center justify-center z-50 backdrop-blur",
+              "absolute w-screen h-screen top-0 flex flex-col items-center justify-center z-50 backdrop-blur overflow-hidden",
               {
                 "bg-white/80": !bgTransparent,
                 "bg-black/10": bgTransparent,
               }
             )}
           >
-            <div className="max-h-[85vh] w-[90vw] flex flex-col space-y-2 items-center justify-center">
+            {!hideCloseButton && (
+              <div className="absolute top-10 right-10 rounded-2xl shadow shadow-red-400 hover:shadow-transparent transition-all ease-in-out duration-200">
+                <Button
+                  leftIcon={{
+                    type: IconType.CLOSE,
+                  }}
+                  fullWidth
+                  color={closeButtonStyle?.color ?? ButtonColor.RED}
+                  size={closeButtonStyle?.size ?? ButtonSize.SMALL}
+                  onClick={close}
+                >
+                  {closeButtonStyle?.text ?? "CLOSE"}
+                </Button>
+              </div>
+            )}
+            <div
+              className={clsx(
+                "h-screen w-[90vw] flex flex-col space-y-2 items-center",
+                {
+                  "justify-center": !fullHeight,
+                  "justify-start py-20": fullHeight,
+                }
+              )}
+            >
               {modalIcon && (
                 <div className="w-full flex justify-center mb-1">
                   <Icon
@@ -79,10 +110,15 @@ const Modal: FCWithChildren<ModalProps> = ({
                 </div>
               )}
               <div className="text-center">
-                <Text variant={TextVariant.HEADING5}>{title}</Text>
+                <Text
+                  customClasses="text-primary-600"
+                  variant={TextVariant.HEADING4}
+                >
+                  {title}
+                </Text>
               </div>
               <div className="text-center flex items-center space-x-1">
-                <Text>{description}</Text>
+                <Text variant={TextVariant.BODY2}>{description}</Text>
                 {boldedEndOfDescription && (
                   <Text customClasses="font-bold">
                     {boldedEndOfDescription}
@@ -90,28 +126,31 @@ const Modal: FCWithChildren<ModalProps> = ({
                 )}
               </div>
               {children && (
-                <div className="flex flex-col py-5 h-full">{children}</div>
+                <div
+                  className={clsx(
+                    "flex flex-col items-center justify-center pt-5 py-12 overflow-h-auto",
+                    {
+                      "h-full": fullHeight,
+                    }
+                  )}
+                >
+                  {children}
+                </div>
               )}
-              {(onConfirm || !hideCloseButton) && (
-                <div className="pt-3 flex flex-col space-y-2 justify-end w-full max-w-[400px]">
+              {(onConfirm || !hideCloseButton || formName) && (
+                <div className="pt-3 flex flex-col space-y-2 justify-end w-full max-w-[300px]">
                   {onConfirm && (
                     <Button
+                      shadow
+                      loading={confirmButtonLoading}
                       fullWidth
+                      formName={formName}
                       color={confirmButtonStyle?.color}
                       size={confirmButtonStyle?.size ?? ButtonSize.MEDIUM}
                       onClick={onConfirm}
+                      disabled={confirmationButtonDisabled}
                     >
                       {confirmButtonStyle?.text ?? "Confirm"}
-                    </Button>
-                  )}
-                  {!hideCloseButton && (
-                    <Button
-                      fullWidth
-                      color={closeButtonStyle?.color ?? ButtonColor.GREY}
-                      size={closeButtonStyle?.size ?? ButtonSize.MEDIUM}
-                      onClick={close}
-                    >
-                      {closeButtonStyle?.text ?? "Cancel"}
                     </Button>
                   )}
                 </div>

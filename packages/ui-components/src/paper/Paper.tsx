@@ -20,6 +20,8 @@ export type PaperProps = {
   titleSize?: TextVariant;
   allowShadowHover?: boolean;
   rounded?: PaperRounded;
+  hideTitlePadding?: boolean;
+  titleTruncate?: boolean;
 };
 
 const Paper: FCWithChildren<PaperProps> = ({
@@ -37,29 +39,40 @@ const Paper: FCWithChildren<PaperProps> = ({
   action,
   allowShadowHover = false,
   rounded = PaperRounded.XXL,
+  hideTitlePadding = false,
+  titleTruncate = false,
 }) => (
   <div
-    className={clsx("flex flex-col relative z-10", rounded, color, {
-      "shadow-xs shadow-primary-200": showShadow && !allowShadowHover,
-      "shadow-xs shadow-primary-200 hover:shadow-sm hover:shadow-primary-300 transition-all ease-in-out duration-300":
-        allowShadowHover && showShadow,
-      "w-full": fullWidth,
-      "h-full": fullHeight,
-      "hover:bg-gray-100": allowHover,
-      "py-4 px-6": !noPadding,
-      "p-0": noPadding,
-      "border border-gray-50": color !== PaperColor.TRANSPARENT,
-    })}
+    className={clsx(
+      "flex flex-col transition-all ease-in-out duration-300 z-10",
+      rounded,
+      color,
+      {
+        "shadow-xs shadow-primary-200": showShadow && !allowShadowHover,
+        "shadow-xs shadow-primary-200 hover:shadow-sm hover:shadow-primary-300 transition-all ease-in-out duration-300":
+          allowShadowHover && showShadow,
+        "w-full": fullWidth,
+        "h-full": fullHeight,
+        "hover:bg-gray-100": allowHover,
+        "py-4 px-6": !noPadding,
+        "p-0": noPadding,
+        "border border-gray-50": color !== PaperColor.TRANSPARENT,
+      }
+    )}
   >
     {(title || action) && (
       <div
         className={clsx(
-          "mb-3 flex items-center justify-between w-full",
+          {
+            "mb-3": !hideTitlePadding,
+          },
+          "flex items-center justify-between w-full",
           textWrapperClassName
         )}
       >
         {title && (
           <Text
+            truncate={titleTruncate}
             variant={titleSize ?? TextVariant.HEADING6}
             customClasses={titleClassName}
           >

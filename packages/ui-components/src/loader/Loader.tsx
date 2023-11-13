@@ -44,6 +44,36 @@ const Loader: FC<LoaderProps> = ({
           />
           <stop offset="1" stopColor={COLOR_MAPPER[color]} stopOpacity="1" />
         </radialGradient>
+        <radialGradient
+          id="loader"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(20 20.0938) rotate(90) scale(20.0938 20)"
+        >
+          <stop
+            offset="0.244792"
+            stopColor={COLOR_MAPPER[color]}
+            stopOpacity="0"
+          />
+          <stop offset="1" stopColor={COLOR_MAPPER[color]} stopOpacity="1" />
+        </radialGradient>
+        <radialGradient
+          id="loader"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(20 20.0938) rotate(90) scale(20.0938 20)"
+        >
+          <stop
+            offset="0.244792"
+            stopColor={COLOR_MAPPER[color]}
+            stopOpacity="0"
+          />
+          <stop offset="1" stopColor={COLOR_MAPPER[color]} stopOpacity="1" />
+        </radialGradient>
       </defs>
     </svg>
   </div>

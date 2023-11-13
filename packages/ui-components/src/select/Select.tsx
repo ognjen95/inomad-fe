@@ -59,7 +59,7 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
     const [isOpened, setIsOpened] = useState(false);
 
     return (
-      <div className="relative w-full" ref={ref}>
+      <div className="w-full" ref={ref}>
         {label && <Label text={label} htmlFor="select" />}
         <Select
           onKeyDown={(e) => {
@@ -81,12 +81,15 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
           onMenuOpen={() => setIsOpened(true)}
           onMenuClose={() => setIsOpened(false)}
           isClearable={false}
+          // className="!z-50"
           styles={{
             control: () => ({
               backgroundColor: errorMessage ? colors.red[50] : selectColor,
             }),
           }}
           classNames={{
+            menu: () => "bg-white",
+            // menuPortal: () => "!z-10",
             placeholder: () => "text-grey-600 px-2 text-sm",
             container: () =>
               clsx(
@@ -108,10 +111,11 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
                 "flex items-center justify-center text-grey-600 mr-1",
                 largeIndicator ? "w-4 h-4 ml-1" : "w-3 h-3"
               ),
-            option: () => "p-2 cursor-pointer hover:bg-primary-50",
+            option: () =>
+              "p-2 cursor-pointer  bg-white hover:bg-primary-50 !z-[999999999]",
             menuList: () =>
               clsx(
-                "overflow-hidden !z-[999999999] bg-white rounded-[5px] shadow w-full",
+                "!z-[999999999] bg-white rounded-[5px] shadow w-full",
                 menuPlacement === MenuPlacementOptions.Top ? "mb-2" : "mt-1"
               ),
             control: () =>

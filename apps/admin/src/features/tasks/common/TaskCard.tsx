@@ -24,8 +24,8 @@ const TaskCard: FC<TaskCardProps> = ({
     onClick={() => openModal()}
     className="flex justify-between flex-col space-y-5 cursor-pointer"
   >
-    <div className="flex justify-start items-center hover:bg-primary-100 rounded-full transition-all ease-out duration-200">
-      <div className="p-3 rounded-full bg-primary-400">
+    <div className="flex justify-start items-center hover:bg-primary-100 rounded-xl transition-all ease-out duration-200">
+      <div className="p-3 rounded-xl bg-primary-600 shadow-xs">
         <Icon
           type={IconType.CALENDAR}
           fill="white"

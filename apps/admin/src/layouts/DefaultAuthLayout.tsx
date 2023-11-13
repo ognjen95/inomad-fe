@@ -21,7 +21,10 @@ const DefaultAuthLayout: FCWithChildren<DefaultAuthLayoutProps> = ({
         width={200}
         height={56}
       /> */}
-      <Text variant={TextVariant.HEADING1} customClasses="text-primary-600">
+      <Text
+        variant={TextVariant.HEADING1}
+        customClasses="text-transparent bg-clip-text bg-gradient-to-br from-primary-800 to-secondary-900"
+      >
         iNomad
       </Text>
       <div className="w-full">{children}</div>

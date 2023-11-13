@@ -28,10 +28,9 @@ const AssignCaseModal: FC<AssignCaseModalProps> = ({
     boldedEndOfDescription={name}
     isOpen={isOpen}
     close={close}
+    fullHeight
   >
-    <div className="flex flex-col h-[60vh]">
-      <EmployeeTable caseId={caseId} rowIsTransparent />
-    </div>
+    <EmployeeTable caseId={caseId} />
   </Modal>
 );
 

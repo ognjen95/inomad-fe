@@ -4,9 +4,9 @@ export { default as Button } from "./button";
 export * from "./button";
 
 export { default as FileUploadInput } from "./file-upload-input";
-export * from "./file-upload-input";
-export { default as FileUploadInputField } from "./form/fields/file-upload-input-field";
-export * from "./form/fields/file-upload-input-field";
+// export * from "./file-upload-input";
+// export { default as FileUploadInputField } from "admin/src/components/file-upload-input-field/file-upload-input-field";
+// export * from "admin/src/components/file-upload-input-field/file-upload-input-field";
 
 export { default as Input } from "./input";
 export * from "./input";

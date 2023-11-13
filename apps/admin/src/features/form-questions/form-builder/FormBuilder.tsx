@@ -1,68 +1,125 @@
-import { SubmitHandler, useFieldArray } from "react-hook-form";
-import LayoutWithRightSidebar from "src/layouts/LayoutWithRightSidebar";
-import { PaperColor, useForm, Button } from "ui-components";
+import { FC, useEffect, useRef, useState } from "react";
+import {
+  SubmitHandler,
+  UseFieldArrayReturn,
+  UseFormReturn,
+} from "react-hook-form";
+import {
+  Button,
+  EmptyList,
+  Form,
+  IconType,
+  InputField,
+  Modal,
+} from "ui-components";
+import { ButtonColor } from "ui-components/src/button/enums";
+import { colors } from "ui-components/src/config/tailwind-config";
+import { UseModalReturn } from "ui-components/src/modal/useModal";
 
-import FormElements from "../form-elements/FormElements";
 import FormQuestion from "../form-question/FormQuestion";
-import { FormBuilderElementType, FormQuestionGroupModel } from "../types";
+import { FormQuestionGroupModel } from "../types";
 
-const FormBuilder = () => {
-  const form = useForm<FormQuestionGroupModel>({
-    defaultValues: {
-      name: "",
-      questions: [],
-    },
-  });
+export type FormBuilderProps = {
+  form: UseFormReturn<FormQuestionGroupModel>;
+  questionsForm: UseFieldArrayReturn<FormQuestionGroupModel, "questions", "id">;
+  onSubmit: SubmitHandler<FormQuestionGroupModel>;
+  removeQuestion: (index: number) => void;
+  modal: UseModalReturn;
+};
 
-  const questionsForm = useFieldArray({
-    control: form.control,
-    name: "questions",
-  });
+const FormBuilder: FC<FormBuilderProps> = ({
+  form,
+  questionsForm,
+  removeQuestion,
+  onSubmit,
+  modal,
+}) => {
+  const [collapseAll, setCollapseAll] = useState<boolean>(false);
+  const resetCollapse = () => setCollapseAll(false);
+  const ref = useRef<HTMLInputElement>(null);
 
-  const addQuestion = (questionType: FormBuilderElementType) => {
-    questionsForm.append({
-      text: "",
-      type: questionType,
-      options: [],
-      comments: [],
-      hasError: false,
-      answer: [],
-      documentType: null,
-    });
-  };
-
-  const removeQuestion = (index: number) => {
-    questionsForm.remove(index);
-  };
-
-  const onSubmit: SubmitHandler<FormQuestionGroupModel> = (data) => {
-    console.log({ data });
-  };
+  useEffect(() => {
+    if (modal.isOpen) {
+      ref.current?.focus();
+    }
+  }, [modal.isOpen]);
 
   return (
-    <LayoutWithRightSidebar
-      mainNoBottomPadding
-      sidebarNoPadding
-      sidebarColor={PaperColor.TRANSPARENT}
-      sidebar={<FormElements addElement={addQuestion} />}
-    >
-      <div className="h-full flex-col flex-grow space-y-5 overflow-y-auto no-scrollbar p-3 relative">
-        {questionsForm?.fields?.map((item, index) => (
-          <FormQuestion
-            key={item.id}
-            form={form}
-            onSubmit={onSubmit}
-            index={index}
-            title={`${item.type.toUpperCase()} Question`}
-            type={item.type}
-            removeQuestion={() => removeQuestion(index)}
+    <div className="h-full">
+      <Form fullHeight form={form} formName="form-builder">
+        {({ control }) => (
+          <div className="h-full flex-col flex-grow space-y-2 overflow-y-auto no-scrollbar p-3 relative">
+            <div className="flex items-center justify-end pr-5">
+              <Button
+                color={ButtonColor.GREY}
+                leftIcon={{
+                  type: IconType.HIDE_EYE,
+                  fill: "none",
+                  stroke: colors.gray[400],
+                }}
+                onClick={() => setCollapseAll(true)}
+              >
+                Collapse All
+              </Button>
+            </div>
+            {!questionsForm.fields.length && (
+              <EmptyList
+                url="/images/empty-file.png"
+                title="No Form Elements"
+                description="Click on elements on the right side and build your form"
+              />
+            )}
+            {questionsForm?.fields?.map((item, index) => (
+              <FormQuestion
+                collapseAll={collapseAll}
+                resetCollapse={resetCollapse}
+                key={item.id}
+                control={control}
+                index={index}
+                title={`${item.type.toUpperCase()} Question`}
+                question={form.watch(`questions.${index}`)}
+                removeQuestion={() => removeQuestion(index)}
+                updateQuestionAnswers={(answers: Array<string>) =>
+                  questionsForm.update(index, {
+                    ...form.watch(`questions.${index}`),
+                    answers,
+                  })
+                }
+                removeAnswer={(answer: string) =>
+                  questionsForm.update(index, {
+                    ...form.watch(`questions.${index}`),
+                    answers: item.answers?.filter((a) => a !== answer),
+                  })
+                }
+              />
+            ))}
+          </div>
+        )}
+      </Form>
+      <Modal
+        modalIcon={{
+          type: IconType.INFO,
+          fill: "none",
+          stroke: colors.primary[500],
+        }}
+        isOpen={modal.isOpen}
+        confirmationButtonDisabled={!form.watch().name}
+        title="Create New Question Group"
+        onConfirm={() => onSubmit(form.getValues())}
+        close={modal.close}
+        description="Please enter the name of the question group and click on CONFIRM button"
+      >
+        <div className="w-96 mt-5">
+          <InputField
+            placeholder="Type question group name ..."
+            ref={ref}
+            label="Question Group Name"
+            fieldName="name"
+            control={form.control}
           />
-        ))}
-        <div>
-          <Button formName="form-builder">SUBMIT</Button>
         </div>
-      </div>
-    </LayoutWithRightSidebar>
+      </Modal>
+    </div>
   );
 };
 

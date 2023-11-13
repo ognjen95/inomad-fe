@@ -121,8 +121,8 @@ const TaskFormModal: FC<TaskFormModalProps> = ({
                     </div>
                   </div>
                 </div>
-                <div className="w-1/4 h-full rounded-xl">
-                  <div className="h-full flex flex-col space-y-3 relative">
+                <div className="w-1/4 h-full rounded-xl relative">
+                  <div className="h-full flex flex-col space-y-3">
                     <SelectField
                       control={control}
                       fieldName="taskType"
@@ -204,7 +204,7 @@ const TaskFormModal: FC<TaskFormModalProps> = ({
                       control={control}
                     />
                   </div>
-                  <div className="flex items-center space-x-5 w-96 absolute justify-end bottom-5 right-0 px-10 bg-white">
+                  <div className="flex items-center space-x-5  absolute justify-end bottom-0 right-0 left-0 bg-white">
                     <Button
                       fullWidth
                       color={ButtonColor.GREY}
@@ -219,6 +219,7 @@ const TaskFormModal: FC<TaskFormModalProps> = ({
                       size={ButtonSize.MEDIUM}
                       loading={loading}
                       disabled={loading}
+                      shadow
                     >
                       Save
                     </Button>

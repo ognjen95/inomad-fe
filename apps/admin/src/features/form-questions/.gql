@@ -1,0 +1,75 @@
+mutation CreateQuestionGroup($createQuestionGroupInput: CreateQuestionGroupInput!) {
+  createQuestionGroup(createQuestionGroupInput: $createQuestionGroupInput) {
+    id
+  }
+}
+
+query QuestionGroups($args: QuestionGroupOptionsInput) {
+  questionGroups(args: $args) {
+    edges {
+      node {
+        id
+        name
+        testId
+        questions {
+          answerType
+          answers {
+            answered
+            id
+            isCorrect
+            text
+          }
+          comments
+          document {
+            caseId
+            createdAt
+            customerId
+            documentType
+            fileId
+            id
+            name
+            providerCompanyId
+          }
+          documentId
+          hasErrors
+          id
+          options
+          points
+          providerCompanyId
+          testId
+          text
+          type
+        }
+      }
+    }
+  }
+}
+
+query Templates {
+  templates {
+    edges {
+      node {
+        providerCompanyId
+        caseId
+        id
+        name
+        questionGroupIds
+        questionGroups {
+          id
+        }
+      }
+    }
+  }
+}
+
+mutation CreateTemplate($args: CreateTestInput!) {
+  createTemplate(args: $args) {
+    id
+  }
+}
+
+mutation AssignTemplate($caseId: String!, $templateId: String!) {
+  assignTemplate(caseId: $caseId, templateId: $templateId) {
+    id
+  }
+}

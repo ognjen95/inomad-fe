@@ -7,7 +7,7 @@ import { useCasesQuery } from "~graphql-api";
 import { CaseListModel, UseCaseListReturn } from "./types";
 
 const useCaseList = (): UseCaseListReturn => {
-  const { data, loading } = useCasesQuery();
+  const { data, loading } = useCasesQuery({});
 
   const modal = useModal<Partial<CaseListModel>>();
 

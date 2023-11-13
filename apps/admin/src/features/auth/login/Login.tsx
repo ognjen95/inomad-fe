@@ -7,7 +7,7 @@ import {
   InputType,
   TextVariant,
 } from "ui-components";
-import { ButtonSize } from "ui-components/src/button/enums";
+import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
 
 import useLogin from "./use-login";
 
@@ -57,14 +57,15 @@ const LoginFeature = () => {
                   shadow
                   size={ButtonSize.MEDIUM}
                   fullWidth
+                  color={ButtonColor.PRIMARY}
                   loading={loading}
                   formName="login-form"
                 >
-                  Sign in
+                  LOGIN
                 </Button>
                 <div
                   onClick={redirectToForgotPassword}
-                  className="cursor-pointer mt-1"
+                  className="cursor-pointer mt-2"
                 >
                   <Text>Forgot password?</Text>
                 </div>

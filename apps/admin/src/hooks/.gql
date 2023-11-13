@@ -1,0 +1,3 @@
+query DownloadSignedUrl($downloadLinkId: String!) {
+  downloadLink(id: $downloadLinkId)
+}

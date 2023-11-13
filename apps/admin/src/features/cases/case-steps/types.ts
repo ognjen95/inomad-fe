@@ -1,4 +1,7 @@
 import { ApplicantFamilyMembers, CaseStatus } from "src/common/enums";
+import { Option } from "ui-components/src/select/types";
+
+import { QuestionType } from "~graphql-api";
 
 export type CaseGeneralInfo = {
   birthday?: Date;
@@ -105,4 +108,44 @@ export type StepStatus = {
   name: string;
   total: number;
   completed: number;
+};
+
+export type Question = {
+  id: string;
+  document?: File;
+  documentName?: string;
+  documentFileId?: string;
+  text?: string;
+  answers?: Option[] | string[] | string | Option;
+  options?: Option[];
+  type?: QuestionType;
+};
+
+export type QuestionGroup = {
+  id: string;
+  name: string;
+  questions: Question[];
+};
+
+export type CaseStepsFormModel = {
+  questionGroups: QuestionGroup[];
+};
+
+export type QuestionStepsModel = {
+  id: string;
+  name: string;
+  questions: {
+    id: string;
+    text: string;
+    type: QuestionType;
+    options: string[];
+    answers: {
+      text: string;
+      isCorrect: boolean;
+    }[];
+    documentName: string;
+    documentType: string;
+    documentId: string;
+    documentFileId: string;
+  }[];
 };

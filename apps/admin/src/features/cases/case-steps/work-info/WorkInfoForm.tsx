@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import {
-  FileUploadInput,
-  FileUploadInputField,
   Form,
   InputField,
   InputType,
@@ -11,6 +9,8 @@ import {
   Text,
   TextVariant,
 } from "ui-components";
+
+import FileUploadInputField from "~components/file-upload-input-field";
 
 import { WorkInfoFormModel } from "./types";
 import FormContainer from "../FormContainer";

@@ -22,7 +22,6 @@ import {
 import { ApplicantFamilyMembers } from "~graphql-api";
 
 import { FamilyInfoFormModel } from "./types";
-import FormContainer from "../FormContainer";
 
 export type FamilyInfoFormProps = {
   form: UseFormReturn<FamilyInfoFormModel>;
@@ -47,7 +46,7 @@ const FamilyInfoForm: FC<FamilyInfoFormProps> = ({
 }) => (
   <Form form={form} formName={formName} onSubmit={onSubmit}>
     {({ control }) => (
-      <FormContainer>
+      <div className="space-y-5 py-10">
         <Text variant={TextVariant.HEADING6}>
           You are applying alone or with family members?
         </Text>
@@ -58,52 +57,33 @@ const FamilyInfoForm: FC<FamilyInfoFormProps> = ({
           isLargeSize
           options={[
             {
-              content: "Alone",
+              label: "Alone",
               value: ApplicantFamilyMembers.Alone,
             },
             {
-              content: "Spouse",
+              label: "Spouse",
               value: ApplicantFamilyMembers.Spouse,
             },
             {
-              content: "Kids",
+              label: "Kids",
               value: ApplicantFamilyMembers.Child,
             },
             {
-              content: "Civil Partner",
+              label: "Civil Partner",
               value: ApplicantFamilyMembers.Partner,
             },
             {
-              content: "Spouse and Kids",
+              label: "Spouse and Kids",
               value: ApplicantFamilyMembers.SpouseAndChild,
             },
             {
-              content: "Civil Partner and Kids",
+              label: "Civil Partner and Kids",
               value: ApplicantFamilyMembers.PartnerAndChild,
             },
           ]}
         />
-        {/* <RadioField
-          fieldName="familyMembers"
-          control={control}
-          isLargeSize
-          options={[
-            {
-              content: "Civil Partner",
-              value: ApplicantFamilyMembers.Partner,
-            },
-            {
-              content: "Spouse and Kids",
-              value: ApplicantFamilyMembers.SpouseAndChild,
-            },
-            {
-              content: "Civil Partner and Kids",
-              value: ApplicantFamilyMembers.PartnerAndChild,
-            },
-          ]}
-        /> */}
         {hasPartnerOrSpouse && (
-          <>
+          <div className="space-y-5 pt-10">
             <Text variant={TextVariant.HEADING6} customClasses="pt-5">
               Spouse or Civil Partner Information
             </Text>
@@ -129,10 +109,10 @@ const FamilyInfoForm: FC<FamilyInfoFormProps> = ({
               label="Birth Date"
               control={control}
             />
-          </>
+          </div>
         )}
         {hasChildren && (
-          <>
+          <div className="space-y-5 pt-10">
             <Text variant={TextVariant.HEADING6} customClasses="pt-5">
               Children Information
             </Text>
@@ -182,9 +162,9 @@ const FamilyInfoForm: FC<FamilyInfoFormProps> = ({
                 Add Child
               </Button>
             </div>
-          </>
+          </div>
         )}
-      </FormContainer>
+      </div>
     )}
   </Form>
 );

@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from "react";
-import { TextVariant, Text, Button, Progress } from "ui-components";
+import { TextVariant, Text, Button, Progress, IconType } from "ui-components";
 import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
+import { colors } from "ui-components/src/config/tailwind-config";
 
 export type Step = {
   name: string;
@@ -33,20 +34,23 @@ const Stepper: FC<StepperProps> = ({
   const isFirstStep = activeStepIndex === 0;
 
   return (
-    <div className="relative flex flex-col space h-full pb-20">
+    <div className="relative flex flex-col justify-between h-full pb-20">
       {showTitle && (
-        <div className="pb-3 border-b border-primary-50">
-          <Text variant={TextVariant.HEADING4}>{activeStep?.name}</Text>
+        <div className="pl-3">
+          <Text variant={TextVariant.HEADING5}>{activeStep?.name}</Text>
         </div>
       )}
-      <div className="pb-5">
+      {activeStep?.component}
+      <div className="pt-1 px-5">
         <Progress
+          size="small"
           multiColor={false}
-          completed={((activeStepIndex + 1) / steps.length) * 100}
+          completed={
+            steps?.length && ((activeStepIndex + 1) / steps.length) * 100
+          }
         />
       </div>
-      {activeStep?.component}
-      <div className="absolute pt-5 left-0 right-0 w-full flex items-center justify-between space-x-10 bottom-0 px-20 backdrop-blur border-t border-primary-50">
+      <div className="absolute left-0 right-0 w-full flex items-center justify-between space-x-10 bottom-0 px-20 backdrop-blur">
         <div className="w-1/4">
           <Button
             fullWidth
@@ -65,17 +69,30 @@ const Stepper: FC<StepperProps> = ({
             size={ButtonSize.MEDIUM}
             onClick={prevStep}
             disabled={isFirstStep || loading}
+            leftIcon={{
+              type: IconType.ARROW_LEFT_LG,
+              stroke: colors.gray[700],
+            }}
           >
             Previous Step
           </Button>
           <Button
+            rightIcon={
+              isLastStep
+                ? undefined
+                : {
+                    type: IconType.ARROW_RIGHT,
+                    stroke: "white",
+                  }
+            }
             formName={activeStep?.formName}
             fullWidth
+            color={ButtonColor.GRADIENT}
             size={ButtonSize.MEDIUM}
             loading={loading}
             onClick={activeStep?.formName ? undefined : nextStep}
           >
-            {isLastStep ? "Complete" : "Save and Continue"}
+            {isLastStep ? "Complete" : "Next Step"}
           </Button>
         </div>
       </div>

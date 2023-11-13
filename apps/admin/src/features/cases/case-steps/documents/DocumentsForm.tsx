@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { FileUploadInputField, Form, Text, TextVariant } from "ui-components";
+import { Form, Text, TextVariant } from "ui-components";
+
+import FileUploadInputField from "~components/file-upload-input-field";
 
 import { DocumentsFormModel } from "./types";
 import { FamilyInfoFormModel } from "../family-info/types";

@@ -1,6 +1,7 @@
 import { CaseEntity, DocumentEntity } from "~graphql-api";
 
-import { DocumentList } from "./types";
+import { DocumentList, QuestionGroup, QuestionStepsModel } from "./types";
+import { answerMapper } from "./utils";
 
 export const caseDocumentsFactory = (
   documents: DocumentEntity[],
@@ -9,7 +10,7 @@ export const caseDocumentsFactory = (
   documents?.reduce<DocumentList>(
     (acc, current) => {
       const accCopy = { ...acc };
-      const document = new File([], current.name!);
+      const document = new File([], current.name!, { type: current.fileId! });
 
       if (!companyCase) return accCopy;
 

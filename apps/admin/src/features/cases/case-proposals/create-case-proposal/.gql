@@ -1,0 +1,5 @@
+mutation CreateCaseProposal($caseId: String!, $deadline: DateTime!, $price: Float!) {
+  createCaseProposal(caseId: $caseId, deadline: $deadline, price: $price) {
+    isCompleted
+  }
+}

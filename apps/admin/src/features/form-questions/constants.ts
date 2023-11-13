@@ -1,28 +1,35 @@
-import { FormBuilderElementType } from "./types";
+import { QuestionType } from "~graphql-api";
+
+import { FormQuestionGroupModel } from "./types";
 
 export const ELEMENTS_ITEMS = [
   {
-    name: "Text Input Field",
-    type: FormBuilderElementType.TEXT,
+    name: "Text Input",
+    type: QuestionType.Text,
   },
   {
-    name: "Select Field",
-    type: FormBuilderElementType.SELECT,
+    name: "Single Choice Dropdown",
+    type: QuestionType.Select,
   },
   {
-    name: "Multi Select Field",
-    type: FormBuilderElementType.MULTISELECT,
+    name: "Multiple Choice Dropdown",
+    type: QuestionType.Multiselect,
   },
   {
-    name: "Radio Button",
-    type: FormBuilderElementType.RADIO,
+    name: "Single Choice Radio Button",
+    type: QuestionType.Radio,
   },
   {
-    name: "Checkbox",
-    type: FormBuilderElementType.CHECKBOX,
+    name: "Multiple Choice Checkbox",
+    type: QuestionType.Checkbox,
   },
   {
     name: "File Upload",
-    type: FormBuilderElementType.FILE,
+    type: QuestionType.File,
   },
 ];
+
+export const DEFAULT_VALUE: FormQuestionGroupModel = {
+  name: "",
+  questions: [],
+};

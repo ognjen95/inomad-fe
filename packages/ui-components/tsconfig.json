@@ -1,5 +1,5 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["."],
+  "include": [".", "../../apps/admin/src/components/file-upload-input-field"],
   "exclude": ["dist", "build", "node_modules"]
 }

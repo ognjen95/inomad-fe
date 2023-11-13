@@ -3,25 +3,14 @@
 import { useParams } from "next/navigation";
 import { FC } from "react";
 import LayoutWithRightSidebar from "src/layouts/LayoutWithRightSidebar";
-import { Paper, PaperColor } from "ui-components";
+import { Form, Paper, PaperColor, Progress } from "ui-components";
 
-import CaseStatusBadge from "~components/badges/CaseStatusBadge";
-import CaseStepsSidebar from "~components/sidebars/case-steps-sidebar/CaseStepsSidebar";
 import Stepper from "~components/stepper/Stepper";
-import useStepper from "~components/stepper/useStepper";
-import DocumentsForm from "~features/cases/case-steps/documents/DocumentsForm";
-import useDocumentsForm from "~features/cases/case-steps/documents/useDocumentsForm";
-import EducationInfoForm from "~features/cases/case-steps/education-info/EducationInfoForm";
-import useEducationInfoForm from "~features/cases/case-steps/education-info/useEducationInfoForm";
-import FamilyInfoForm from "~features/cases/case-steps/family-info/FamilyInfoForm";
-import GeneralInfoForm from "~features/cases/case-steps/general-info/GeneralInfoForm";
-import useGeneralInfoForm from "~features/cases/case-steps/general-info/useGeneralInfoForm";
-import useWorkInfoForm from "~features/cases/case-steps/work-info/useWorkInfoForm";
-import WorkInfoForm from "~features/cases/case-steps/work-info/WorkInfoForm";
 
-import useFamilyInfoForm from "./family-info/useFamilyInfoForm";
-import { StepStatus } from "./types";
-import useCase from "./useCase";
+import CaseQuestion from "./CaseQuestion";
+import GeneralInfoForm from "./general-info/GeneralInfoForm";
+import { CaseStepsFormModel } from "./types";
+import useCustomerCaseSteps from "./useCaseSteps";
 
 type CaseStepsProps = {
   onCancel?: () => void;
@@ -31,177 +20,67 @@ type CaseStepsProps = {
 const CaseSteps: FC<CaseStepsProps> = ({ onCancel, isCustomer }) => {
   const { caseId } = useParams();
 
-  const { case: caseData, loading: loadingCase } = useCase(
-    (caseId as string) ?? "",
-    isCustomer
-  );
-  const { activeStep, nextStep, prevStep, goToStep } = useStepper(5);
-
-  const generalInfo = useGeneralInfoForm(
-    (!isCustomer ? caseId : caseData?.id) as string,
-    caseData?.generalInfo ?? null,
-    nextStep
-  );
-
-  const educationInfo = useEducationInfoForm(
-    (!isCustomer ? caseId : caseData?.id) as string,
-    caseData?.educationInfo ?? null,
-    nextStep
-  );
-
-  const workInfo = useWorkInfoForm(
-    (!isCustomer ? caseId : caseData?.id) as string,
-    caseData?.workInfo ?? null,
-    nextStep
-  );
-
-  const familyInfo = useFamilyInfoForm(
-    (!isCustomer ? caseId : caseData?.id) as string,
-    caseData?.familyInfo ?? null,
-    nextStep
-  );
-
-  const applicantName = `${generalInfo.form.getValues().firstName} ${
-    generalInfo.form.getValues().lastName
-  }`;
-
-  const documents = useDocumentsForm({
-    familyInfo: familyInfo.form,
-    applicantName,
-    caseId: (!isCustomer ? caseId : caseData?.id) as string,
-    documents: caseData?.additionalDocuments,
-  });
-
-  const isLoading =
-    generalInfo.loading ||
-    loadingCase ||
-    educationInfo.loading ||
-    workInfo.loading;
-
-  const stepsStatus: Array<StepStatus> = [
-    {
-      name: "General Info",
-      total: Object.keys(generalInfo.form.watch()).length,
-      completed: Object.keys(generalInfo.form.watch()).filter(Boolean).length,
-    },
-    {
-      name: "Education Info",
-      total: Object.keys(educationInfo.form.watch()).length,
-      completed: Object.keys(educationInfo.form.watch()).filter(Boolean).length,
-    },
-    {
-      name: "Work Info",
-      total: Object.keys(workInfo.form.watch()).length,
-      completed: Object.keys(workInfo.form.watch()).filter(Boolean).length,
-    },
-    {
-      name: "Family Info",
-      total: Object.keys(familyInfo.form.watch()).length,
-      completed: Object.keys(familyInfo.form.watch()).filter(Boolean).length,
-    },
-    {
-      name: "Documents",
-      total: Object.keys(documents.form.watch()).length,
-      completed: Object.keys(documents.form.watch()).filter(Boolean).length,
-    },
-  ];
+  const { steps, form, stepper, onSubmit, fieldArray, loadingUpdate } =
+    useCustomerCaseSteps(caseId as string);
 
   return (
     <LayoutWithRightSidebar
       sidebarColor={PaperColor.TRANSPARENT}
       sidebarNoPadding
       sidebar={
-        <CaseStepsSidebar
-          activeStep={activeStep}
-          goToStep={goToStep}
-          stepsStatus={stepsStatus}
-        />
+        <div className="flex flex-col space-y-3">
+          <Paper fullHeight title="General Information">
+            <Progress completed={Math.floor(Math.random() * 100)} />
+          </Paper>
+          {steps?.map((_step) => (
+            <Paper key={_step.id} fullHeight title={_step.name}>
+              <Progress completed={Math.floor(Math.random() * 100)} />
+            </Paper>
+          ))}
+        </div>
       }
     >
-      <Paper
-        fullHeight
-        fullWidth
-        action={
-          caseData && (
-            <div className="absolute right-5 top-5">
-              <CaseStatusBadge status={caseData.status} />
-            </div>
-          )
-        }
-      >
-        <Stepper
-          onCancel={onCancel}
-          nextStep={nextStep}
-          prevStep={prevStep}
-          activeStepIndex={activeStep}
-          loading={isLoading}
-          steps={[
-            {
-              name: "General Info",
-              formName: "generalInfo",
-              component: (
-                <GeneralInfoForm
-                  formName="generalInfo"
-                  form={generalInfo.form}
-                  onSubmit={generalInfo.onSubmit}
-                />
-              ),
-            },
-            {
-              name: "Education Info",
-              formName: "educationInfo",
-              component: (
-                <EducationInfoForm
-                  formName="educationInfo"
-                  form={educationInfo.form}
-                  onSubmit={educationInfo.onSubmit}
-                />
-              ),
-            },
-            {
-              name: "Work Info",
-              formName: "workInfo",
-              component: (
-                <WorkInfoForm
-                  form={workInfo.form}
-                  formName="workInfo"
-                  onSubmit={workInfo.onSubmit}
-                />
-              ),
-            },
-            {
-              name: "Family Info",
-              formName: "familyInfo",
-              component: (
-                <FamilyInfoForm
-                  formName="familyInfo"
-                  form={familyInfo.form}
-                  onSubmit={familyInfo.onSubmit}
-                  fields={familyInfo.fields}
-                  addNewChild={familyInfo.addNewChild}
-                  removeChild={familyInfo.removeChild}
-                  hasChildren={familyInfo.hasChildren}
-                  hasPartnerOrSpouse={
-                    familyInfo.hasPartner || familyInfo.hasSpouse
-                  }
-                />
-              ),
-            },
-            {
-              name: "Documents",
-              formName: "documents",
-              component: (
-                <DocumentsForm
-                  formName="documents"
-                  form={documents.form}
-                  onSubmit={documents.onSubmit}
-                  familyInfo={familyInfo.form}
-                  applicantName={applicantName}
-                />
-              ),
-            },
-          ]}
-        />
+      <Paper fullHeight fullWidth color={PaperColor.WHITE}>
+        <Form<CaseStepsFormModel> fullHeight form={form}>
+          {({ control }) => (
+            <Stepper
+              onCancel={onCancel}
+              nextStep={onSubmit}
+              prevStep={stepper.prevStep}
+              activeStepIndex={stepper.activeStep}
+              loading={loadingUpdate}
+              steps={[
+                {
+                  name: "General Information",
+                  component: <GeneralInfoForm caseId={caseId as string} />,
+                },
+                ...fieldArray.fields.map((step, stepIndex) => ({
+                  name: step.name,
+                  component: (
+                    <div className="mt-2 flex h-full flex-col space-y-5 overflow-y-auto no-scrollbar p-3 bg-gray-50 rounded-2xl border-2 border-gray-100">
+                      {step.questions?.map((question, questionIndex) => (
+                        <CaseQuestion
+                          key={question.id}
+                          text={question.text ?? ""}
+                          type={question.type!}
+                          options={question.options?.map((option) => ({
+                            label: option.label,
+                            value: option.value,
+                          }))}
+                          documentFileId={question.documentFileId}
+                          documentName={question.documentName}
+                          control={control}
+                          stepIndex={stepIndex}
+                          questionIndex={questionIndex}
+                        />
+                      ))}
+                    </div>
+                  ),
+                })),
+              ]}
+            />
+          )}
+        </Form>
       </Paper>
     </LayoutWithRightSidebar>
   );

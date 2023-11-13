@@ -73,7 +73,11 @@ const useEducationInfoForm: UseEducationInfoForm = (
       const file = data?.diplomaFileId;
 
       if (file) {
-        const [{ link, id }] = await getPresignedUrls([file.name]);
+        const [url] = await getPresignedUrls([file.name]);
+        const { link, id } = url || {};
+
+        if (!link || !id) return;
+
         diplomaFileId = id;
         await uploadFile(file, link);
       }
@@ -83,7 +87,12 @@ const useEducationInfoForm: UseEducationInfoForm = (
       const file = data?.confirmationLetterFileId;
 
       if (file) {
-        const [{ link, id }] = await getPresignedUrls([file.name]);
+        const [url] = await getPresignedUrls([file.name]);
+
+        const { link, id } = url || {};
+
+        if (!link || !id) return;
+
         confirmationLetterFileId = id;
         await uploadFile(file, link);
       }

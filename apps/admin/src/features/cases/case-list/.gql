@@ -1,12 +1,11 @@
 query Cases {
   providerCompany {
-    id
     cases {
       edges {
         node {
           applicants {
-            firstName
             id
+            firstName
             lastName
             middleName
             email
@@ -14,6 +13,27 @@ query Cases {
            providers {
             firstName
             id
+            middleName
+            lastName
+            email
+          }
+          id
+          status
+          createdAt
+          name
+        }
+      }
+      }
+    }
+  }
+
+  query AvailableCases {
+    availableCases {
+      edges {
+        node {
+          applicants {
+            id
+            firstName
             lastName
             middleName
             email
@@ -26,4 +46,3 @@ query Cases {
       }
     }
   }
-}

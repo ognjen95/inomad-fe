@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import { FieldValues } from "react-hook-form";
-
 import FileUploadInput, {
   FileUploadInputProps,
-} from "../../../file-upload-input";
+} from "ui-components/src/file-upload-input";
 import useFormController, {
   UseFormControllerOptions,
-} from "../../use-form-controller";
+} from "ui-components/src/form/use-form-controller";
+
+import useDownloadSignedUrl from "~hooks/useDownloadSignedUrl";
 
 type NewType<TFormValues extends FieldValues> =
   UseFormControllerOptions<TFormValues>;
@@ -24,6 +26,8 @@ const FileUploadInputField = <TFormValues extends FieldValues = FieldValues>({
     fieldState: { error },
   } = useFormController<TFormValues>({ fieldName, control });
 
+  const getDownloadUrl = useDownloadSignedUrl();
+
   return (
     <FileUploadInput
       {...fileUploadInputProps}
@@ -32,6 +36,7 @@ const FileUploadInputField = <TFormValues extends FieldValues = FieldValues>({
       onChange={(files) => field.onChange(files?.[0])}
       value={field.value}
       id={field.name}
+      download={getDownloadUrl}
     />
   );
 };

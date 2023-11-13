@@ -9,17 +9,16 @@ type ChipProps = {
   text: string;
   selected?: boolean;
   size?: ChipSize;
-  onChipClick?: () => void;
+  onClose?: () => void;
 };
 
 const Chip = ({
   size = CHIP_SIZE_VARIANTS.small,
   text,
   selected,
-  onChipClick,
+  onClose,
 }: ChipProps) => (
   <div
-    onClick={onChipClick}
     className={clsx(
       "gap-3 py-2 inline-flex justify-center items-center rounded-full cursor-pointer max-w-fit",
       selected
@@ -32,7 +31,13 @@ const Chip = ({
   >
     <span>{text}</span>
     {size === CHIP_SIZE_VARIANTS.large && (
-      <div className="flex justify-center items-center">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose?.();
+        }}
+        className="flex justify-center items-center"
+      >
         <Icon type={IconType.CLOSE} stroke={colors.primary[800]} />
       </div>
     )}

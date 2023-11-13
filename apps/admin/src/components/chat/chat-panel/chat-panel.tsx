@@ -60,7 +60,7 @@ const ChatPanel: FC<ChatPanelProps> = ({ senderId }) => {
           />
         </div>
       </Paper>
-      <div className="flex-grow h-0 no-scrollbar flex flex-col px-6 mx-1 bg-gray-100">
+      <div className="flex-grow h-0 no-scrollbar flex flex-col mx-1 bg-gray-100">
         {!isLoading && (
           <div className="h-full overflow-auto no-scrollbar">
             <div className="flex w-full flex-col-reverse justify-end">

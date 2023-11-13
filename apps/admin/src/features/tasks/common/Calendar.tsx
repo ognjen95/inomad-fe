@@ -9,7 +9,14 @@ import {
 } from "date-fns";
 import { FC } from "react";
 import ReactCalendar from "react-calendar";
-import { Icon, IconSize, IconType, Text, TextVariant } from "ui-components";
+import {
+  Icon,
+  IconButton,
+  IconSize,
+  IconType,
+  Text,
+  TextVariant,
+} from "ui-components";
 
 import { Task } from "../types";
 
@@ -26,13 +33,23 @@ const Calendar: FC<CalendarProps> = ({ tasks, previewTask }) => (
     defaultActiveStartDate={new Date()}
     tileClassName="[&>abbr]:hidden"
     nextLabel={
-      <div className="flex items-center justify-center pr-4  ">
-        <Icon type={IconType.ARROW_RIGHT} size={IconSize.SMALL} />
+      <div className="flex items-center justify-center pr-4">
+        <IconButton
+          iconProps={{
+            type: IconType.ARROW_RIGHT,
+            size: IconSize.SMALL,
+          }}
+        />
       </div>
     }
     prevLabel={
-      <div className="flex items-center justify-center pl-2 mr-3">
-        <Icon type={IconType.ARROW_LEFT_LG} size={IconSize.SMALL} />
+      <div className="flex items-center justify-center pl-2 mr-4">
+        <IconButton
+          iconProps={{
+            type: IconType.ARROW_LEFT_LG,
+            size: IconSize.SMALL,
+          }}
+        />
       </div>
     }
     next2Label={null}
@@ -58,9 +75,9 @@ const Calendar: FC<CalendarProps> = ({ tasks, previewTask }) => (
       return (
         <div
           className={clsx(
-            "m-1 rounded-full h-8 w-8 flex items-center justify-center hover:bg-primary-100 relative transition-all ease-out duration-200",
+            "m-1 !rounded-2xl h-8 w-8 flex items-center justify-center hover:bg-primary-100 relative transition-all ease-out duration-200",
             {
-              "bg-primary-500 shadow-[0px_3px_3px_0px_#00000026]":
+              "bg-primary-600 shadow-[0px_3px_3px_0px_#00000026]":
                 today && thisMonth,
               "bg-white shadow-[0px_3px_3px_0px_#00000026]":
                 !today && thisMonth,

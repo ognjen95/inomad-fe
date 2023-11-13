@@ -3,8 +3,7 @@ import { InputColor, InputSize } from "./enums";
 export const COLORS_CLASS_MAPPER: Record<InputColor, string> = {
   [InputColor.PRIMARY]:
     "bg-grey-50 border border-gray-50 hover:border-primary-200 focus:border-primary-300",
-  [InputColor.TRANSPARENT]:
-    "bg-transparent border-grey-50 border hover:border-primary-200 focus:border-primary-300",
+  [InputColor.TRANSPARENT]: "bg-transparent border-transparent border",
   [InputColor.ERROR]: "bg-red-50",
 };
 

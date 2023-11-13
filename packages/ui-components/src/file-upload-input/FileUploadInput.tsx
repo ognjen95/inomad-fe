@@ -13,6 +13,7 @@ import { colors } from "../config/tailwind-config";
 import ContentPreviewModal from "../content-preview-modal";
 import { IconSize, IconType } from "../icon/enums";
 import Icon from "../icon/Icon";
+import IconButton from "../icon-button";
 import Text from "../text";
 import { TextVariant } from "../text/enums";
 
@@ -24,7 +25,10 @@ export type FileUploadInputProps = {
   type?: FileType;
   errorMessage?: string;
   id?: string;
+  fileId?: string;
   fullWidth?: boolean;
+  download?: (fileId: string) => Promise<string>;
+  removeFile?: () => void;
 };
 
 const FileUploadInput: FC<FileUploadInputProps> = ({
@@ -34,10 +38,14 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
   type = FileType.FILE,
   fullWidth = false,
   onChange,
+  download,
+  fileId,
+  removeFile,
 }) => {
   const [error, setError] = useState("");
   const maxSize = 1024 * 1024 * (type === FileType.FILE ? 500 : 5); // 500mb for File, 5mb for Image
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  const [fileToPreview, setFileToPreview] = useState<File | null>(null);
 
   const { getRootProps, getInputProps, inputRef } = useDropzone({
     onDropAccepted: (files) => {
@@ -65,11 +73,27 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
     }
 
     inputRef.current.value = "";
+
+    inputRef.current.click();
+
     onChange([]);
+    removeFile?.();
   };
 
-  const previewFile = (event: SyntheticEvent<HTMLDivElement, Event>) => {
+  const previewFile = async (event: SyntheticEvent<HTMLDivElement, Event>) => {
     event.stopPropagation();
+    if (value && !value.size && fileId) {
+      const donwloadUrl = await download?.(fileId);
+
+      const downloadedFile = await fetch(donwloadUrl!);
+
+      const blob = await downloadedFile.blob();
+
+      const file = new File([blob], value.name, { type: value.type });
+
+      setFileToPreview(file);
+    }
+
     setIsPreviewModalOpen(true);
   };
 
@@ -90,7 +114,7 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
             tabIndex: 0,
             role: "button",
             className: clsx(
-              "border border-grey-200  rounded-2xl p-4 min-h-[78px] flex flex-col justify-center bg-white hover:bg-gray-100 transition-all ease-in-out duration-200",
+              "border border-grey-200  rounded-2xl p-4 min-h-[78px] flex flex-col justify-center bg-white hover:bg-gray-50 hover:shadow-sm hover:shadow-primary-200 transition-all ease-in-out duration-200",
               {
                 "w-[640px]": !fullWidth,
                 "w-full": fullWidth,
@@ -100,14 +124,18 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
               }
             ),
           })}
+          onClick={(e) => {
+            if (value) {
+              previewFile(e);
+            }
+          }}
         >
           {!value && (
             <div className="flex flex-col items-center gap-2 py-6">
               {type === FileType.FILE && (
                 <Icon
                   type={IconType.FILE_DOCUMENT}
-                  fill={colors.primary[500]}
-                  stroke="white"
+                  stroke={colors.primary[500]}
                   size={IconSize.XXL}
                 />
               )}
@@ -136,7 +164,7 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
             </div>
           )}
           {value && (
-            <div className="flex justify-between" onClick={previewFile}>
+            <div className="flex justify-between">
               <div className="flex gap-3 items-center">
                 {type === FileType.FILE && (
                   <Icon
@@ -171,11 +199,15 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
                 </div>
               </div>
               <div className="pl-2 self-center">
-                <Icon
-                  type={IconType.TRASH_FULL}
-                  stroke={colors.red[500]}
-                  onClick={onReset}
-                  size={IconSize.MEDIUM}
+                <IconButton
+                  iconProps={{
+                    type: IconType.TRASH_FULL,
+                    size: IconSize.LARGE,
+                    stroke: colors.red[500],
+                  }}
+                  // type={IconType.TRASH_FULL}
+                  // size={IconSize.MEDIUM}
+                  // onClick={onReset}
                 />
               </div>
             </div>
@@ -198,13 +230,18 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
       {value && (
         <ContentPreviewModal
           isOpen={isPreviewModalOpen}
-          onClose={() => setIsPreviewModalOpen(false)}
+          onClose={() => {
+            setIsPreviewModalOpen(false);
+            setFileToPreview(null);
+          }}
           content={{
-            file: value,
-            title: value.name,
-            type: value.type
-              ? getContentTypeFromFileType(value.type)
-              : getContentTypeByFileName(value.name)!,
+            file: fileToPreview ?? value,
+            title: fileToPreview?.name ?? value.name,
+            type:
+              fileToPreview && fileId
+                ? getContentTypeByFileName(fileId ?? value.name)!
+                : getContentTypeFromFileType(value.type)!,
+            // IN this case in fileToPreview.type is saved file id with extension
             isDescriptionVisible: false,
           }}
         />

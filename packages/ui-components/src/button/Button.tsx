@@ -44,11 +44,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       type={formName ? "submit" : "button"}
       className={clsx(
+        "rounded-2xl transition-all ease-in-out duration-300",
         COLOR_CLASS_MAPPER[type][color],
         SIZE_CLASS_MAPPER[type][size],
-        "rounded-xl transition-all ease-in-out duration-200",
         {
-          "shadow-xs shadow-gray-300": shadow,
+          "shadow-sm shadow-primary-500 active: shadow-none": shadow,
           "w-full": fullWidth,
           "active:scale-90": !disabled,
           "bg-[#0000001a] shadow-none":

@@ -25,6 +25,8 @@ export type DropdownMenuProps = {
   triggerClassNames?: string;
   onClearButtonClick?: () => void;
   isScrollable?: boolean;
+  iconHover?: string;
+  rounded?: boolean;
 };
 
 const DropdownMenu: FC<DropdownMenuProps> = ({
@@ -39,7 +41,9 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
   showSelectedLabel = true,
   triggerClassNames,
   onClearButtonClick,
+  iconHover,
   isScrollable = true,
+  rounded,
 }) => {
   const [selectedItemLabel, setSelectedItemLabel] = useState<string>(
     items.length > 0 ? items[0].label : ""
@@ -66,7 +70,12 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
             <div className="w-max">
               {isIconButton ? (
                 <IconButton
-                  iconProps={{ type: iconType, stroke: iconColor }}
+                  iconProps={{
+                    type: iconType,
+                    stroke: iconColor,
+                    hoverColor: iconHover,
+                  }}
+                  rounded={rounded}
                   isActive={isOpen}
                 />
               ) : (
@@ -90,12 +99,12 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
           </RadixDropdownMenu.DropdownMenuLabel>
         </div>
       </RadixDropdownMenu.Trigger>
-      <RadixDropdownMenu.Portal className="shadow">
+      <RadixDropdownMenu.Portal className="shadow z-50">
         <RadixDropdownMenu.Content
           onPointerDownOutside={() => setIsOpen(false)}
           sideOffset={5}
           className={clsx(
-            "bg-white rounded-2xl overflow-hidden shadow relative z-10 min-w-[200px]",
+            "bg-white rounded-2xl overflow-hidden shadow relative z-50 min-w-[200px]",
             {
               "pb-2": label || onClearButtonClick || actionButtons,
             }

@@ -7,7 +7,7 @@ export const SIZE_CLASS_MAPPER: Record<LoaderSize, string> = {
 };
 
 export const COLOR_MAPPER: Record<LoaderColor, string> = {
-  [LoaderColor.PRIMARY]: colors.primary[500],
+  [LoaderColor.PRIMARY]: colors.primary[800],
   [LoaderColor.WHITE]: colors.white,
   [LoaderColor.GRAY]: colors.gray[500],
 };

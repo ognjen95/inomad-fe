@@ -27,6 +27,8 @@ export type InputProps = {
   onIconClick?: () => void;
   iconPlacement?: IconPlacement;
   iconSize?: IconSize;
+  customColors?: string;
+  lightPlaceholder?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -49,6 +51,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       onIconClick,
       iconSize,
       // border = true,
+      customColors,
+      lightPlaceholder,
       ...props
     },
     ref
@@ -58,7 +62,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div
         className={clsx(
           "w-full text-gray-900 rounded-xl sm:text-md flex items-center justify-between",
+          customColors,
           {
+            "text-gray-900": !customColors,
             "border-grey-200 bg-transparent": disabled,
             "border-transparent focus:border-grey-300 hover:border-primary-300":
               !errorMessage && !disabled && !InputColor.TRANSPARENT,
@@ -89,6 +95,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={clsx(
+            {
+              "placeholder-gray-200": lightPlaceholder,
+            },
             "h-2/3 w-full px-4 border-0 focus:outline-0 border-transparent bg-inherit rounded-lg"
           )}
           type={type}

@@ -81,17 +81,17 @@ const useFormInfoForm: UseFormInfoForm = (
 
     if (!contractUnchanged) {
       const [contract] = await getUrlsAndUpload([data.contractFileId]);
-      contractId = contract.id;
+      contractId = contract?.id ?? "";
     }
 
     if (!cvUnchanged) {
       const [cv] = await getUrlsAndUpload([data.cvFileId]);
-      cvId = cv.id;
+      cvId = cv?.id ?? "";
     }
 
     if (!invoiceUnchanged) {
       const [invoice] = await getUrlsAndUpload([data.invoicesId as File]);
-      invoiceId = invoice.id;
+      invoiceId = invoice?.id ?? "";
     }
 
     const args = {

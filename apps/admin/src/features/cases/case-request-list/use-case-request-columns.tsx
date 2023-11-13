@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 import { formatDate } from "src/utils/date-utils";
-import { Text } from "ui-components";
+import { Icon, IconType, Text } from "ui-components";
 
 import CaseRequestStatusBadge from "~components/badges/CaseRequestStatusBadge";
 
@@ -11,6 +11,15 @@ import { CaseRequestListModel } from "./types";
 const useCaseRequestColumns = () => {
   const columnHelper = createColumnHelper<CaseRequestListModel>();
   const columns = [
+    columnHelper.accessor("id", {
+      cell: (cell) => (
+        <div className="p-2 h-10 w-10 flex justify-center rounded-xl bg-yellow-500">
+          <Icon type={IconType.USER_VOICE} fill="none" stroke="white" />
+        </div>
+      ),
+      header: "",
+      size: 0,
+    }),
     columnHelper.accessor("caseName", {
       cell: (cell) => (
         <Link href={`/cases/${cell.row.original.id}`}>

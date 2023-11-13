@@ -14,15 +14,18 @@ const Message: FC<MessageProps> = ({ message, author, date, isSender }) => {
   const isFile = message.includes("[{File]}]");
 
   return (
-    <div className="flex mb-4 items-center">
+    <div className="flex px-6 mb-4 items-center">
       {!isSender && <Avatar imageSrc="/images/jenny-wilson.jpeg" />}
       <div
-        className={clsx("flex flex-col justify-between ml-3", {
-          "bg-primary-600 py-2 px-5 rounded-xl min-w-[180px] min-h-[60px]":
-            isSender,
-          "bg-[#fff] py-2 px-5 rounded-xl min-w-[180px] min-h-[60px]":
-            !isSender,
-        })}
+        className={clsx(
+          "flex flex-col justify-between ml-3 hover:shadow-transparent transition-all ease-out duration-200",
+          {
+            "bg-gradient-to-br from-primary-500 to-primary-800 shadow shadow-primary-400 py-2 px-5 rounded-xl min-w-[180px] min-h-[60px]":
+              isSender,
+            "bg-[#fff] py-2 px-5 shadow rounded-xl min-w-[180px] min-h-[60px]":
+              !isSender,
+          }
+        )}
       >
         {!isSender && (
           <Text customClasses="text-primary-500 font-semibold">{author}</Text>

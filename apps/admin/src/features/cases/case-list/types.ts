@@ -22,3 +22,9 @@ export type UseCaseListReturn = {
   loading: boolean;
   modal: UseModalReturn<Partial<CaseListModel>>;
 };
+
+export type UseAvailableCaseListReturn = {
+  caseList: Array<Omit<CaseListModel, "employee">>;
+  loading: boolean;
+  modal: UseModalReturn<Partial<CaseListModel>>;
+};

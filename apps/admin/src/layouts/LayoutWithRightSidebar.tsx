@@ -30,7 +30,7 @@ const LayoutWithRightSidebar: FCWithChildren<LayoutWithRightSidebarProps> = ({
         <Paper
           fullHeight
           fullWidth
-          showShadow={false}
+          showShadow={sidebarColor !== PaperColor.TRANSPARENT}
           color={sidebarColor ?? PaperColor.PRIMARY_LIGHT}
           noPadding={sidebarNoPadding}
         >
