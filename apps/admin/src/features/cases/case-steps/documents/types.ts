@@ -1,5 +1,5 @@
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { ApplicantFamilyMembers, DocumentType } from "src/common/enums";
+import { DocumentType } from "src/common/enums";
 
 import { FamilyInfoFormModel } from "../family-info/types";
 import { CaseAdditionalDocuments } from "../types";

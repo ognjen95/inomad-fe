@@ -39,7 +39,7 @@ export type UseFamilyInfoFormReturn = {
 };
 
 export type UseFamilyInfoForm = (
-  caseId: string,
+  caseId: string | null,
   familyInfo: CaseFamilyInfo | null,
-  nextStep: () => void
+  nextStep: (() => void) | null
 ) => UseFamilyInfoFormReturn;

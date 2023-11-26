@@ -23,8 +23,6 @@ import { colors } from "ui-components/src/config/tailwind-config";
 
 import CaseStatusBadge from "~components/badges/CaseStatusBadge";
 import FilterDropdown from "~components/filter-dropdown/FilterDropdown";
-import Calendar from "~features/tasks/common/Calendar";
-import CalendarAndTasks from "~features/tasks/common/CalendarAndTasks";
 import TaskListWithCalendar from "~features/tasks/TaskListWithCalendar";
 
 import ChatInput from "./chat-input/chat-input";

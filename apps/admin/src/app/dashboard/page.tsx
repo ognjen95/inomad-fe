@@ -7,12 +7,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { UserRoles } from "src/common/enums";
 import LayoutWithRightSidebar from "src/layouts/LayoutWithRightSidebar";
-import { Button, Paper, PaperColor, Text, TextVariant } from "ui-components";
-import {
-  ButtonColor,
-  ButtonSize,
-  ButtonType,
-} from "ui-components/src/button/enums";
+import { Button, Paper, Text, TextVariant } from "ui-components";
+import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
 import { colors } from "ui-components/src/config/tailwind-config";
 
 import { useUserInfoAtomValue } from "~components/auth-guard/atoms";

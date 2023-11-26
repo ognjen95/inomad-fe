@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "ui-components";
 
+import useFamilyInfoForm from "~features/cases/case-steps/family-info/useFamilyInfoForm";
 import { UserRoles, useRegisterCustomerMutation } from "~graphql-api";
 
 import { DEFAULT_VALUES } from "./constants";
@@ -17,6 +18,8 @@ const useRegisterCustomer = (): UseRegisterCustomerReturn => {
   const form = useForm<RegisterNewCustomerFormModel>({
     defaultValues: DEFAULT_VALUES,
   });
+
+  const family = useFamilyInfoForm(null, null, null);
 
   const [register, { loading }] = useRegisterCustomerMutation();
 
@@ -61,6 +64,7 @@ const useRegisterCustomer = (): UseRegisterCustomerReturn => {
     loading,
     onSubmit,
     redirectToLogin,
+    family,
   };
 };
 

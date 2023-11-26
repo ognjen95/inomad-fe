@@ -32,6 +32,9 @@ const CaseTabs: FC = () => {
   const { caseList, loading: casesLoading } = useCaseList();
   const { caseRequestList, loading: requestsLoading } = useCaseRequestList();
 
+  const { caseRequestList: proposalList, loading: proposalsLoading } =
+    useCaseRequestList(true);
+
   const caseTableColumns = useCaseTableColumns(modal);
   const caseRequestsTableColumns = useCaseRequestColumns();
   const availableCaseColumns = useAvailableCaseTableColumns(availableCaseModal);
@@ -151,11 +154,11 @@ const CaseTabs: FC = () => {
                 noPadding
                 action={<SearchInput />}
               >
-                {!requestsLoading ? (
+                {!proposalsLoading ? (
                   <div className="h-0 px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
                     <SimpleTable<CaseRequestListModel>
                       columns={caseRequestsTableColumns}
-                      data={caseRequestList}
+                      data={proposalList}
                       showHeader
                       isTransparent={false}
                     />

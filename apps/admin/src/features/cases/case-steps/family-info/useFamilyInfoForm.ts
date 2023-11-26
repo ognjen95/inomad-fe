@@ -86,14 +86,14 @@ const useFamilyInfoForm: UseFamilyInfoForm = (
 
   const onSubmit: SubmitHandler<FamilyInfoFormModel> = (data) => {
     if (!form.formState.isDirty) {
-      nextStep();
+      nextStep!();
       return;
     }
 
     editFamilyInfo({
       variables: {
         args: {
-          id: caseId,
+          id: caseId!,
           familyMembers: data.familyMembers,
           spouse: hasSpouse || hasPartner ? data.spouse : null,
           children: hasChildren ? data.children : null,

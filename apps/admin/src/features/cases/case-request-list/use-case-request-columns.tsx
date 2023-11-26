@@ -12,7 +12,7 @@ const useCaseRequestColumns = () => {
   const columnHelper = createColumnHelper<CaseRequestListModel>();
   const columns = [
     columnHelper.accessor("id", {
-      cell: (cell) => (
+      cell: () => (
         <div className="p-2 h-10 w-10 flex justify-center rounded-xl bg-yellow-500">
           <Icon type={IconType.USER_VOICE} fill="none" stroke="white" />
         </div>

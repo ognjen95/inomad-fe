@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Loader, Paper, PaperColor, Tabs } from "ui-components";
+import { Loader, Paper, Tabs } from "ui-components";
 
 import SimpleTable from "~components/tables/SimpleTable";
 import OnboardEmployeeForm from "~features/employees/onboard-employee/OnboardEmployeeForm";

@@ -7,7 +7,7 @@ import { Task } from "../types";
 
 export type TaskCardProps = {
   openModal: () => void;
-  id: Task["id"];
+  // id: Task["id"];
   name: Task["name"];
   startDate: Task["startDate"];
   endDate: Task["endDate"];
@@ -15,7 +15,6 @@ export type TaskCardProps = {
 
 const TaskCard: FC<TaskCardProps> = ({
   openModal,
-  id,
   name,
   startDate,
   endDate,

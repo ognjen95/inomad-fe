@@ -4,7 +4,7 @@ import { Paper, InputField, SelectField, RadioField } from "ui-components";
 import { Option } from "ui-components/src/select/types";
 
 import FileUploadInputField from "~components/file-upload-input-field";
-import { DocumentType, QuestionType } from "~graphql-api";
+import { QuestionType } from "~graphql-api";
 
 import { CaseStepsFormModel } from "./types";
 
@@ -12,9 +12,9 @@ export type CaseQuestionProps = {
   text: string;
   type: QuestionType;
   options?: Option[];
-  documentName?: string;
-  documentType?: DocumentType | undefined;
-  documentId?: string;
+  // documentName?: string;
+  // documentType?: DocumentType | undefined;
+  // documentId?: string;
   documentFileId?: string;
   control: Control<CaseStepsFormModel>;
   stepIndex: number;
@@ -25,9 +25,9 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
   text,
   type,
   options = [],
-  documentName,
-  documentType,
-  documentId,
+  // documentName,
+  // documentType,
+  // documentId,
   documentFileId,
   control,
   stepIndex,

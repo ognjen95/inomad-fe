@@ -1,97 +1,90 @@
+import { useRouter } from "next/navigation";
 import React from "react";
-import {
-  Button,
-  DatePickerField,
-  Form,
-  InputField,
-  InputType,
-  Text,
-  TextVariant,
-} from "ui-components";
-import { ButtonSize } from "ui-components/src/button/enums";
+import { Button, Paper, PaperRounded, Text, TextVariant } from "ui-components";
+import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
 
+import useStepper from "~components/stepper/useStepper";
+import FamilyInfoForm from "~features/cases/case-steps/family-info/FamilyInfoForm";
+
+import GeneralinfoForm from "./GeneralinfoForm";
 import useRegisterCustomer from "./useRegisterCustomer";
 
 const RegisterNewCustomer = () => {
-  const { form, onSubmit, loading, redirectToLogin } = useRegisterCustomer();
+  const { push } = useRouter();
+  const { form, onSubmit, loading, redirectToLogin, family } =
+    useRegisterCustomer();
+  const stepper = useStepper(2);
 
   return (
-    <div className="h-full">
-      <div className="text-center flex flex-col">
-        <Text variant={TextVariant.HEADING3}>Hello, welcome 👋</Text>
-        <Text>Enter your basic info to join community</Text>
-      </div>
-      <Form
-        fullHeight
-        form={form}
-        formName="onboard-employee"
-        onSubmit={onSubmit}
-      >
-        {({ control }) => (
-          <div className="px-2 m-auto flex overflow-y-auto justify-center flex-col space-y-5 no-scrollbar h-full w-full">
-            <div className="flex items-start space-x-5">
-              <InputField
-                fieldName="firstName"
-                label="First Name"
-                control={control}
-                placeholder="John"
-              />
-              <InputField
-                fieldName="middleName"
-                label="Middle Name (Optional)"
-                control={control}
-                placeholder="Junior"
-              />
-            </div>
-            <div className="flex items-start space-x-5">
-              <InputField
-                fieldName="lastName"
-                label="Last Name"
-                control={control}
-                placeholder="Doe"
-              />
-              <DatePickerField
-                fieldName="birthDate"
-                label="Birth Date"
-                control={control}
-              />
-            </div>
-            <InputField
-              fieldName="email"
-              label="Email"
-              type={InputType.EMAIL}
-              control={control}
-              placeholder="youremailadress@gmail.com"
+    <div className="h-screen flex flex-col items-center justify-between">
+      <Paper fullWidth rounded={PaperRounded.NONE}>
+        <div className="text-center flex flex-col w-full">
+          <Text variant={TextVariant.HEADING3}>Hello, welcome 👋</Text>
+          <Text>Enter your basic info to join community</Text>
+        </div>
+      </Paper>
+      <div className="w-full h-0 flex flex-col flex-1 overflow-y-auto bg-gray-50">
+        {stepper.activeStep === 0 && (
+          <div className="w-1/2 m-auto space-y-5">
+            <GeneralinfoForm
+              form={form}
+              onSubmit={onSubmit}
+              loading={loading}
+              redirectToLogin={redirectToLogin}
             />
-            <InputField
-              type={InputType.PASSWORD}
-              fieldName="password"
-              label="Password"
-              control={control}
-            />
-            <InputField
-              type={InputType.PASSWORD}
-              fieldName="confirmPassword"
-              label="Confirm Password"
-              control={control}
-            />
-            <div className="pb-5 w-full">
-              <Button
-                fullWidth
-                loading={loading}
-                formName="onboard-employee"
-                size={ButtonSize.MEDIUM}
-              >
-                Register
-              </Button>
-              <div onClick={redirectToLogin} className="cursor-pointer mt-1">
-                <Text>Already have an account?</Text>
-                <Text customClasses="text-primary-500 ml-2">Go to Login</Text>
-              </div>
-            </div>
           </div>
         )}
-      </Form>
+        {stepper.activeStep === 1 && (
+          <div className="w-1/2 m-auto space-y-5">
+            <FamilyInfoForm
+              form={family.form}
+              fields={family.fields}
+              formName="family"
+              onSubmit={family.onSubmit}
+              addNewChild={family.addNewChild}
+              removeChild={family.removeChild}
+              hasChildren={family.hasChildren}
+              hasPartnerOrSpouse={family.hasPartner || family.hasSpouse}
+            />
+          </div>
+        )}
+      </div>
+      <Paper fullWidth rounded={PaperRounded.NONE}>
+        <div className="w-full space-x-5 flex items-center justify-between">
+          <Button
+            size={ButtonSize.MEDIUM}
+            color={ButtonColor.TRANSPARENT}
+            onClick={() => {
+              push("/login");
+            }}
+          >
+            Cancel
+          </Button>
+          <div className="space-x-5">
+            {stepper.activeStep !== 0 && (
+              <Button
+                size={ButtonSize.MEDIUM}
+                color={ButtonColor.GREY}
+                onClick={() => {
+                  stepper.prevStep();
+                }}
+              >
+                Previous Step
+              </Button>
+            )}
+            <Button
+              shadow
+              color={ButtonColor.GRADIENT}
+              size={ButtonSize.MEDIUM}
+              onClick={() => {
+                stepper.nextStep();
+              }}
+            >
+              Next Step
+            </Button>
+          </div>
+        </div>
+      </Paper>
     </div>
   );
 };

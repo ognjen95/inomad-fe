@@ -1,11 +1,11 @@
-query ProviderCompanyCaseRequests {
+query ProviderCompanyCaseRequests ($options: CaseQueryOptionsInput) {
   providerCompany {
-    caseRequests {
+    caseRequests(options: $options) {
       edges {
         node {
           applicantId
-          caseId
           createdAt
+          caseId
           id
           providerCompanyId
           status

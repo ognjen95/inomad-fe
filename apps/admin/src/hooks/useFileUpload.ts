@@ -36,13 +36,11 @@ const useFileUpload = (): UseFileUploadReturn => {
   ): Promise<boolean> => {
     if (!file?.name || !presignedUrl) return false;
 
-    const uploaded = await axios.put<IdAndLink>(presignedUrl, file, {
+    await axios.put<IdAndLink>(presignedUrl, file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
-    console.log({ uploaded });
 
     return true;
   };
@@ -77,6 +75,7 @@ const useFileUpload = (): UseFileUploadReturn => {
 
     const uploadPromises = presignedUrls.map((presignedUrl, index) => {
       const currentFile = files[index];
+
       if (!presignedUrl?.link || !currentFile) return false;
 
       return uploadFilesWithRetry(

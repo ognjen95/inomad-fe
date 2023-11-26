@@ -1,5 +1,4 @@
 import { useChannelContext } from "@sendbird/uikit-react/Channel/context";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ClientUserMessage } from "SendbirdUIKitGlobal";
 
@@ -13,9 +12,6 @@ export const useChatPanel: UseChatPanel = (
     loading: isLoadingAllMessages,
     currentGroupChannel,
   } = useChannelContext();
-
-  const { get } = useSearchParams();
-  const chatId = get("chatId") ?? "";
 
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 

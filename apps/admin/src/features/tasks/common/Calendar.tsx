@@ -10,7 +10,6 @@ import {
 import { FC } from "react";
 import ReactCalendar from "react-calendar";
 import {
-  Icon,
   IconButton,
   IconSize,
   IconType,
@@ -22,10 +21,10 @@ import { Task } from "../types";
 
 type CalendarProps = {
   tasks: Array<Task>;
-  previewTask: (task: Task) => void;
+  // previewTask: (task: Task) => void;
 };
 
-const Calendar: FC<CalendarProps> = ({ tasks, previewTask }) => (
+const Calendar: FC<CalendarProps> = ({ tasks }) => (
   <ReactCalendar
     onChange={() => {}}
     className="w-full"

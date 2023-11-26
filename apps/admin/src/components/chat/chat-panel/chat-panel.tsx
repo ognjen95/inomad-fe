@@ -3,11 +3,9 @@ import { FC } from "react";
 import {
   Avatar,
   DropdownMenu,
-  FileUploadInput,
   IconType,
   Loader,
   Paper,
-  PaperRounded,
   Text,
   TextVariant,
 } from "ui-components";

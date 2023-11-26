@@ -1,6 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
-import { Icon, IconSize, IconType, Text } from "ui-components";
+import { Icon, IconType, Text } from "ui-components";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
 
 import CaseStatusBadge from "~components/badges/CaseStatusBadge";
@@ -12,7 +12,7 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
   const columnHelper = createColumnHelper<CaseListModel>();
   const columns = [
     columnHelper.accessor("name", {
-      cell: (cell) => (
+      cell: () => (
         <div className="p-2 h-10 w-10 flex justify-center rounded-xl bg-primary-500">
           <Icon type={IconType.FOLDER_DOCUMENT} fill="none" stroke="white" />
         </div>

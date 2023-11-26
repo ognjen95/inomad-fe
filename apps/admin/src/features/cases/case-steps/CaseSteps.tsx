@@ -14,14 +14,20 @@ import useCustomerCaseSteps from "./useCaseSteps";
 
 type CaseStepsProps = {
   onCancel?: () => void;
-  isCustomer?: boolean;
 };
 
-const CaseSteps: FC<CaseStepsProps> = ({ onCancel, isCustomer }) => {
+const CaseSteps: FC<CaseStepsProps> = ({ onCancel }) => {
   const { caseId } = useParams();
 
-  const { steps, form, stepper, onSubmit, fieldArray, loadingUpdate } =
-    useCustomerCaseSteps(caseId as string);
+  const {
+    steps,
+    form,
+    stepper,
+    onSubmit,
+    fieldArray,
+    loadingUpdate,
+    generalApplicantData,
+  } = useCustomerCaseSteps(caseId as string);
 
   return (
     <LayoutWithRightSidebar
@@ -51,11 +57,11 @@ const CaseSteps: FC<CaseStepsProps> = ({ onCancel, isCustomer }) => {
               loading={loadingUpdate}
               steps={[
                 {
-                  name: "General Information",
+                  name: generalApplicantData.caseName.toUpperCase(),
                   component: <GeneralInfoForm caseId={caseId as string} />,
                 },
                 ...fieldArray.fields.map((step, stepIndex) => ({
-                  name: step.name,
+                  name: generalApplicantData.caseName.toUpperCase(),
                   component: (
                     <div className="mt-2 flex h-full flex-col space-y-5 overflow-y-auto no-scrollbar p-3 bg-gray-50 rounded-2xl border-2 border-gray-100">
                       {step.questions?.map((question, questionIndex) => (

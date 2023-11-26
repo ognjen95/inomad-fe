@@ -8,7 +8,6 @@ import {
   Badge,
   BadgeSize,
   IconPlacement,
-  IconSize,
   IconType,
   Input,
   InputSize,

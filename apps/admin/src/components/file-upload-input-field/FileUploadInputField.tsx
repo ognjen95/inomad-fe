@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FieldValues } from "react-hook-form";
 import FileUploadInput, {
   FileUploadInputProps,

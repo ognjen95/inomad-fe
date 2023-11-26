@@ -202,7 +202,7 @@ const useDocumentsForm: UseDocumentsForm = ({
         onCompleted: () => {
           toast.success("Documents updated successfully");
         },
-        onError: (error) => {
+        onError: () => {
           toast.error("Something went wrong!");
         },
         variables: {

@@ -14,13 +14,13 @@ import { ChartData } from "./types";
 
 export type PieChartProps = {
   data: ChartData[];
-  height?: number;
-  width?: number;
+  // height?: number;
+  // width?: number;
 };
 
 const PieChart: FC<PieChartProps> = ({
-  height = 300,
-  width = 300,
+  // height = 300,
+  // width = 300,
   data = [],
 }) => {
   const total = useMemo(

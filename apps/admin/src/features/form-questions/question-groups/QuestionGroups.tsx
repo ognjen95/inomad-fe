@@ -10,7 +10,6 @@ import {
   IconSize,
   TextVariant,
   Modal,
-  IconButton,
   Icon,
 } from "ui-components";
 import { colors } from "ui-components/src/config/tailwind-config";

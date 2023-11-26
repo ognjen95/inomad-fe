@@ -4,12 +4,16 @@ import Select, {
   ActionMeta,
   MenuPlacement,
   MultiValue,
+  OptionProps,
   PropsValue,
   SingleValue,
+  SingleValueProps,
+  components,
 } from "react-select";
 
 import { SIZE_CLASS_MAPPER } from "./constants";
 import { MenuPlacementOptions, SelectSize } from "./enums";
+import SelectPrefixImage from "./SelectPrefixImage";
 import { Option } from "./types";
 import { colors } from "../config/tailwind-config";
 import { IconSize, IconType } from "../icon/enums";
@@ -81,7 +85,35 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
           onMenuOpen={() => setIsOpened(true)}
           onMenuClose={() => setIsOpened(false)}
           isClearable={false}
-          // className="!z-50"
+          components={{
+            Option: ({ children, ...props }) => {
+              const prefixImgUrl =
+                (props.data as SingleValue<Option>)?.prefixImgUrl ?? "";
+              return (
+                <components.Option {...(props as OptionProps)}>
+                  <div className="flex items-center space-x-5">
+                    {prefixImgUrl && <SelectPrefixImage src={prefixImgUrl} />}
+                    <div>{children}</div>
+                  </div>
+                </components.Option>
+              );
+            },
+            SingleValue: ({ children, ...props }) => {
+              const prefixImgUrl =
+                (props.data as SingleValue<Option>)?.prefixImgUrl ?? "";
+              return (
+                <components.SingleValue
+                  className="flex flex-wrap items-center"
+                  {...(props as SingleValueProps)}
+                >
+                  <div className="flex items-center space-x-5">
+                    {prefixImgUrl && <SelectPrefixImage src={prefixImgUrl} />}
+                    <div>{children}</div>
+                  </div>
+                </components.SingleValue>
+              );
+            },
+          }} // className="!z-50"
           styles={{
             control: () => ({
               backgroundColor: errorMessage ? colors.red[50] : selectColor,

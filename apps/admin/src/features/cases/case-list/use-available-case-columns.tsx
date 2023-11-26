@@ -13,7 +13,7 @@ const useAvailableCaseTableColumns = (
   const columnHelper = createColumnHelper<Omit<CaseListModel, "employee">>();
   const columns = [
     columnHelper.accessor("name", {
-      cell: (cell) => (
+      cell: () => (
         <div className="p-2 h-10 w-10 flex justify-center rounded-xl bg-green-400">
           <Icon type={IconType.FOLDER_ADD} fill="none" stroke="white" />
         </div>

@@ -4,8 +4,16 @@ import { useProviderCompanyCaseRequestsQuery } from "~graphql-api";
 
 import { UseCaseRequestListReturn } from "./types";
 
-const useCaseRequestList = (): UseCaseRequestListReturn => {
-  const { data, loading } = useProviderCompanyCaseRequestsQuery();
+const useCaseRequestList = (isProposal = false): UseCaseRequestListReturn => {
+  const { data, loading } = useProviderCompanyCaseRequestsQuery({
+    variables: {
+      options: {
+        where: {
+          isProposal,
+        },
+      },
+    },
+  });
 
   const caseRequestList =
     data?.providerCompany?.caseRequests.edges.map(({ node }) => {

@@ -19,6 +19,9 @@ export * from "./form/fields/input-field";
 export { default as Select } from "./select";
 export * from "./select";
 
+export { default as CountriesSelectField } from "./form/fields/countries-select-field";
+export * from "./form/fields/countries-select-field";
+
 export { default as SelectField } from "./form/fields/select-field";
 export * from "./form/fields/select-field";
 
