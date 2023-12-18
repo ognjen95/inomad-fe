@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-import { NAV_CLASSES } from "./constants";
 import Badge, { BadgeSize } from "../badge";
 import { colors } from "../config/tailwind-config";
 import { IconSize, IconType } from "../icon/enums";
@@ -31,11 +31,13 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
     setSidebarOpen((prev) => !prev);
   };
 
+  const pathname = usePathname();
+
   return (
-    <div className="p-5 pr-0 h-screen">
+    <div className="pr-0 h-screen">
       <div
         className={clsx(
-          "bg-primary-600 relative h-full inline-flex flex-col  z-10 transition-all ease-in-out duration-150 border-r rounded-2xl",
+          "bg-primary-600 shadow-sm shadow-primary-500 relative h-full inline-flex flex-col  z-50 transition-all ease-in-out duration-150",
           sidebarOpen ? "w-[225px] min-w-[225px]" : "w-[88px] min-w-[88px]"
         )}
       >
@@ -56,7 +58,7 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
             />
           </div>
         </div>
-        <div className="flex flex-col overflow-x-hidden p-6 pr-0 h-full">
+        <div className="flex flex-col overflow-x-hidden pr-0 h-full">
           <Link
             href="/dashboard"
             className={clsx("flex items-center min-h-[45px] relative", {
@@ -64,7 +66,7 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
               "w-[45px]": !sidebarOpen,
             })}
           >
-            <div className="w-[140px] h-[40px] absolute">
+            <div className="w-[140px] h-[40px] p-6 absolute">
               {sidebarOpen ? (
                 <Text customClasses="text-white" variant={TextVariant.HEADING4}>
                   iNomad
@@ -91,7 +93,15 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
             <div className="flex  flex-col space-y-3">
               {mainNav.map(({ text, link, iconType, fill }) => (
                 <Link key={text} href={link}>
-                  <div className={NAV_CLASSES}>
+                  <div
+                    className={clsx(
+                      {
+                        "border-white bg-white/10": link.includes(pathname),
+                        "border-transparent": !link.includes(pathname),
+                      },
+                      "group hover:bg-white/10 transition-all ease-in-out active:bg-white/20 border-l-4 pl-6 flex flex-row items-center text-xs font-normal tracking-tight gap-4 py-4 px-2 transition-all text-grey-400 hover:text-primary-600 whitespace-nowrap pr-6"
+                    )}
+                  >
                     <Icon
                       type={iconType}
                       size={IconSize.LARGE}
@@ -110,7 +120,7 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
                 </Link>
               ))}
             </div>
-            <div>
+            <div className="py-6">
               {bottomNav.map(
                 ({
                   text,
@@ -121,7 +131,10 @@ const Sidebar = ({ mainNav, bottomNav }: SidebarProps) => {
                   fill,
                 }) => (
                   <Link key={text} href={link}>
-                    <div className={NAV_CLASSES} onClick={onClick}>
+                    <div
+                      className="group hover:bg-white/10 transition-all active:bg-white/20 ease-in-out pl-6 flex flex-row items-center text-xs font-normal tracking-tight gap-4 py-4 px-2 transition-all text-grey-400 hover:text-primary-600 whitespace-nowrap pr-6"
+                      onClick={onClick}
+                    >
                       <Icon
                         type={iconType}
                         size={IconSize.LARGE}

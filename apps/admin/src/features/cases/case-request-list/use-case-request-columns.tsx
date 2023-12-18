@@ -1,14 +1,15 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
-import { formatDate } from "src/utils/date-utils";
+import { formatDate } from "src/common/utils/date-utils";
 import { Icon, IconType, Text } from "ui-components";
 
 import CaseRequestStatusBadge from "~components/badges/CaseRequestStatusBadge";
 
 import CaseRequestActions from "./case-request-actions/CaseRequestActions";
 import { CaseRequestListModel } from "./types";
+import { removeUnderscoreAndCapitalizeFirst } from "../../../common/utils/string'utils";
 
-const useCaseRequestColumns = () => {
+const useCaseRequestColumns = (isProposal = false) => {
   const columnHelper = createColumnHelper<CaseRequestListModel>();
   const columns = [
     columnHelper.accessor("id", {
@@ -29,26 +30,43 @@ const useCaseRequestColumns = () => {
         </Link>
       ),
       header: "Case Name",
-      size: 25,
+      size: 10,
     }),
     columnHelper.accessor("applicantName", {
       cell: (cell) => (
         <div className="flex flex-col">
-          <Text customClasses="text-gray-400">{cell.getValue()}</Text>
-          <Text customClasses="text-gray-400">
+          <Text light>{cell.getValue()}</Text>
+          <Text light>
             {cell.row.original.applicantEmail}
           </Text>
         </div>
       ),
       header: "Applicant",
-      size: 20,
+      size: 10,
     }),
-    columnHelper.accessor("createdAt", {
+    columnHelper.accessor("familyMembers", {
       cell: (cell) => (
-        <Text customClasses="text-gray-400">{formatDate(cell.getValue())}</Text>
+        <Text light>{removeUnderscoreAndCapitalizeFirst(cell.getValue() ?? "")}</Text>
+      ),
+      header: "Family",
+      size: 10,
+    }),
+    columnHelper.accessor("caseTotalCost", {
+      cell: (cell) => (
+        <Text light>{cell.getValue()}</Text>
+      ),
+      header: "Price",
+      size: 5,
+    }),
+    columnHelper.accessor("id", {
+      cell: (cell) => (
+        <div className="flex flex-col">
+          <Text light>Created: {formatDate(cell.row.original.createdAt)}</Text>
+          <Text light>Deadline: {cell.row.original.caseDeadline && formatDate(cell.row.original.caseDeadline)}</Text>
+        </div>
       ),
       header: "Created At",
-      size: 20,
+      size: 15,
     }),
     columnHelper.accessor("status", {
       cell: (cell) => <CaseRequestStatusBadge status={cell.getValue()} />,
@@ -56,9 +74,9 @@ const useCaseRequestColumns = () => {
       size: 15,
     }),
     columnHelper.accessor("id", {
-      cell: (cell) => <CaseRequestActions caseRequestId={cell.getValue()} />,
-      header: "Actions",
-      size: 5,
+      cell: (cell) => !isProposal && <CaseRequestActions caseRequestId={cell.getValue()} />,
+      header: !isProposal ? "Actions" : "",
+      size: 0,
     }),
   ];
 

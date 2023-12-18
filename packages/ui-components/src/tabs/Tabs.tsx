@@ -11,9 +11,10 @@ export type TabsProps = {
   tabs: Tab[];
   defaultTab: string;
   onTabChange?: (tab: string) => void;
+  compact?: boolean;
 };
 
-const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange }) => {
+const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange, compact }) => {
   const [activeTab, setActiveTab] = useState(defaultTab);
 
   const handleTabClick = useCallback(
@@ -36,7 +37,7 @@ const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange }) => {
             <TabsRadix.Trigger
               key={tab.text}
               value={tab.text}
-              className="flex-1"
+              className=""
               onClick={() => handleTabClick(tab.text)}
             >
               <div
@@ -44,11 +45,13 @@ const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange }) => {
                   COLOR_CLASS_MAPPER[ButtonType.BUTTON][
                     ButtonColor.TRANSPARENT
                   ],
-                  "border p-1 transition-all ease-out rounded-xl ",
+                  "border transition-all ease-out rounded-xl px-5",
                   {
-                    "border-primary-500 text-white shadow-xs shadow-primary-500 bg-gradient-to-b from-primary-400 via-primary-700 to-primary-900":
+                    "border-primary-500 text-white shadow-xs shadow-primary-500 bg-gradient-to-br from-primary-900 to-secondary-900":
                       isActive,
                     "border-transparent hover:bg-gray-300": !isActive,
+                    "px-1": compact,
+                    "p-3": !compact,
                   }
                 )}
               >
@@ -83,7 +86,7 @@ const Tabs: FC<TabsProps> = ({ tabs, defaultTab, onTabChange }) => {
 
   return (
     <TabsRadix.Root defaultValue={defaultTab} className="h-full flex flex-col">
-      <TabsRadix.List className="flex justify-between space-x-2 mb-5 p-1 mx-4 shadow-inner  bg-gray-50 rounded-2xl">
+      <TabsRadix.List className="flex items-center space-x-2 mb-5 p-1 mx-4 shadow-inner bg-gray-200 rounded-2xl">
         {tabsAndFeatures.tabs}
       </TabsRadix.List>
       {tabsAndFeatures.features}

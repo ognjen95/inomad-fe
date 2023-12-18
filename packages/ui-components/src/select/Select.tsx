@@ -20,6 +20,7 @@ import { IconSize, IconType } from "../icon/enums";
 import Icon from "../icon/Icon";
 import Label from "../label";
 import Text from "../text";
+import Avatar from "../avatar";
 
 export type SelectProps = {
   options: Array<Option>;
@@ -91,8 +92,8 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
                 (props.data as SingleValue<Option>)?.prefixImgUrl ?? "";
               return (
                 <components.Option {...(props as OptionProps)}>
-                  <div className="flex items-center space-x-5">
-                    {prefixImgUrl && <SelectPrefixImage src={prefixImgUrl} />}
+                  <div className="flex items-center space-x-3 rounded-2xl">
+                    {prefixImgUrl && <Avatar size="SMALL" imageSrc={prefixImgUrl} />}
                     <div>{children}</div>
                   </div>
                 </components.Option>
@@ -106,14 +107,14 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
                   className="flex flex-wrap items-center"
                   {...(props as SingleValueProps)}
                 >
-                  <div className="flex items-center space-x-5">
-                    {prefixImgUrl && <SelectPrefixImage src={prefixImgUrl} />}
+                  <div className="flex items-center space-x-3">
+                    {prefixImgUrl && <Avatar size="SMALL" imageSrc={prefixImgUrl} />}
                     <div>{children}</div>
                   </div>
                 </components.SingleValue>
               );
             },
-          }} // className="!z-50"
+          }}
           styles={{
             control: () => ({
               backgroundColor: errorMessage ? colors.red[50] : selectColor,
@@ -121,7 +122,6 @@ const SelectInput: FC<SelectProps> = forwardRef<HTMLDivElement, SelectProps>(
           }}
           classNames={{
             menu: () => "bg-white",
-            // menuPortal: () => "!z-10",
             placeholder: () => "text-grey-600 px-2 text-sm",
             container: () =>
               clsx(

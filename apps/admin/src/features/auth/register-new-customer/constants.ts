@@ -6,6 +6,12 @@ export const DEFAULT_VALUES: RegisterNewCustomerFormModel = {
   lastName: "",
   email: "",
   birthDate: new Date(),
+  description: "",
   password: "",
+  nationality: {
+    label: "",
+    value: "",
+  },
+  phone: "",
   confirmPassword: "",
 };

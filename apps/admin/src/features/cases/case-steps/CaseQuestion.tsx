@@ -19,6 +19,7 @@ export type CaseQuestionProps = {
   control: Control<CaseStepsFormModel>;
   stepIndex: number;
   questionIndex: number;
+  isViewMode?: boolean;
 };
 
 const CaseQuestion: FC<CaseQuestionProps> = ({
@@ -32,15 +33,17 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
   control,
   stepIndex,
   questionIndex,
+  isViewMode = false,
 }) => {
   if (type === QuestionType.Text) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <InputField
           control={control}
           fieldName={`questionGroups.${stepIndex}.questions.${questionIndex}.answers.0`}
           placeholder="Type here..."
           label="Please type answer for this question"
+          readonly={isViewMode}
         />
       </Paper>
     );
@@ -48,7 +51,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   if (type === QuestionType.Select || type === QuestionType.Multiselect) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <SelectField
           control={control}
           fieldName={`questionGroups.${stepIndex}.questions.${questionIndex}.answers`}
@@ -67,7 +70,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   if (type === QuestionType.Radio) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <RadioField
           control={control}
           fieldName={`questionGroups.${stepIndex}.questions.${questionIndex}.answers.0`}
@@ -80,7 +83,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   // if (type === QuestionType.Checkbox) {
   //   return (
-  //     <Paper title={text}>
+  //     <Paper allowShadowHover title={text}>
   //       <div className="flex items-center space-x-5 py-2">
   //         {options.map((option) => (
   //           <CheckboxField onChange={() => {}} key={option} label={option} />
@@ -92,7 +95,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   if (type === QuestionType.File) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <FileUploadInputField
           fileId={documentFileId}
           control={control}

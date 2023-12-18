@@ -1,5 +1,5 @@
-import { CaseStatus } from "src/common/enums";
-import { formatDate } from "src/utils/date-utils";
+import { ApplicantFamilyMembers, CaseStatus } from "src/common/enums";
+import { formatDate } from "src/common/utils/date-utils";
 import { useModal } from "ui-components";
 
 import { useCasesQuery } from "~graphql-api";
@@ -18,16 +18,19 @@ const useCaseList = (): UseCaseListReturn => {
       caseList: [],
     };
 
-  const caseList = data.providerCompany.cases.edges?.map(({ node }) => ({
+  const caseList = data.providerCompany.cases.edges?.map<CaseListModel>(({ node }) => ({
     name: node.name,
     id: node.id,
     status: CaseStatus[node.status],
     createdAt: formatDate(node.createdAt),
+    description: node.description ?? "",
+    familyMembers: node.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
     applicant: {
-      firstName: node.applicants?.[0].firstName ?? "",
-      lastName: node.applicants?.[0].lastName ?? "",
-      email: node.applicants?.[0].email ?? "",
-      id: node.applicants?.[0].id ?? "",
+      nationality: node.generalInfo?.nationality ?? "",
+      firstName: node.generalInfo?.firstName ?? "",
+      lastName: node.generalInfo?.lastName ?? "",
+      email: node.generalInfo?.email ?? "",
+      id: node.applicantsIds[0] ?? "",
     },
     employee: {
       firstName: node.providers?.[0]?.firstName ?? "",
@@ -36,6 +39,8 @@ const useCaseList = (): UseCaseListReturn => {
       id: node.providers?.[0]?.id ?? "",
     },
   }));
+
+  console.log(caseList.map((c) => c.applicant));
 
   return {
     modal,

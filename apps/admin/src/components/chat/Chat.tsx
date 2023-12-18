@@ -9,6 +9,8 @@ import {
   IconType,
   Input,
   Paper,
+  PaperColor,
+  PaperRounded,
   Progress,
   Tabs,
   Text,
@@ -43,8 +45,8 @@ const Chat: FC<ChatProps> = ({ appId, chatId, senderId, chatAccessToken }) => (
     accessToken={chatAccessToken}
   >
     <ChannelProvider channelUrl={chatId}>
-      <div className="h-full flex space-x-5">
-        <Paper noPadding>
+      <div className="h-full flex">
+        <Paper noPadding rounded={PaperRounded.NONE}>
           <ChatList chatId={chatId} senderId={senderId} />
         </Paper>
         {chatId && chatAccessToken ? (
@@ -63,7 +65,7 @@ const Chat: FC<ChatProps> = ({ appId, chatId, senderId, chatAccessToken }) => (
             </Text>
           </div>
         )}
-        <Paper noPadding>
+        <Paper noPadding rounded={PaperRounded.NONE}>
           <div className="w-96 pt-3 h-full">
             <Tabs
               defaultTab="User"

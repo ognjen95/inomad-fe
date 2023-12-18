@@ -15,13 +15,13 @@ export const PUBLIC_ROUTES = ["/login", "/create-account/customer"];
 export const DEFAULT_DATE_FORMAT = "dd MMM yyyy";
 
 export const CASE_STATUS_COLOR_MAPPER: Record<CaseStatus, string> = {
-  [CaseStatus.UNASSIGNED]: "bg-gray-300",
-  [CaseStatus.PENDING]: "bg-yellow-300",
-  [CaseStatus.REVIEW]: "bg-blue-300",
-  [CaseStatus.SENT]: "bg-blue-600",
-  [CaseStatus.APPROVED]: "bg-green-300",
-  [CaseStatus.REJECTED]: "bg-red-300",
-  [CaseStatus.CANCELLED]: "bg-red-200",
+  [CaseStatus.UNASSIGNED]: "bg-gray-300 text-white-900",
+  [CaseStatus.PENDING]: "bg-yellow-300 text-gray-900",
+  [CaseStatus.REVIEW]: "bg-blue-300 text-gray-900",
+  [CaseStatus.SENT]: "bg-blue-600 text-white",
+  [CaseStatus.APPROVED]: "bg-green-300 text-gray-900",
+  [CaseStatus.REJECTED]: "bg-red-300 text-gray-900",
+  [CaseStatus.CANCELLED]: "bg-red-200 text-gray-900",
 };
 
 export const CASE_REQUEST_STATUS_COLOR_MAPPER: Record<

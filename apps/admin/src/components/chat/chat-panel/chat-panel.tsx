@@ -6,6 +6,7 @@ import {
   IconType,
   Loader,
   Paper,
+  PaperRounded,
   Text,
   TextVariant,
 } from "ui-components";
@@ -24,7 +25,7 @@ const ChatPanel: FC<ChatPanelProps> = ({ senderId }) => {
 
   return (
     <div className="h-screen flex flex-col">
-      <Paper>
+      <Paper rounded={PaperRounded.NONE}>
         <div className="flex items-center justify-between h-full">
           <div className="flex items-center space-x-5">
             <Avatar imageSrc="/images/jenny-wilson.jpeg" />
@@ -58,7 +59,7 @@ const ChatPanel: FC<ChatPanelProps> = ({ senderId }) => {
           />
         </div>
       </Paper>
-      <div className="flex-grow h-0 no-scrollbar flex flex-col mx-1 bg-gray-100">
+      <div className="flex-grow h-0 no-scrollbar flex flex-col bg-gray-100">
         {!isLoading && (
           <div className="h-full overflow-auto no-scrollbar">
             <div className="flex w-full flex-col-reverse justify-end">

@@ -7,7 +7,14 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { UserRoles } from "src/common/enums";
 import LayoutWithRightSidebar from "src/layouts/LayoutWithRightSidebar";
-import { Button, Paper, Text, TextVariant } from "ui-components";
+import {
+  Button,
+  IconType,
+  Paper,
+  PaperColor,
+  Text,
+  TextVariant,
+} from "ui-components";
 import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
 import { colors } from "ui-components/src/config/tailwind-config";
 
@@ -30,10 +37,13 @@ const DashboardPage: NextPage = () => {
   if (userInfo.userRole === UserRoles.CUSTOMER) return null;
 
   return (
-    <LayoutWithRightSidebar sidebarNoPadding sidebar={<CaseAndTasksSidebar />}>
+    <LayoutWithRightSidebar
+      mainNoBottomPadding
+      sidebar={<CaseAndTasksSidebar />}
+    >
       <div className="flex items-center space-x-5 h-1/3">
-        <div className="w-2/3 h-full relative shadow shadow-primary-300 hover:shadow-primary-400 transition-all ease-in-out duration-250 rounded-2xl">
-          <div className="p-5 bg-gradient-to-r from-primary-700 to-secondary-900 w-full h-full flex rounded-xl">
+        <div className="w-2/3 h-full relative shadow shadow-primary-300 hover:shadow-primary-400 transition-all ease-in-out duration-250 rounded-3xl">
+          <div className="p-5 bg-gradient-to-r from-primary-700 to-secondary-900 w-full h-full flex rounded-3xl">
             <div className="flex-grow flex flex-col justify-between h-full">
               <Text
                 customClasses="text-white"
@@ -255,14 +265,25 @@ const DashboardPage: NextPage = () => {
         </div>
       </div>
       <div className="h-1/3">
-        <Paper fullHeight fullWidth noPadding textWrapperClassName="px-2">
-          <div className="w-full flex items-center justify-between pt-3 px-5">
+        <Paper
+          showShadow={false}
+          color={PaperColor.TRANSPARENT}
+          fullHeight
+          fullWidth
+          noPadding
+          textWrapperClassName="px-2"
+        >
+          <div className="w-full flex items-center justify-between px-5">
             <Text variant={TextVariant.HEADING5}>Cases</Text>
 
             <Link href="/cases">
               <Button
                 size={ButtonSize.SMALL}
                 color={ButtonColor.TRANSPARENT_PRIMARY}
+                rightIcon={{
+                  type: IconType.ARROW_RIGHT,
+                  stroke: colors.primary[500],
+                }}
               >
                 See all
               </Button>

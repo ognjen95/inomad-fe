@@ -1,4 +1,4 @@
-import { CaseRequestStatus } from "src/common/enums";
+import { ApplicantFamilyMembers, CaseRequestStatus } from "src/common/enums";
 
 export type CaseRequestListModel = {
   id: string;
@@ -10,6 +10,10 @@ export type CaseRequestListModel = {
   createdAt: Date;
   updatedAt: Date;
   caseId: string;
+  caseDescription: string;
+  caseDeadline: Date | null;
+  caseTotalCost: number;
+  familyMembers: ApplicantFamilyMembers;
 };
 
 export type UseCaseRequestListReturn = {

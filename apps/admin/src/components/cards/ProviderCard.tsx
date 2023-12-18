@@ -39,9 +39,7 @@ const ProviderCard: FC<ProviderCardProps> = ({
   <Paper fullHeight fullWidth allowShadowHover>
     <div className="flex space-x-2 w-full">
       <div className="flex space-x-5  w-full">
-        <div className="rounded-full border-[3px] flex items-center justify-center border-primary-600">
-          <Avatar imageSrc={avatarImgSrc} />
-        </div>
+        <Avatar imageSrc={avatarImgSrc} />
         <div className="flex flex-col justify-center w-full flex-1">
           <Text variant={TextVariant.BODY2} customClasses="font-semibold">
             {name}

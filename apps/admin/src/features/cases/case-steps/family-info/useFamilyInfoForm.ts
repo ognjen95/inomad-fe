@@ -22,7 +22,14 @@ const useFamilyInfoForm: UseFamilyInfoForm = (
     defaultValues: {
       familyMembers: null,
       spouse: null,
-      children: null,
+      children: [
+        {
+          name: "",
+          middleName: "",
+          lastName: "",
+          birthday: new Date(),
+        },
+      ],
     },
   });
 
@@ -81,6 +88,10 @@ const useFamilyInfoForm: UseFamilyInfoForm = (
   };
 
   const removeChild = (index: number) => {
+    if (fields.length === 1) {
+      return;
+    }
+
     remove(index);
   };
 

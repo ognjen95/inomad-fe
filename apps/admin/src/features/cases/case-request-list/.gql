@@ -4,6 +4,8 @@ query ProviderCompanyCaseRequests ($options: CaseQueryOptionsInput) {
       edges {
         node {
           applicantId
+          deadline
+          totalCost
           createdAt
           caseId
           id
@@ -11,6 +13,7 @@ query ProviderCompanyCaseRequests ($options: CaseQueryOptionsInput) {
           status
           updatedAt
           case {
+            description
             id
             name
             applicants {
@@ -18,6 +21,9 @@ query ProviderCompanyCaseRequests ($options: CaseQueryOptionsInput) {
               lastName
               id
               email
+            }
+            familyInfo {
+              familyMembers
             }
           }
         }

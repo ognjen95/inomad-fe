@@ -74,12 +74,11 @@ const Calendar: FC<CalendarProps> = ({ tasks }) => (
       return (
         <div
           className={clsx(
-            "m-1 !rounded-2xl h-8 w-8 flex items-center justify-center hover:bg-primary-100 relative transition-all ease-out duration-200",
+            "m-1 !rounded-2xl h-8 w-8 flex items-center justify-center hover:bg-primary-50 relative transition-all ease-out duration-200",
             {
-              "bg-primary-600 shadow-[0px_3px_3px_0px_#00000026]":
+              "bg-gradient-to-br from-primary-300 to-primary-500 shadow-primary-300 shadow-xs":
                 today && thisMonth,
-              "bg-white shadow-[0px_3px_3px_0px_#00000026]":
-                !today && thisMonth,
+              "bg-white shadow-xs shadow-primary-300": !today && thisMonth,
               "bg-transparent": !thisMonth,
             }
           )}

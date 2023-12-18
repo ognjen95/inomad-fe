@@ -5,6 +5,7 @@ import {
   IconSize,
   IconType,
   Paper,
+  PaperRounded,
   Text,
   TextVariant,
 } from "ui-components";
@@ -57,7 +58,7 @@ const FormElements: FC<FormElementsProps> = ({
       </div>
     ))}
     <div className="w-full">
-      <Paper fullWidth>
+      <Paper fullWidth rounded={PaperRounded.NONE}>
         <Button
           loading={loading}
           disabled={loading || !hasElements}

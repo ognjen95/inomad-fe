@@ -1,0 +1,5 @@
+mutation ChangeCaseStatus($caseId: String!, $status: String!) {
+  changeCaseStatus(status: $status, caseId: $caseId) {
+    isCompleted
+  }
+}

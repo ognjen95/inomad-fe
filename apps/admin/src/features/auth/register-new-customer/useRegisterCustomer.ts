@@ -1,6 +1,5 @@
 import { useToastContext } from "context/toast/ToastContext";
 import { useRouter } from "next/navigation";
-import { SubmitHandler } from "react-hook-form";
 import { useForm } from "ui-components";
 
 import useFamilyInfoForm from "~features/cases/case-steps/family-info/useFamilyInfoForm";
@@ -11,9 +10,11 @@ import {
   RegisterNewCustomerFormModel,
   UseRegisterCustomerReturn,
 } from "./types";
+import useStepper from "../../../components/stepper/useStepper";
 
 const useRegisterCustomer = (): UseRegisterCustomerReturn => {
   const { push } = useRouter();
+  const stepper = useStepper(4);
 
   const form = useForm<RegisterNewCustomerFormModel>({
     defaultValues: DEFAULT_VALUES,
@@ -33,15 +34,16 @@ const useRegisterCustomer = (): UseRegisterCustomerReturn => {
     toast.success(
       "Registration successful! Verification link sent to your email"
     );
-
-    push("/create-account/customer?success=true");
+    stepper.nextStep();
   };
 
   const onError = () => {
     toast.error("Something went wrong");
   };
 
-  const onSubmit: SubmitHandler<RegisterNewCustomerFormModel> = (data) => {
+  const onSubmit = () => {
+    const data = form.getValues();
+
     register({
       onCompleted,
       onError,
@@ -54,6 +56,10 @@ const useRegisterCustomer = (): UseRegisterCustomerReturn => {
           birthday: data.birthDate,
           password: data.password,
           userRole: UserRoles.Customer,
+          nationality: data.nationality.value,
+          description: data.description,
+          phone: data.phone,
+          familyInfo: family.form.getValues(),
         },
       },
     });
@@ -65,6 +71,7 @@ const useRegisterCustomer = (): UseRegisterCustomerReturn => {
     onSubmit,
     redirectToLogin,
     family,
+    stepper,
   };
 };
 

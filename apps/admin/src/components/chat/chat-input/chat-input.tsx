@@ -7,6 +7,7 @@ import {
   Input,
   InputSize,
   Paper,
+  PaperRounded,
 } from "ui-components";
 import { colors } from "ui-components/src/config/tailwind-config";
 
@@ -21,7 +22,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatId }) => {
 
   return (
     <div className="w-full">
-      <Paper fullWidth>
+      <Paper fullWidth rounded={PaperRounded.NONE}>
         <div className="flex justify-between items-center space-x-10">
           <IconButton
             iconProps={{

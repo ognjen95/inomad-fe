@@ -20,6 +20,8 @@ const useFileUpload = (): UseFileUploadReturn => {
   const getPresignedUrls = async (
     fileNames: string[]
   ): Promise<Array<IdAndLink | null>> => {
+    if (!fileNames?.length) return [];
+    
     const { data: links } = await getPresigned({
       fetchPolicy: "network-only",
       variables: {
@@ -76,7 +78,7 @@ const useFileUpload = (): UseFileUploadReturn => {
     const uploadPromises = presignedUrls.map((presignedUrl, index) => {
       const currentFile = files[index];
 
-      if (!presignedUrl?.link || !currentFile) return false;
+      if (!presignedUrl?.link || !currentFile) return null;
 
       return uploadFilesWithRetry(
         presignedUrl.link,
@@ -91,62 +93,11 @@ const useFileUpload = (): UseFileUploadReturn => {
     return presignedUrls;
   };
 
-  const uploadChangedFiles = async (
-    files: FileUpload[],
-    options?: UploadOptions
-  ) => {
-    setIsFileUploading(true);
-    const indexes: number[] = [];
-
-    const fileNames = files
-      .filter((file, index) => {
-        if (file.newFile.name !== file.previousFileName) {
-          return true;
-        }
-
-        indexes.push(index);
-        return false;
-      })
-      .map((file) => file.newFile.name);
-
-    const presignedUrls = await getPresignedUrls(fileNames);
-
-    const uploadPromises = presignedUrls.map((presignedUrl, index) => {
-      const currentFile = files[index];
-      if (!presignedUrl?.link || !currentFile) return false;
-
-      return uploadFilesWithRetry(
-        presignedUrl.link,
-        currentFile.newFile,
-        options?.maxRetries,
-        options?.retryCount
-      );
-    });
-
-    await Promise.all(uploadPromises);
-
-    const returnUrls = files.map((_, index) => {
-      if (!indexes.includes(index)) {
-        return presignedUrls[index];
-      }
-
-      return {
-        id: null,
-        link: null,
-      };
-    });
-
-    setIsFileUploading(false);
-
-    return returnUrls;
-  };
-
   return {
     loading: loading || isFileUploading,
     getPresignedUrls,
     uploadFile,
     getUrlsAndUpload,
-    uploadChangedFiles,
   };
 };
 

@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { SubmitHandler, useFieldArray } from "react-hook-form";
 import { useForm, useModal } from "ui-components";
 
-import { QuestionType, useCreateQuestionGroupMutation } from "~graphql-api";
+import { QuestionGroupsDocument, QuestionType, useCreateQuestionGroupMutation } from "~graphql-api";
 
-import { DEFAULT_VALUE } from "./constants";
-import { FormQuestionGroupModel, UseQuestionGroupBuilderReturn } from "./types";
+import { DEFAULT_VALUE } from "../constants";
+import { FormQuestionGroupModel, UseQuestionGroupBuilderReturn } from "../types";
 
 const useQuestionGroupBuilder = (): UseQuestionGroupBuilderReturn => {
   const [createQuestionGroup, { loading }] = useCreateQuestionGroupMutation();
@@ -50,6 +50,7 @@ const useQuestionGroupBuilder = (): UseQuestionGroupBuilderReturn => {
 
   const onSubmit: SubmitHandler<FormQuestionGroupModel> = (data) => {
     createQuestionGroup({
+      refetchQueries: [QuestionGroupsDocument],
       onCompleted: () => {
         success("Question group created successfully");
         form.reset(DEFAULT_VALUE);

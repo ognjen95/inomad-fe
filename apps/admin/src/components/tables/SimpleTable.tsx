@@ -17,6 +17,7 @@ export type SimpleTableProps<
   propertyOnRowClick?: keyof TRow;
   showHeader?: boolean;
   isTransparent?: boolean;
+  animate?: boolean;
 };
 
 const SimpleTable = <
@@ -28,6 +29,7 @@ const SimpleTable = <
   propertyOnRowClick,
   showHeader = true,
   isTransparent = true,
+  animate = true,
 }: SimpleTableProps<TRow>) => {
   const table = useReactTable<TRow>({
     data,
@@ -42,22 +44,22 @@ const SimpleTable = <
     <table
       className={clsx(
         "table text-sm w-full border-separate border-spacing-x-0",
-        { "border-spacing-y-3": !isTransparent }
+        { "border-spacing-y-2": !isTransparent }
       )}
     >
       {showHeader && (
         <thead
-          className={clsx("sticky top-0 h-10", {
-            "bg-gray-50": !isTransparent,
-            "bg-transparent": isTransparent,
+          className={clsx("sticky top-0 h-10 bg-gray-50", {
+            // "bg-gray-50": !isTransparent,
+            // "bg-transparent": isTransparent,
           })}
         >
           {table.getHeaderGroups().map((headerGroups) => (
-            <tr key={headerGroups.id} className="pb-2">
+            <tr key={headerGroups.id}>
               {headerGroups.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="text-left font-bold pl-6"
+                  className="text-left font-bold pl-3"
                   style={{ width: `${header.getSize()}%` }}
                 >
                   <Text
@@ -77,7 +79,7 @@ const SimpleTable = <
           ))}
         </thead>
       )}
-      <tbody>
+      <tbody className="px-2">
         {table.getRowModel().rows.map((row) => {
           const handleRowClick = () => {
             if (
@@ -102,14 +104,16 @@ const SimpleTable = <
                   "bg-white hover:bg-gray-100 shadow-sm shadow-primary-100":
                     !isTransparent,
                   "bg-transparent hover:bg-white row-span-5": isTransparent,
+                  "animate-slideUpAndFade": animate,
+                  "opacity-0": animate && !data,
                 },
-                "p-5 max-h-[40px] hover:shadow-sm hover:shadow-primary-100 rounded-2xl transition-all ease-in-out duration-300"
+                "p-5 max-h-[40px] hover:shadow-sm hover:shadow-primary-100 rounded-2xl transition-all ease-in-out duration-200 "
               )}
             >
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}
-                  className="px-6 py-5 [&:first-child]:rounded-l-2xl [&:last-child]:rounded-r-2xl overflow"
+                  className="p-3 [&:first-child]:rounded-l-2xl [&:last-child]:rounded-r-2xl overflow"
                   style={{ width: `${cell.column.getSize()}%` }}
                 >
                   <div>

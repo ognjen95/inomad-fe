@@ -3,14 +3,20 @@ query Cases {
     cases {
       edges {
         node {
-          applicants {
-            id
+          applicantsIds
+          description
+          familyInfo {
+            familyMembers
+          }
+          generalInfo {
+            birthday
             firstName
             lastName
             middleName
+            nationality
             email
           }
-           providers {
+          providers {
             firstName
             id
             middleName
@@ -23,26 +29,31 @@ query Cases {
           name
         }
       }
-      }
     }
   }
+}
 
-  query AvailableCases {
-    availableCases {
-      edges {
-        node {
-          applicants {
-            id
-            firstName
-            lastName
-            middleName
-            email
-          }
-          id
-          status
-          createdAt
-          name
+query AvailableCases {
+  availableCases {
+    edges {
+      node {
+        applicantsIds
+        description
+        familyInfo {
+          familyMembers
         }
+        generalInfo {
+          birthday
+          firstName
+          lastName
+          middleName
+          nationality
+        }
+        id
+        status
+        createdAt
+        name
       }
     }
   }
+}

@@ -74,18 +74,6 @@ const GeneralinfoForm: React.FC<GeneralinfoFormModel> = ({
           control={control}
           placeholder="Select your natilality"
         />
-        <InputField
-          type={InputType.PASSWORD}
-          fieldName="password"
-          label="Password"
-          control={control}
-        />
-        <InputField
-          type={InputType.PASSWORD}
-          fieldName="confirmPassword"
-          label="Confirm Password"
-          control={control}
-        />
       </div>
     )}
   </Form>

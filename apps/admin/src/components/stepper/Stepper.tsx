@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import { TextVariant, Text, Button, Progress, IconType } from "ui-components";
+import { TextVariant, Text, Button, IconType } from "ui-components";
 import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
 import { colors } from "ui-components/src/config/tailwind-config";
 
@@ -30,18 +30,18 @@ const Stepper: FC<StepperProps> = ({
   loading,
 }) => {
   const activeStep = steps[activeStepIndex];
-  const isLastStep = activeStepIndex === steps.length - 1;
+  const isLastStep = activeStepIndex === steps.length + 1;
   const isFirstStep = activeStepIndex === 0;
 
   return (
-    <div className="relative flex flex-col justify-between h-full pb-20">
-      {showTitle && (
-        <div className="pl-3">
+    <div className="relative flex flex-col flex-1 justify-between h-full overflow-hidden">
+      <div className="pl-3">
+        {showTitle && (
           <Text variant={TextVariant.HEADING5}>{activeStep?.name}</Text>
-        </div>
-      )}
+        )}
+      </div>
       {activeStep?.component}
-      <div className="pt-1 px-5">
+      {/* <div className="px-2">
         <Progress
           size="small"
           multiColor={false}
@@ -49,11 +49,10 @@ const Stepper: FC<StepperProps> = ({
             steps?.length && ((activeStepIndex + 1) / steps.length) * 100
           }
         />
-      </div>
-      <div className="absolute left-0 right-0 w-full flex items-center justify-between space-x-10 bottom-0 px-20 backdrop-blur">
+      </div> */}
+      <div className="pt-5 w-full flex items-center justify-between space-x-10 backdrop-blur">
         <div className="w-1/4">
           <Button
-            fullWidth
             disabled={loading}
             color={ButtonColor.TRANSPARENT}
             size={ButtonSize.MEDIUM}
@@ -62,9 +61,8 @@ const Stepper: FC<StepperProps> = ({
             Cancel
           </Button>
         </div>
-        <div className="flex items-center space-x-3 w-1/2">
+        <div className="flex items-center space-x-3 ">
           <Button
-            fullWidth
             color={ButtonColor.GREY}
             size={ButtonSize.MEDIUM}
             onClick={prevStep}
@@ -86,7 +84,6 @@ const Stepper: FC<StepperProps> = ({
                   }
             }
             formName={activeStep?.formName}
-            fullWidth
             color={ButtonColor.GRADIENT}
             size={ButtonSize.MEDIUM}
             loading={loading}

@@ -3,6 +3,7 @@ query ProviderCompanyCase($caseId: String!) {
     case(id: $caseId) {
       id
       name
+      applicantsIds
       documents {
         caseId
         createdAt
@@ -22,22 +23,6 @@ query ProviderCompanyCase($caseId: String!) {
         nationality
         passportFileId
         phone
-      }
-      applicantsIds
-      education {
-        confirmationLetterFileId
-        degree
-        diplomaFileId
-        university
-      }
-      workInfo {
-        contractFileId
-        contractType
-        cvFileId
-        invoicesFilesIds
-        jobTitle
-        monthlyIncome
-        yearsOfExperience
       }
       familyInfo {
         familyMembers
@@ -81,7 +66,10 @@ query CustomerCases($options: CaseQueryOptionsInput!) {
   }
 }
 
-query CaseQestionsAndDocuments($queryOptionsInput: TestQueryOptionsInput, $caseId: String!) {
+query CaseQestionsAndDocuments(
+  $queryOptionsInput: TestQueryOptionsInput
+  $caseId: String
+) {
   templates(QueryOptionsInput: $queryOptionsInput) {
     edges {
       node {
@@ -134,14 +122,21 @@ query CaseQestionsAndDocuments($queryOptionsInput: TestQueryOptionsInput, $caseI
     id
     status
     name
-    applicants {
-      birthday
-      createdAt
-      email
-      firstName
-      id
-      middleName
-      lastName
+    description
+    familyInfo {
+      familyMembers
+      spouse {
+        name
+        lastName
+        middleName
+        birthday
+      }
+      children {
+        name
+        lastName
+        middleName
+        birthday
+      }
     }
     generalInfo {
       birthday
@@ -150,7 +145,6 @@ query CaseQestionsAndDocuments($queryOptionsInput: TestQueryOptionsInput, $caseI
       lastName
       middleName
       nationality
-      passportFileId
       phone
     }
   }
@@ -158,6 +152,6 @@ query CaseQestionsAndDocuments($queryOptionsInput: TestQueryOptionsInput, $caseI
 
 mutation UpdateQuestionGroup($args: UpdateQuestionGroupInput!) {
   updateQuestionGroup(args: $args) {
-     id
+    id
   }
 }

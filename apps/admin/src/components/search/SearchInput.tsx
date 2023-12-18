@@ -1,15 +1,32 @@
-import React from "react";
+import clsx from "clsx";
+import React, { FC } from "react";
 import {
   DropdownMenu,
   IconPlacement,
   IconType,
   Input,
   InputColor,
+  InputProps,
   InputSize,
 } from "ui-components";
 
-const SearchInput = () => (
-  <div className="w-96 flex justify-end items-center bg-gradient-to-br from-primary-800 to-secondary-900 rounded-2xl text-white px-2 transition-all ease-in-out duation-200 shadow-sm shadow-primary-400 hover:shadow hover:shadow-primary-400">
+export type SearchInputProps = {
+  fullWidth?: boolean;
+} & InputProps;
+
+const SearchInput: FC<SearchInputProps> = ({
+  fullWidth,
+  placeholder = "Search ...",
+}) => (
+  <div
+    className={clsx(
+      {
+        "w-full": fullWidth,
+        "w-96": !fullWidth,
+      },
+      "flex justify-end items-center bg-gradient-to-br from-primary-800 to-secondary-900 rounded-2xl text-white px-2 transition-all ease-in-out duation-200 shadow-sm shadow-primary-400 hover:shadow-xs hover:shadow-primary-400"
+    )}
+  >
     <Input
       lightPlaceholder
       customColors="text-white"
@@ -19,7 +36,7 @@ const SearchInput = () => (
       iconColor="transparent"
       strokeColor="white"
       iconPlacement={IconPlacement.LEFT}
-      placeholder="Search..."
+      placeholder={placeholder}
     />
     <DropdownMenu
       isIconButton

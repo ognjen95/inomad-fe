@@ -52,10 +52,10 @@ const TaskFormModal: FC<TaskFormModalProps> = ({
           close={close}
           bgTransparent
         >
-          <div className="shadow shadow-primary-300 rounded-xl h-[80vh]">
+          <div className="shadow shadow-primary-300 rounded-3xl h-[80vh]">
             <Paper fullWidth fullHeight title={title}>
               <div className="w-[70vw] h-[80vh] flex items-center justify-between">
-                <div className="w-3/4 h-full pr-10 border-r mr-10 border-t border-l rounded-xl pl-10 border-gray-100 bg-gray-50">
+                <div className="w-3/4 h-full pr-10 border-r mr-10 border-t border-l rounded-3xl pl-10 border-gray-100 bg-gray-50">
                   <div className="flex flex-col space-y-5 h-full justify-between overflow-y-auto pb-20 no-scrollbar">
                     <div className="mt-7 space-y-5">
                       <InputField

@@ -23,11 +23,11 @@ const LoginFeature = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-5">
-      <div className="text-center flex flex-col">
+      <div className="text-center flex flex-col animate-slideUpAndFade">
         <Text variant={TextVariant.HEADING2}>Welcome! 👋</Text>
         <Text>Enter your account credentials to sign in</Text>
       </div>
-      <div className="w-full">
+      <div className="w-full animate-slideUpAndFade">
         <Form form={form} onSubmit={onSubmit} formName="login-form">
           {({ control }) => (
             <div className="flex flex-col gap-6 items-center justify-center h-full">

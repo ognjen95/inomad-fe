@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { Loader, Paper, Tabs } from "ui-components";
+import { Loader, Paper, PaperColor, Tabs } from "ui-components";
 
 import SimpleTable from "~components/tables/SimpleTable";
 import OnboardEmployeeForm from "~features/employees/onboard-employee/OnboardEmployeeForm";
 import useOnboardEmployee from "~features/employees/onboard-employee/use-onboard-employee";
 
+import SearchInput from "../../../components/search/SearchInput";
 import { EmployeeListModel } from "../employee-list/types";
 import useEmployeeList from "../employee-list/use-employee-list";
 import useTableColumns from "../employee-list/use-table-columns";
@@ -25,7 +26,7 @@ const EmployeeTabs: FC<EmployeeTabsProps> = ({
   const columns = useTableColumns(caseId);
 
   return (
-    <div className="h-full w-full flex flex-col flex-grow">
+    <div className="h-full w-full flex flex-col flex-grow no-scrollbar">
       <Tabs
         defaultTab="EMPLOYEE LIST"
         tabs={[
@@ -34,14 +35,23 @@ const EmployeeTabs: FC<EmployeeTabsProps> = ({
             feature: listLoading ? (
               <Loader centered />
             ) : (
-              <div className="px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
-                <SimpleTable<EmployeeListModel>
-                  columns={columns}
-                  data={employeeList}
-                  showHeader={showHeader}
-                  isTransparent={rowIsTransparent}
-                />
-              </div>
+              <Paper
+                showShadow={false}
+                fullHeight
+                fullWidth
+                noPadding
+                allowShadowHover={false}
+                color={PaperColor.TRANSPARENT}
+              >
+                <div className="px-5 flex flex-1 overflow-y-auto flex-col no-scrollbar">
+                  <SimpleTable<EmployeeListModel>
+                    columns={columns}
+                    data={employeeList}
+                    showHeader={showHeader}
+                    isTransparent={rowIsTransparent}
+                  />
+                </div>
+              </Paper>
             ),
           },
           {
