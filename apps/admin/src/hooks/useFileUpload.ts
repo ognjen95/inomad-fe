@@ -4,7 +4,6 @@ import { useState } from "react";
 import { usePresignedUrlLazyQuery } from "~graphql-api";
 
 import {
-  FileUpload,
   IdAndLink,
   UploadFilesWithRetry,
   UploadOptions,
