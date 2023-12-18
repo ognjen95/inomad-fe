@@ -18,8 +18,8 @@ export type GeneralInfoFormProps = {
 };
 
 const GeneralInfoForm: FC<GeneralInfoFormProps> = ({ caseId }) => {
-  const generalInfoForm = useGeneralInfoForm(caseId, {}, () => {});
-  const familyForm = useFamilyInfoForm(caseId, {}, () => {});
+  const generalInfoForm = useGeneralInfoForm(caseId, null, () => {});
+  const familyForm = useFamilyInfoForm(caseId, null, () => {});
 
   return (
     <div className="pt-5 flex flex-col space-x-5 w-full h-full">
