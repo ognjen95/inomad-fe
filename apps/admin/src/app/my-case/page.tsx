@@ -14,7 +14,7 @@ const MyCasePage: NextPage = () => {
 
   return (
     <div>
-      <CaseSteps onCancel={open} isCustomer />
+      <CaseSteps onCancel={open} />
       <Modal
         isOpen={isOpen}
         modalIcon={{
