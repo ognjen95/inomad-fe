@@ -5,8 +5,6 @@ import {
   IconType,
   Text,
   Input,
-  InputSize,
-  IconPlacement,
   IconSize,
   TextVariant,
   Modal,
@@ -15,7 +13,6 @@ import {
 import { colors } from "ui-components/src/config/tailwind-config";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
 
-import FilterDropdown from "~components/filter-dropdown/FilterDropdown";
 import { QuestionGroupEntity } from "~graphql-api";
 
 import SearchInput from "../../../components/search/SearchInput";

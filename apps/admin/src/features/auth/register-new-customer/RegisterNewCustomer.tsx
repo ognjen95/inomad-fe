@@ -221,7 +221,6 @@ const RegisterNewCustomer = () => {
               loading={loading}
               onClick={() => {
                 if (stepper.activeStep === 3) {
-                  console.log("first");
                   onSubmit();
                   return;
                 }
