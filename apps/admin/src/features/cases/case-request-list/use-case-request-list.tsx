@@ -1,6 +1,9 @@
 import { CaseRequestStatus } from "src/common/enums";
 
-import { ApplicantFamilyMembers, useProviderCompanyCaseRequestsQuery } from "~graphql-api";
+import {
+  ApplicantFamilyMembers,
+  useProviderCompanyCaseRequestsQuery,
+} from "~graphql-api";
 
 import { UseCaseRequestListReturn } from "./types";
 
@@ -35,7 +38,9 @@ const useCaseRequestList = (isProposal = false): UseCaseRequestListReturn => {
         caseDescription: requestedCase?.description ?? "",
         caseDeadline: node.deadline ?? null,
         caseTotalCost: node.totalCost ?? 0,
-        familyMembers: requestedCase?.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
+        familyMembers:
+          requestedCase?.familyInfo?.familyMembers ??
+          ApplicantFamilyMembers.Alone,
       };
     }) ?? [];
 

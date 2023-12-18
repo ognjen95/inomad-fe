@@ -1,12 +1,12 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import Image from "next/image";
 import Link from "next/link";
-import { Button, DropdownMenu, Icon, IconType, Text } from "ui-components";
+import { Button, Icon, IconType, Text } from "ui-components";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
-import Image from 'next/image';
 
 import { CaseListModel } from "./types";
-import { removeUnderscoreAndCapitalizeFirst } from "../../../common/utils/string'utils";
 import getCountryFlagAndName from "../../../common/helpers/getCountryFlagAndName";
+import { removeUnderscoreAndCapitalizeFirst } from "../../../common/utils/string'utils";
 
 const useAvailableCaseTableColumns = (
   modal: UseModalReturn<Partial<CaseListModel>>
@@ -49,16 +49,18 @@ const useAvailableCaseTableColumns = (
         const country = getCountryFlagAndName(cell.getValue().nationality);
         return (
           <div className="flex items-center space-x-3">
-            {cell.getValue()?.nationality && <Image
-              className="rounded-full"
-              height={30}
-              width={30}
-              alt="flag"
-              src={country?.prefixImgUrl ?? ""}
-            />}
+            {cell.getValue()?.nationality && (
+              <Image
+                className="rounded-full"
+                height={30}
+                width={30}
+                alt="flag"
+                src={country?.prefixImgUrl ?? ""}
+              />
+            )}
             <Text light>{country?.label}</Text>
           </div>
-        )
+        );
       },
       header: "Nationality",
       size: 10,
@@ -83,15 +85,15 @@ const useAvailableCaseTableColumns = (
     columnHelper.accessor("id", {
       cell: (cell) => (
         <Button
-          onClick={
-            () => {
-              modal.open({
-                id: cell.getValue(),
-                name: cell.row.original.name,
-              });
-            }
-          }
-        > Send proposal
+          onClick={() => {
+            modal.open({
+              id: cell.getValue(),
+              name: cell.row.original.name,
+            });
+          }}
+        >
+          {" "}
+          Send proposal
         </Button>
       ),
       header: "",

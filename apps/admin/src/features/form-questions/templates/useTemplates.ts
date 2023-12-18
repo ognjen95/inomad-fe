@@ -1,16 +1,19 @@
 import { useState } from "react";
+
 import { useToastContext } from "../../../../context/toast/ToastContext";
-import { useTemplatesQuery, useAssignTemplateMutation } from "../../../graphql-api";
+import {
+  useTemplatesQuery,
+  useAssignTemplateMutation,
+} from "../../../graphql-api";
 import useCaseList from "../../cases/case-list/use-case-list";
 import { Template } from "../types";
-
 
 const useTemplates = () => {
   const { data: templatesData } = useTemplatesQuery();
   const [assign, { loading: assignLoading }] = useAssignTemplateMutation();
 
   const { caseList } = useCaseList();
-  
+
   const { success } = useToastContext();
   const [selectedTab, setSelectedTab] = useState<string>("Questions");
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
@@ -48,8 +51,8 @@ const useTemplates = () => {
     templateId,
     setTemplateId,
     assignTemplate,
-    assignLoading
-  }
+    assignLoading,
+  };
 };
 
 export default useTemplates;

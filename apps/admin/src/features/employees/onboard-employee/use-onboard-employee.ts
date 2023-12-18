@@ -33,6 +33,8 @@ const useOnboardEmployee = (): UseOnboardEmployeeReturn => {
           userRole: UserRoles[data.role],
           password: data.password,
           birthday: data.birthday,
+          nationality: "",
+          phone: "",
         },
       },
     });

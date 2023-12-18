@@ -9,4 +9,5 @@ export const DEFAULT_VALUES: OnboardEmployeeFormModel = {
   role: UserRoles.PROVIDER_EMPLOYEE,
   password: "",
   confirmPassword: "",
+  birthday: new Date(),
 };

@@ -1,3 +1,5 @@
+import { ApplicantFamilyMembers } from "~graphql-api";
+
 import { GeneralInfoFormModel } from "./types";
 
 export const DEFAULT_VALUES: GeneralInfoFormModel = {
@@ -9,4 +11,5 @@ export const DEFAULT_VALUES: GeneralInfoFormModel = {
   phone: "",
   birthday: new Date(),
   passport: null,
+  familyMembers: ApplicantFamilyMembers.Alone,
 };

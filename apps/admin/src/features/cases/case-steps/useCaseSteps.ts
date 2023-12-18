@@ -46,7 +46,6 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
   const familyInfo = customerCaseData?.case.familyInfo;
   const generalInfo = customerCaseData?.case?.generalInfo;
 
-
   const generalApplicantData: GeneralApplicantData = {
     firstName: generalInfo?.firstName ?? "",
     middleName: generalInfo?.middleName ?? "",
@@ -74,9 +73,7 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
     if (steps?.length && !form.getValues("questionGroups").length) {
       form.reset({ questionGroups: steps });
     }
-  },
-    [form, steps,]
-  );
+  }, [form, steps]);
 
   const onSubmit = useCallback(async () => {
     const step = form.getValues().questionGroups[stepper.activeStep - 1];
@@ -87,7 +84,6 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
     }
 
     if (!Object.keys(form.formState.dirtyFields)?.length) {
-      console.log("dirty", Object.keys(form.formState.dirtyFields));
       stepper.nextStep();
       return;
     }
@@ -96,30 +92,37 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
 
     const questionIdFileIdMap = new Map<string, string>();
 
-    const changedFilesForUpload = step.questions.map((formQuestion) => {
-      if (!formQuestion?.document) return null;
+    const changedFilesForUpload = step.questions
+      .map((formQuestion) => {
+        if (!formQuestion?.document) return null;
 
-      if (formQuestion.document?.name === formQuestion?.documentName) return null;
+        if (formQuestion.document?.name === formQuestion?.documentName)
+          return null;
 
+        questionIdFileIdMap.set(formQuestion.id, "");
 
-      questionIdFileIdMap.set(formQuestion.id, "");
+        return formQuestion;
+      })
+      .filter(Boolean);
 
-      return formQuestion;
-    }).filter(Boolean);
-
-
-    const urls = await getUrlsAndUpload(changedFilesForUpload.map((file) => file?.document!), { maxRetries: 5 });
+    const urls = await getUrlsAndUpload(
+      changedFilesForUpload.map((file) => file!.document!),
+      { maxRetries: 5 }
+    );
 
     urls.forEach((urlLink, index) => {
       if (!urlLink) return;
 
       const questionsWithFileChange = changedFilesForUpload[index];
 
-      questionIdFileIdMap.set(questionsWithFileChange?.id!, urlLink?.id);
+      questionIdFileIdMap.set(questionsWithFileChange!.id!, urlLink?.id);
     });
 
     const changeFileIdIfNeeded = (question: Question) => {
-      if (question.documentName === question.document?.name && question.documentFileId) {
+      if (
+        question.documentName === question.document?.name &&
+        question.documentFileId
+      ) {
         return question.documentFileId;
       }
 
@@ -127,7 +130,7 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
         return questionIdFileIdMap.get(question.id);
       }
 
-      return ""
+      return "";
     };
 
     update({
@@ -135,7 +138,8 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
         const result = await refetch();
 
         form.reset({
-          questionGroups: templateMapper(result.data.templates.edges[0].node) ?? [],
+          questionGroups:
+            templateMapper(result.data.templates.edges[0].node) ?? [],
         });
 
         stepper.nextStep();
@@ -156,11 +160,11 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
     form,
     getUrlsAndUpload,
     loadingUpdate,
+    refetch,
     stepper,
     steps.length,
     update,
   ]);
-
 
   return {
     form,

@@ -11,8 +11,6 @@ import {
   InputField,
   Paper,
   RadioField,
-  Text,
-  TextVariant,
 } from "ui-components";
 import {
   ButtonColor,

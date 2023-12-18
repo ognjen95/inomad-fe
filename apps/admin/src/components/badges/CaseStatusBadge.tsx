@@ -3,7 +3,6 @@ import { FC } from "react";
 import { CASE_STATUS_COLOR_MAPPER } from "src/common/constants";
 import { CaseStatus } from "src/common/enums";
 import { capitalizeFirst } from "src/common/utils/string'utils";
-import { Text } from "ui-components";
 
 export type CaseStatusBadgeProps = {
   status: CaseStatus;

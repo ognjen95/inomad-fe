@@ -4,4 +4,4 @@ export const capitalizeFirst = (word: string) =>
     : word;
 
 export const removeUnderscoreAndCapitalizeFirst = (word: string) =>
- capitalizeFirst(word.replace(/_/g, ' '));
+  capitalizeFirst(word.replace(/_/g, " "));

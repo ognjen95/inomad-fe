@@ -1,7 +1,3 @@
-import Link from "next/link";
-import { Paper, Text, Button, TextVariant } from "ui-components";
-import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
-
 import TaskListWithCalendar from "~features/tasks/TaskListWithCalendar";
 
 const CaseAndTasksSidebar = () => (

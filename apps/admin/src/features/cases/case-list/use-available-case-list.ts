@@ -24,7 +24,8 @@ const useAvailableCaseList = (): UseAvailableCaseListReturn => {
     status: CaseStatus[node.status],
     createdAt: formatDate(node.createdAt),
     description: node.description ?? "",
-    familyMembers: node.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
+    familyMembers:
+      node.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
     applicant: {
       nationality: node.generalInfo?.nationality ?? "",
       firstName: node?.generalInfo?.firstName ?? "",

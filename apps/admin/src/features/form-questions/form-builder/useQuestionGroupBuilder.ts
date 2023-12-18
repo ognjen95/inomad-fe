@@ -4,10 +4,17 @@ import { useEffect } from "react";
 import { SubmitHandler, useFieldArray } from "react-hook-form";
 import { useForm, useModal } from "ui-components";
 
-import { QuestionGroupsDocument, QuestionType, useCreateQuestionGroupMutation } from "~graphql-api";
+import {
+  QuestionGroupsDocument,
+  QuestionType,
+  useCreateQuestionGroupMutation,
+} from "~graphql-api";
 
 import { DEFAULT_VALUE } from "../constants";
-import { FormQuestionGroupModel, UseQuestionGroupBuilderReturn } from "../types";
+import {
+  FormQuestionGroupModel,
+  UseQuestionGroupBuilderReturn,
+} from "../types";
 
 const useQuestionGroupBuilder = (): UseQuestionGroupBuilderReturn => {
   const [createQuestionGroup, { loading }] = useCreateQuestionGroupMutation();

@@ -1,17 +1,14 @@
 import { FC } from "react";
-import {
-  PaperColor,
-  Tabs,
-} from "ui-components";
+import { PaperColor, Tabs } from "ui-components";
 
-import FormBuilder from "./form-builder/FormBuilder";
-import QuestionGroups from "./question-groups/QuestionGroups";
-import useQuestionForm from "./form-builder/useQuestionGroupBuilder";
-import LayoutWithRightSidebarNoPadding from "../../layouts/LayoutWithRightSidebarNoPadding";
 import FormSidebars from "./components/FormSidebars";
-import TemplatesList from "./templates/TemplatesList";
+import FormBuilder from "./form-builder/FormBuilder";
+import useQuestionForm from "./form-builder/useQuestionGroupBuilder";
+import QuestionGroups from "./question-groups/QuestionGroups";
 import useQuestionGroups from "./question-groups/useQuestionGroups";
+import TemplatesList from "./templates/TemplatesList";
 import useTemplates from "./templates/useTemplates";
+import LayoutWithRightSidebarNoPadding from "../../layouts/LayoutWithRightSidebarNoPadding";
 
 export type FormTabsProps = {
   tab: string;
@@ -47,7 +44,6 @@ const FormTabs: FC<FormTabsProps> = ({ tab }) => {
     setIsCreationMode,
   } = useQuestionGroups();
 
-
   const {
     templates,
     selectedTab,
@@ -58,7 +54,7 @@ const FormTabs: FC<FormTabsProps> = ({ tab }) => {
     templateId,
     setTemplateId,
     assignTemplate,
-    assignLoading
+    assignLoading,
   } = useTemplates();
 
   return (
@@ -144,7 +140,7 @@ const FormTabs: FC<FormTabsProps> = ({ tab }) => {
           ]}
         />
       </div>
-    </LayoutWithRightSidebarNoPadding >
+    </LayoutWithRightSidebarNoPadding>
   );
 };
 

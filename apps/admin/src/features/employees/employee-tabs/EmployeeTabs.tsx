@@ -5,7 +5,6 @@ import SimpleTable from "~components/tables/SimpleTable";
 import OnboardEmployeeForm from "~features/employees/onboard-employee/OnboardEmployeeForm";
 import useOnboardEmployee from "~features/employees/onboard-employee/use-onboard-employee";
 
-import SearchInput from "../../../components/search/SearchInput";
 import { EmployeeListModel } from "../employee-list/types";
 import useEmployeeList from "../employee-list/use-employee-list";
 import useTableColumns from "../employee-list/use-table-columns";

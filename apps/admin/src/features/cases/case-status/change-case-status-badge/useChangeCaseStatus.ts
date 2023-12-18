@@ -3,8 +3,8 @@ import { DropdownMenuItem } from "ui-components/src/dropdown-menu/types";
 
 import { useToastContext } from "../../../../../context/toast/ToastContext";
 import { CaseStatus } from "../../../../common/enums";
-import { useChangeCaseStatusMutation } from "../../../../graphql-api";
 import { capitalizeFirst } from "../../../../common/utils/string'utils";
+import { useChangeCaseStatusMutation } from "../../../../graphql-api";
 
 const useChangeCaseStatus = (status: CaseStatus, caseId: string) => {
   const [change, { loading }] = useChangeCaseStatusMutation();

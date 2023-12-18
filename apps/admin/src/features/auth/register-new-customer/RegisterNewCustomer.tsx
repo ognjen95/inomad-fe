@@ -9,7 +9,6 @@ import {
   Paper,
   PaperColor,
   PaperRounded,
-  PhoneInputField,
   Progress,
   Text,
   TextAreaField,
@@ -17,7 +16,6 @@ import {
 } from "ui-components";
 import { ButtonColor, ButtonSize } from "ui-components/src/button/enums";
 
-import useStepper from "~components/stepper/useStepper";
 import FamilyInfoForm from "~features/cases/case-steps/family-info/FamilyInfoForm";
 
 import GeneralinfoForm from "./GeneralinfoForm";
@@ -223,7 +221,6 @@ const RegisterNewCustomer = () => {
               loading={loading}
               onClick={() => {
                 if (stepper.activeStep === 3) {
-                  console.log("first");
                   onSubmit();
                   return;
                 }

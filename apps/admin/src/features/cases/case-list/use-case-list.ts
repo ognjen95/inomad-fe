@@ -18,29 +18,30 @@ const useCaseList = (): UseCaseListReturn => {
       caseList: [],
     };
 
-  const caseList = data.providerCompany.cases.edges?.map<CaseListModel>(({ node }) => ({
-    name: node.name,
-    id: node.id,
-    status: CaseStatus[node.status],
-    createdAt: formatDate(node.createdAt),
-    description: node.description ?? "",
-    familyMembers: node.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
-    applicant: {
-      nationality: node.generalInfo?.nationality ?? "",
-      firstName: node.generalInfo?.firstName ?? "",
-      lastName: node.generalInfo?.lastName ?? "",
-      email: node.generalInfo?.email ?? "",
-      id: node.applicantsIds[0] ?? "",
-    },
-    employee: {
-      firstName: node.providers?.[0]?.firstName ?? "",
-      lastName: node.providers?.[0]?.lastName ?? "",
-      email: node.providers?.[0]?.email ?? "",
-      id: node.providers?.[0]?.id ?? "",
-    },
-  }));
-
-  console.log(caseList.map((c) => c.applicant));
+  const caseList = data.providerCompany.cases.edges?.map<CaseListModel>(
+    ({ node }) => ({
+      name: node.name,
+      id: node.id,
+      status: CaseStatus[node.status],
+      createdAt: formatDate(node.createdAt),
+      description: node.description ?? "",
+      familyMembers:
+        node.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
+      applicant: {
+        nationality: node.generalInfo?.nationality ?? "",
+        firstName: node.generalInfo?.firstName ?? "",
+        lastName: node.generalInfo?.lastName ?? "",
+        email: node.generalInfo?.email ?? "",
+        id: node.applicantsIds[0] ?? "",
+      },
+      employee: {
+        firstName: node.providers?.[0]?.firstName ?? "",
+        lastName: node.providers?.[0]?.lastName ?? "",
+        email: node.providers?.[0]?.email ?? "",
+        id: node.providers?.[0]?.id ?? "",
+      },
+    })
+  );
 
   return {
     modal,
