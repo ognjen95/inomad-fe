@@ -148,7 +148,11 @@ const SelectedQuestionGroups: FC<SelectedQuestionGroupsProps> = ({
                   size={ButtonSize.MEDIUM}
                   color={ButtonColor.RED}
                 >
-                  <Icon type={IconType.TRASH_FULL} size={IconSize.EXTRA_LARGE} stroke='white' />
+                  <Icon
+                    type={IconType.TRASH_FULL}
+                    size={IconSize.EXTRA_LARGE}
+                    stroke="white"
+                  />
                 </Button>
               )}
               <Button

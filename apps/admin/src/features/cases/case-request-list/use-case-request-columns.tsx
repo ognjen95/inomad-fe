@@ -36,9 +36,7 @@ const useCaseRequestColumns = (isProposal = false) => {
       cell: (cell) => (
         <div className="flex flex-col">
           <Text light>{cell.getValue()}</Text>
-          <Text light>
-            {cell.row.original.applicantEmail}
-          </Text>
+          <Text light>{cell.row.original.applicantEmail}</Text>
         </div>
       ),
       header: "Applicant",
@@ -46,15 +44,15 @@ const useCaseRequestColumns = (isProposal = false) => {
     }),
     columnHelper.accessor("familyMembers", {
       cell: (cell) => (
-        <Text light>{removeUnderscoreAndCapitalizeFirst(cell.getValue() ?? "")}</Text>
+        <Text light>
+          {removeUnderscoreAndCapitalizeFirst(cell.getValue() ?? "")}
+        </Text>
       ),
       header: "Family",
       size: 10,
     }),
     columnHelper.accessor("caseTotalCost", {
-      cell: (cell) => (
-        <Text light>{cell.getValue()}</Text>
-      ),
+      cell: (cell) => <Text light>{cell.getValue()}</Text>,
       header: "Price",
       size: 5,
     }),
@@ -62,7 +60,11 @@ const useCaseRequestColumns = (isProposal = false) => {
       cell: (cell) => (
         <div className="flex flex-col">
           <Text light>Created: {formatDate(cell.row.original.createdAt)}</Text>
-          <Text light>Deadline: {cell.row.original.caseDeadline && formatDate(cell.row.original.caseDeadline)}</Text>
+          <Text light>
+            Deadline:{" "}
+            {cell.row.original.caseDeadline &&
+              formatDate(cell.row.original.caseDeadline)}
+          </Text>
         </div>
       ),
       header: "Created At",
@@ -74,7 +76,8 @@ const useCaseRequestColumns = (isProposal = false) => {
       size: 15,
     }),
     columnHelper.accessor("id", {
-      cell: (cell) => !isProposal && <CaseRequestActions caseRequestId={cell.getValue()} />,
+      cell: (cell) =>
+        !isProposal && <CaseRequestActions caseRequestId={cell.getValue()} />,
       header: !isProposal ? "Actions" : "",
       size: 0,
     }),

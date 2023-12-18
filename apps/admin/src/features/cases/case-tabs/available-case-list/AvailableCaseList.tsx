@@ -1,18 +1,19 @@
-import React from 'react'
-import { useModal, Paper, PaperColor, Loader } from 'ui-components';
-import SearchInput from '../../../../components/search/SearchInput';
-import SimpleTable from '../../../../components/tables/SimpleTable';
-import { CaseListModel } from '../../case-list/types';
-import useAvailableCaseTableColumns from '../../case-list/use-available-case-columns';
-import CreateCaseProposalModal from '../../case-proposals/create-case-proposal/CreateCaseProposalModal';
-import useAvailableCaseList from '../../case-list/use-available-case-list';
+import React from "react";
+import { useModal, Paper, Loader } from "ui-components";
+
+import SearchInput from "../../../../components/search/SearchInput";
+import SimpleTable from "../../../../components/tables/SimpleTable";
+import { CaseListModel } from "../../case-list/types";
+import useAvailableCaseTableColumns from "../../case-list/use-available-case-columns";
+import useAvailableCaseList from "../../case-list/use-available-case-list";
+import CreateCaseProposalModal from "../../case-proposals/create-case-proposal/CreateCaseProposalModal";
 
 const AvailableCaseList = () => {
   const availableCaseModal = useModal<Partial<CaseListModel>>();
 
   const { caseList: availableCaseList, loading: availableLoading } =
     useAvailableCaseList();
-    
+
   const availableCaseColumns = useAvailableCaseTableColumns(availableCaseModal);
 
   return (
@@ -32,7 +33,7 @@ const AvailableCaseList = () => {
               columns={availableCaseColumns}
               data={availableCaseList}
               showHeader
-              isTransparent={true}
+              isTransparent
             />
             <CreateCaseProposalModal
               caseId={availableCaseModal.params?.id ?? ""}
@@ -46,7 +47,7 @@ const AvailableCaseList = () => {
         )}
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-export default AvailableCaseList
+export default AvailableCaseList;

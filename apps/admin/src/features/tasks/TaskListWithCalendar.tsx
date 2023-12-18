@@ -5,7 +5,7 @@ import CalendarAndTasks from "~features/tasks/common/CalendarAndTasks";
 import useTaskListWithCalendar from "./useTaskListWithCalendar";
 
 const TaskListWithCalendar: FC = () => {
-  const { tasks, loading, preview, create, modal, form, taskDataLoading, } =
+  const { tasks, loading, preview, create, modal, form, taskDataLoading } =
     useTaskListWithCalendar();
 
   return (

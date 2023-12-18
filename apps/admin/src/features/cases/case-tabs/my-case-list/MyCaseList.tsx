@@ -1,18 +1,19 @@
-import React from 'react'
-import { Paper, PaperColor, Loader } from 'ui-components';
-import { useModal } from 'ui-components/src/modal';
-import SearchInput from '../../../../components/search/SearchInput';
-import SimpleTable from '../../../../components/tables/SimpleTable';
-import AssignCaseModal from '../../assign-case/AssignCaseModal';
-import { CaseListModel } from '../../case-list/types';
-import useCaseList from '../../case-list/use-case-list';
-import useCaseTableColumns from '../../case-list/use-columns';
+import React from "react";
+import { Paper, PaperColor, Loader } from "ui-components";
+import { useModal } from "ui-components/src/modal";
+
+import SearchInput from "../../../../components/search/SearchInput";
+import SimpleTable from "../../../../components/tables/SimpleTable";
+import AssignCaseModal from "../../assign-case/AssignCaseModal";
+import { CaseListModel } from "../../case-list/types";
+import useCaseList from "../../case-list/use-case-list";
+import useCaseTableColumns from "../../case-list/use-columns";
 
 const MyCaseList = () => {
   const modal = useModal<Partial<CaseListModel>>();
 
   const { caseList, loading: casesLoading } = useCaseList();
-  
+
   const caseTableColumns = useCaseTableColumns(modal);
 
   return (
@@ -33,7 +34,7 @@ const MyCaseList = () => {
               columns={caseTableColumns}
               data={caseList}
               showHeader
-              isTransparent={true}
+              isTransparent
             />
             <AssignCaseModal
               caseId={modal.params?.id ?? ""}
@@ -47,7 +48,7 @@ const MyCaseList = () => {
         )}
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-export default MyCaseList
+export default MyCaseList;

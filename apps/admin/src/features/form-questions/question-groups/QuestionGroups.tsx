@@ -47,15 +47,17 @@ const QuestionGroups: FC<QuestionGroupsProps> = ({
   isCreationMode,
 }) => (
   <div className="flex flex-wrap px-2">
-      <div className="w-full flex justify-between items-center space-x-5 pb-3">
-        <div className='pl-5'>
+    <div className="w-full flex justify-between items-center space-x-5 pb-3">
+      <div className="pl-5">
         <Text variant={TextVariant.HEADING5}>
-          Question group list {!!selectedGroups.length && `(${selectedGroups.length})`}
-        </Text>        </div>
-        <div className="flex justify-between items-center space-x-5">
-          <SearchInput placeholder="Search templates..." />
-        </div>
+          Question group list{" "}
+          {!!selectedGroups.length && `(${selectedGroups.length})`}
+        </Text>{" "}
       </div>
+      <div className="flex justify-between items-center space-x-5">
+        <SearchInput placeholder="Search templates..." />
+      </div>
+    </div>
     {questionGroups?.map((group) => {
       if (selectedGroups.includes(group.id)) return null;
 

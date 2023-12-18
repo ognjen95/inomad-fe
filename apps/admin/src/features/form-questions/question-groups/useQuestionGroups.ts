@@ -1,9 +1,15 @@
 import { useMemo, useState } from "react";
 import { useModal } from "ui-components";
-import { useToastContext } from "../../../../context/toast/ToastContext";
-import { QuestionGroupEntity, namedOperations, useCreateTemplateMutation, useQuestionGroupsQuery } from "../../../graphql-api";
 
- const useQuestionGroups = () => {
+import { useToastContext } from "../../../../context/toast/ToastContext";
+import {
+  QuestionGroupEntity,
+  namedOperations,
+  useCreateTemplateMutation,
+  useQuestionGroupsQuery,
+} from "../../../graphql-api";
+
+const useQuestionGroups = () => {
   const { success } = useToastContext();
   const { data } = useQuestionGroupsQuery({
     variables: {
@@ -68,16 +74,16 @@ import { QuestionGroupEntity, namedOperations, useCreateTemplateMutation, useQue
   };
 
   const selectedQuestionGroups = useMemo(
-    () => selectedGroups.map(
-      (id) => questionGroups.find((group) => group.id === id)!
-    ), [selectedGroups, questionGroups]
+    () =>
+      selectedGroups.map(
+        (id) => questionGroups.find((group) => group.id === id)!
+      ),
+    [selectedGroups, questionGroups]
   );
 
   const removeSelectedQuestionGroup = (id) => {
-    setSelectedGroups((prev) =>
-      prev.filter((group) => group !== id)
-    );
-  }
+    setSelectedGroups((prev) => prev.filter((group) => group !== id));
+  };
 
   return {
     questionGroups,
@@ -95,8 +101,8 @@ import { QuestionGroupEntity, namedOperations, useCreateTemplateMutation, useQue
     setIsCreationMode,
     createTemplateLoading,
     selectedQuestionGroups,
-    removeSelectedQuestionGroup
-  }
-}
+    removeSelectedQuestionGroup,
+  };
+};
 
 export default useQuestionGroups;

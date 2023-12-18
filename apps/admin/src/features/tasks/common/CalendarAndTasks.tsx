@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
+import { Loader } from "ui-components";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
 
 import Calendar from "./Calendar";
@@ -8,7 +9,6 @@ import { DEFAULT_VALUES } from "../task-form/constants";
 import TaskModal from "../task-form/TaskFormModal";
 import { TaskFormModel } from "../task-form/types";
 import { Task } from "../types";
-import { Loader } from "ui-components";
 
 type CalendarAndTasksProps = {
   createTask: SubmitHandler<TaskFormModel>;
@@ -43,9 +43,7 @@ const CalendarAndTasks: FC<CalendarAndTasksProps> = ({
         />
       </div>
     </div>
-    {taskDataLoading && (
-      <Loader centered />
-    )}
+    {taskDataLoading && <Loader centered />}
     <TaskModal
       taskId={modal.params?.id}
       form={form}

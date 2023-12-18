@@ -1,10 +1,11 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import Image from "next/image";
 import Link from "next/link";
 import { Icon, IconType, Text } from "ui-components";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
 
 import CaseStatusBadge from "~components/badges/CaseStatusBadge";
-import Image from 'next/image';
+
 import CaseActions from "./case-actions/CaseActions";
 import { CaseListModel, CaseUserModel } from "./types";
 import getCountryFlagAndName from "../../../common/helpers/getCountryFlagAndName";
@@ -39,7 +40,6 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
           <Text light truncate>
             {`${cell.getValue().firstName} ${cell.getValue().lastName}`}
           </Text>
-
         </div>
       ),
       header: "Applicant",
@@ -50,17 +50,18 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
         const country = getCountryFlagAndName(cell.getValue().nationality);
         return (
           <div className="flex items-center space-x-3">
-            {country && <Image
-              className="rounded-full"
-              height={30}
-              width={30}
-              alt="flag"
-              src={country?.prefixImgUrl ?? ""}
-            />
-            }
+            {country && (
+              <Image
+                className="rounded-full"
+                height={30}
+                width={30}
+                alt="flag"
+                src={country?.prefixImgUrl ?? ""}
+              />
+            )}
             <Text light>{country?.label}</Text>
           </div>
-        )
+        );
       },
       header: "Nationality",
       size: 15,
@@ -68,7 +69,9 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
     columnHelper.accessor("familyMembers", {
       cell: (cell) => (
         <div className="flex flex-col">
-          <Text light>{removeUnderscoreAndCapitalizeFirst(cell.getValue())}</Text>
+          <Text light>
+            {removeUnderscoreAndCapitalizeFirst(cell.getValue())}
+          </Text>
         </div>
       ),
       header: "Family",
@@ -78,7 +81,9 @@ const useCaseTableColumns = (modal: UseModalReturn<Partial<CaseListModel>>) => {
       cell: (cell) => (
         <div className="flex flex-col">
           <Text light>
-            {`${cell.getValue().firstName} ${cell.getValue().lastName}`}
+            {`${cell.getValue().firstName ?? ""} ${
+              cell.getValue().lastName ?? ""
+            }`}
           </Text>
         </div>
       ),

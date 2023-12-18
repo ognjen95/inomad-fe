@@ -15,13 +15,13 @@ const useFileUpload = (): UseFileUploadReturn => {
   const [getPresigned, { loading }] = usePresignedUrlLazyQuery({
     fetchPolicy: "network-only",
   });
-  const [isFileUploading, setIsFileUploading] = useState(false);
+  const [isFileUploading] = useState(false);
 
   const getPresignedUrls = async (
     fileNames: string[]
   ): Promise<Array<IdAndLink | null>> => {
     if (!fileNames?.length) return [];
-    
+
     const { data: links } = await getPresigned({
       fetchPolicy: "network-only",
       variables: {

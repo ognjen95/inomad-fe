@@ -3,11 +3,7 @@ import { ApplicantFamilyMembers, CaseStatus } from "src/common/enums";
 import { Option } from "ui-components/src/select/types";
 
 import { UseStepperReturn } from "~components/stepper/useStepper";
-import {
-  ApplicantFamilyMembers as ApplicantFamilyMembersGql,
-  FamilyInfo,
-  QuestionType,
-} from "~graphql-api";
+import { FamilyInfo, QuestionType } from "~graphql-api";
 
 export type CaseGeneralInfo = {
   birthday?: Date;

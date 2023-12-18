@@ -1,8 +1,8 @@
 import { FieldValues } from "react-hook-form";
 import { SelectField, SelectFieldProps } from "ui-components";
+import { Option } from "ui-components/src/radio/types";
 
 import useEmployeeList from "../use-employee-list";
-import { Option } from "ui-components/src/radio/types";
 
 export type EmployeesSelectFieldProps<
   TFormValues extends FieldValues = FieldValues
@@ -19,7 +19,7 @@ const EmployeesSelectField = <TFormValues extends FieldValues = FieldValues>({
   const options = employeeList.map<Option>((employee) => ({
     label: employee.name,
     value: employee.id,
-    prefixImgUrl: '/images/jenny-wilson.jpeg',
+    prefixImgUrl: "/images/jenny-wilson.jpeg",
   }));
 
   return (

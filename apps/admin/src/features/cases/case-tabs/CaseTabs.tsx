@@ -2,16 +2,16 @@ import { useSearchParams } from "next/navigation";
 import { FC, useState } from "react";
 import { Tabs } from "ui-components";
 
-import { tabMapper } from "./tabs-mapper";
-import MyCaseList from "./my-case-list/MyCaseList";
 import AvailableCaseList from "./available-case-list/AvailableCaseList";
-import MyProposalsList from "./my-proposals-list/MyProposalsList";
 import CaseRequestsList from "./case-requests-list.tsx/CaseRequestsList";
+import MyCaseList from "./my-case-list/MyCaseList";
+import MyProposalsList from "./my-proposals-list/MyProposalsList";
+import { tabMapper } from "./tabs-mapper";
 
 const CaseTabs: FC = () => {
   const { get } = useSearchParams();
-  const tab = tabMapper(get("tab") as string);
-  const [selectedTab, setSelectedTab] = useState<string>(tab);
+  const defaultTab = tabMapper(get("tab") as string);
+  const [selectedTab, setSelectedTab] = useState<string>(defaultTab);
 
   return (
     <Tabs

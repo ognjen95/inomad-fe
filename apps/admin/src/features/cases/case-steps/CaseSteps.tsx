@@ -54,9 +54,7 @@ const CaseSteps: FC<CaseStepsProps> = ({ onCancel }) => {
               />
             )}
             {!caseId && generalApplicantData?.caseStatus && (
-              <CaseStatusBadge
-                status={generalApplicantData.caseStatus}
-              />
+              <CaseStatusBadge status={generalApplicantData.caseStatus} />
             )}
           </div>
           <CaseSidebar steps={steps} stepper={stepper} />
@@ -80,7 +78,11 @@ const CaseSteps: FC<CaseStepsProps> = ({ onCancel }) => {
               steps={[
                 {
                   name: "General Information",
-                  component: <CaseGeneralInfoStep generalApplicantData={generalApplicantData} />,
+                  component: (
+                    <CaseGeneralInfoStep
+                      generalApplicantData={generalApplicantData}
+                    />
+                  ),
                 },
                 ...fieldArray.fields.map((step, stepIndex) => ({
                   name: step.name,
