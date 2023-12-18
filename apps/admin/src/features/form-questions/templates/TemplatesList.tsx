@@ -3,10 +3,7 @@ import { FC } from "react";
 import {
   Button,
   Text,
-  Paper,
-  Icon,
   IconType,
-  IconSize,
   TextVariant,
   IconButton,
   DropdownMenu,

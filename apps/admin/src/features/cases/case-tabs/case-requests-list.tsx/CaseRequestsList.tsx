@@ -1,10 +1,11 @@
-import React from 'react'
-import useCaseRequestColumns from '../../case-request-list/use-case-request-columns';
-import useCaseRequestList from '../../case-request-list/use-case-request-list';
-import { Paper, PaperColor, Loader } from 'ui-components';
-import SearchInput from '../../../../components/search/SearchInput';
-import SimpleTable from '../../../../components/tables/SimpleTable';
-import { CaseRequestListModel } from '../../case-request-list/types';
+import React from "react";
+import { Paper, PaperColor, Loader } from "ui-components";
+
+import SearchInput from "../../../../components/search/SearchInput";
+import SimpleTable from "../../../../components/tables/SimpleTable";
+import { CaseRequestListModel } from "../../case-request-list/types";
+import useCaseRequestColumns from "../../case-request-list/use-case-request-columns";
+import useCaseRequestList from "../../case-request-list/use-case-request-list";
 
 const CaseRequestsList = () => {
   const { caseRequestList, loading: requestsLoading } = useCaseRequestList();
@@ -28,7 +29,7 @@ const CaseRequestsList = () => {
               columns={caseRequestsTableColumns}
               data={caseRequestList}
               showHeader
-              isTransparent={true}
+              isTransparent
             />
           </div>
         ) : (
@@ -36,7 +37,7 @@ const CaseRequestsList = () => {
         )}
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-export default CaseRequestsList
+export default CaseRequestsList;

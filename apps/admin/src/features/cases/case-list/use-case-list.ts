@@ -43,8 +43,6 @@ const useCaseList = (): UseCaseListReturn => {
     })
   );
 
-  console.log(caseList.map((c) => c.applicant));
-
   return {
     modal,
     caseList,

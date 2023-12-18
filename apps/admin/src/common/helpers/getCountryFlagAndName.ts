@@ -1,14 +1,16 @@
-import { COUNTRIES, Option } from 'ui-components'
+import { COUNTRIES, Option } from "ui-components";
 
 const getCountryFlagAndName = (countryName: string): Option | null => {
-  const country = COUNTRIES.find((country) => country.value === countryName);
+  const foundCountry = COUNTRIES.find(
+    (country) => country.value === countryName
+  );
 
-  if (!country) return null;
+  if (!foundCountry) return null;
 
   return {
-    ...country,
+    ...foundCountry,
     prefixImgUrl: `https://purecatamphetamine.github.io/country-flag-icons/1x1/${countryName}.svg`,
   };
-}
+};
 
-export default getCountryFlagAndName
+export default getCountryFlagAndName;

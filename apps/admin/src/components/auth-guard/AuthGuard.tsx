@@ -11,7 +11,7 @@ import { FCWithChildren, Loader, LoaderSize } from "ui-components";
 import { UserRoles as UserRolesGql } from "~graphql-api";
 
 import { userInfoAtom } from "./atoms";
-import { MAIN_NAV_MAPPER } from "../sidebar-container/constants";
+// import { MAIN_NAV_MAPPER } from "../sidebar-container/constants";
 
 const AuthGuard: FCWithChildren = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true); // change to true default
@@ -72,7 +72,7 @@ const AuthGuard: FCWithChildren = ({ children }) => {
         case UserRolesGql.ProviderSupervisor:
           // const providerPaths = MAIN_NAV_MAPPER[UserRoles.PROVIDER_SUPERVISOR]
           //  providerPaths.some((path) => path.link === pathname) ? null : replace(providerPaths[0].link);
-          
+
           setUserRole((prev) => ({
             ...prev,
             userRole: UserRoles.PROVIDER_SUPERVISOR,

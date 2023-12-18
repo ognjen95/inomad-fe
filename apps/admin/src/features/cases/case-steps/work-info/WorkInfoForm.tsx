@@ -33,11 +33,11 @@ const WorkInfoForm: FC<WorkInfoFormProps> = ({ form, onSubmit, formName }) => (
           isLargeSize
           options={[
             {
-              content: "Employment contract",
+              label: "Employment contract",
               value: "employment",
             },
             {
-              content: "Service contract",
+              label: "Service contract",
               value: "service-contract",
             },
           ]}

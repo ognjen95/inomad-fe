@@ -50,11 +50,11 @@ const OnboardEmployeeForm: FC<OnboardEmployeeFormProps> = ({
           defaultValue={UserRoles.PROVIDER_EMPLOYEE}
           options={[
             {
-              content: "Supervisor",
+              label: "Supervisor",
               value: UserRoles.PROVIDER_SUPERVISOR,
             },
             {
-              content: "Regular Employee",
+              label: "Regular Employee",
               value: UserRoles.PROVIDER_EMPLOYEE,
             },
           ]}

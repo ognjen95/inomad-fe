@@ -9,7 +9,6 @@ import {
   IconType,
   Input,
   Paper,
-  PaperColor,
   PaperRounded,
   Progress,
   Tabs,
