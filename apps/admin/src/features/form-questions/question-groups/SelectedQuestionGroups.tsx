@@ -15,7 +15,7 @@ import { UseModalReturn } from "ui-components/src/modal/useModal";
 
 import { QuestionGroupEntity } from "~graphql-api";
 
-import GroupCard from "../cards/GroupCard";
+import GroupCard from "../components/GroupCard";
 
 export type SelectedQuestionGroupsProps = {
   questionGroups: Array<QuestionGroupEntity>;
@@ -44,20 +44,27 @@ const SelectedQuestionGroups: FC<SelectedQuestionGroupsProps> = ({
 }) => {
   if (!questionGroups?.length)
     return (
-      <div className="h-full flex items-center justify-center flex-col space-y-3 px-5">
+      <div className="h-full flex items-center justify-center flex-col space-y-10 px-5">
         <EmptyList
           disableFullHeight
           url="/images/empty-file.png"
           title="Add Question Groups"
-          description="Select questions or dragg them here to create a template"
+          description="Click ''Create new template'' button and add question groups to your template."
         />
-        <Button
-          shadow
-          onClick={isCreationMode ? exitCreationMode : enterCreationMode}
-          color={isCreationMode ? ButtonColor.RED : ButtonColor.GRADIENT}
-        >
-          {isCreationMode ? "Exit creation mode" : "Start Template Creation"}
-        </Button>
+        <div className="space-y-3">
+          <Button
+            leftIcon={{
+              type: isCreationMode ? IconType.TRASH_FULL : IconType.PLUS,
+            }}
+            fullWidth
+            size={ButtonSize.MEDIUM}
+            shadow
+            onClick={isCreationMode ? exitCreationMode : enterCreationMode}
+            color={isCreationMode ? ButtonColor.RED : ButtonColor.PRIMARY}
+          >
+            {isCreationMode ? "Exit creation mode" : "Create New Template"}
+          </Button>
+        </div>
       </div>
     );
 
@@ -139,9 +146,9 @@ const SelectedQuestionGroups: FC<SelectedQuestionGroupsProps> = ({
                     exitCreationMode?.();
                   }}
                   size={ButtonSize.MEDIUM}
-                  color={ButtonColor.TRANSPARENT}
+                  color={ButtonColor.RED}
                 >
-                  <Icon type={IconType.REDO} size={IconSize.EXTRA_LARGE} />
+                  <Icon type={IconType.TRASH_FULL} size={IconSize.EXTRA_LARGE} stroke='white' />
                 </Button>
               )}
               <Button
@@ -155,7 +162,7 @@ const SelectedQuestionGroups: FC<SelectedQuestionGroupsProps> = ({
                 onClick={() => templateModal.open()}
                 size={ButtonSize.MEDIUM}
               >
-                Template
+                Create
               </Button>
             </div>
           </Paper>

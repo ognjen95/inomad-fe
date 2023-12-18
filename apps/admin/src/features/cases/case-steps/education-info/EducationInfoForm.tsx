@@ -1,15 +1,6 @@
 import React, { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import {
-  FileUploadInput,
-  Form,
-  InputField,
-  InputType,
-  RadioField,
-  SelectField,
-  Text,
-  TextVariant,
-} from "ui-components";
+import { Form, InputField, Text, TextVariant } from "ui-components";
 import { FileType } from "ui-components/src/file-upload-input/enums";
 
 import FileUploadInputField from "~components/file-upload-input-field";

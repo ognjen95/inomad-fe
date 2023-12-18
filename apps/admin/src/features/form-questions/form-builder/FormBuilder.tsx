@@ -16,7 +16,7 @@ import { ButtonColor } from "ui-components/src/button/enums";
 import { colors } from "ui-components/src/config/tailwind-config";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
 
-import FormQuestion from "../form-question/FormQuestion";
+import FormQuestion from "./FormQuestion";
 import { FormQuestionGroupModel } from "../types";
 
 export type FormBuilderProps = {
@@ -49,7 +49,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
       <Form fullHeight form={form} formName="form-builder">
         {({ control }) => (
           <div className="h-full flex-col flex-grow space-y-2 overflow-y-auto no-scrollbar p-3 relative">
-            <div className="flex items-center justify-end pr-5">
+            {/* <div className="flex items-center justify-end pr-5">
               <Button
                 color={ButtonColor.GREY}
                 leftIcon={{
@@ -61,7 +61,7 @@ const FormBuilder: FC<FormBuilderProps> = ({
               >
                 Collapse All
               </Button>
-            </div>
+            </div> */}
             {!questionsForm.fields.length && (
               <EmptyList
                 url="/images/empty-file.png"

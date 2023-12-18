@@ -36,7 +36,7 @@ const TaskList: FC<TaskListProps> = ({ openModal, previewTask, tasks }) => {
         </Button>
       </div>
       <div
-        className={clsx("flex flex-col space-y-2 flex-grow overflow-y-auto", {
+        className={clsx("flex flex-col space-y-2 flex-1 overflow-y-auto", {
           "no-scrollbar": !isScrollVisible,
         })}
       >
@@ -47,7 +47,6 @@ const TaskList: FC<TaskListProps> = ({ openModal, previewTask, tasks }) => {
             name={task.name}
             startDate={task.startDate}
             endDate={task.endDate}
-            id={task.id}
           />
         ))}
       </div>

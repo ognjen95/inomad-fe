@@ -41,7 +41,7 @@ const GroupCard: FC<GroupCardProps> = ({
       onClick={onClick}
       className="p-2 flex items-center space-x-5"
     >
-      <div className="p-2 rounded-xl bg-secondary-500">
+      <div className="p-2 rounded-2xl bg-secondary-500">
         <Icon
           type={IconType.FILE_DOCUMENT}
           fill="none"
@@ -49,7 +49,7 @@ const GroupCard: FC<GroupCardProps> = ({
           size={IconSize.XXL}
         />
       </div>
-      <div className="flex flex-col justify-center flex-1">
+      <div className="flex flex-col justify-center flex-1 overflow-hidden">
         <Text variant={TextVariant.BODY2} bolded truncate>
           {name}
         </Text>

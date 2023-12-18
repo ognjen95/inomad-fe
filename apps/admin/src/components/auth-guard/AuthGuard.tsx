@@ -11,9 +11,10 @@ import { FCWithChildren, Loader, LoaderSize } from "ui-components";
 import { UserRoles as UserRolesGql } from "~graphql-api";
 
 import { userInfoAtom } from "./atoms";
+import { MAIN_NAV_MAPPER } from "../sidebar-container/constants";
 
 const AuthGuard: FCWithChildren = ({ children }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false); // change to true default
+  const [isLoading, setIsLoading] = useState<boolean>(true); // change to true default
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const setUserRole = useSetAtom(userInfoAtom);
   const { replace } = useRouter();
@@ -43,6 +44,8 @@ const AuthGuard: FCWithChildren = ({ children }) => {
 
       switch (decodedIdToken.userRole) {
         case UserRolesGql.Customer:
+          // const paths = MAIN_NAV_MAPPER[UserRoles.CUSTOMER]
+          // paths.some((path) => path.link === pathname) ? null : replace(paths[0].link);
           setUserRole((prev) => ({
             ...prev,
             userRole: UserRoles.CUSTOMER,
@@ -67,6 +70,9 @@ const AuthGuard: FCWithChildren = ({ children }) => {
           }));
           break;
         case UserRolesGql.ProviderSupervisor:
+          // const providerPaths = MAIN_NAV_MAPPER[UserRoles.PROVIDER_SUPERVISOR]
+          //  providerPaths.some((path) => path.link === pathname) ? null : replace(providerPaths[0].link);
+          
           setUserRole((prev) => ({
             ...prev,
             userRole: UserRoles.PROVIDER_SUPERVISOR,
@@ -88,8 +94,7 @@ const AuthGuard: FCWithChildren = ({ children }) => {
         return;
       }
 
-      // check role and redirect to appropriate application
-
+      // check role and redirect to appropriate applications
       setIsLoading(false);
       setIsAuthenticated(true);
     }

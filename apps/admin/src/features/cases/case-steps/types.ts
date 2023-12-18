@@ -1,7 +1,13 @@
+import { UseFieldArrayReturn, UseFormReturn } from "react-hook-form";
 import { ApplicantFamilyMembers, CaseStatus } from "src/common/enums";
 import { Option } from "ui-components/src/select/types";
 
-import { QuestionType } from "~graphql-api";
+import { UseStepperReturn } from "~components/stepper/useStepper";
+import {
+  ApplicantFamilyMembers as ApplicantFamilyMembersGql,
+  FamilyInfo,
+  QuestionType,
+} from "~graphql-api";
 
 export type CaseGeneralInfo = {
   birthday?: Date;
@@ -148,4 +154,28 @@ export type QuestionStepsModel = {
     documentId: string;
     documentFileId: string;
   }[];
+};
+
+export type GeneralApplicantData = {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  birthday: Date | null;
+  nationality: string;
+  caseName: string;
+  familyMembers: FamilyInfo | null;
+  caseStatus: CaseStatus | null;
+  caseDescription: string;
+};
+
+export type UseCaseStepsReturn = {
+  form: UseFormReturn<CaseStepsFormModel>;
+  fieldArray: UseFieldArrayReturn<CaseStepsFormModel, "questionGroups", "id">;
+  onSubmit: () => void;
+  stepper: UseStepperReturn;
+  loadingUpdate?: boolean;
+  steps: QuestionGroup[];
+  generalApplicantData: GeneralApplicantData;
 };

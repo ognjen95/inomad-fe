@@ -45,6 +45,7 @@ const PdfViewer: FC<PdfViewerProps> = ({ src, file }) => {
       <Document
         file={src || URL.createObjectURL(file!)}
         onLoadSuccess={onDocumentLoadSuccess}
+        className="w-fit mx-auto"
       >
         {Array.from(Array(numPages), (_, index) => (
           <div key={index + 1}>

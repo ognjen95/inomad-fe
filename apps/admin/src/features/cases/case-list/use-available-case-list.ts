@@ -1,5 +1,5 @@
-import { CaseStatus } from "src/common/enums";
-import { formatDate } from "src/utils/date-utils";
+import { ApplicantFamilyMembers, CaseStatus } from "src/common/enums";
+import { formatDate } from "src/common/utils/date-utils";
 import { useModal } from "ui-components";
 
 import { useAvailableCasesQuery } from "~graphql-api";
@@ -23,11 +23,14 @@ const useAvailableCaseList = (): UseAvailableCaseListReturn => {
     id: node.id,
     status: CaseStatus[node.status],
     createdAt: formatDate(node.createdAt),
+    description: node.description ?? "",
+    familyMembers: node.familyInfo?.familyMembers ?? ApplicantFamilyMembers.Alone,
     applicant: {
-      firstName: node.applicants?.[0].firstName ?? "",
-      lastName: node.applicants?.[0].lastName ?? "",
-      email: node.applicants?.[0].email ?? "",
-      id: node.applicants?.[0].id ?? "",
+      nationality: node.generalInfo?.nationality ?? "",
+      firstName: node?.generalInfo?.firstName ?? "",
+      lastName: node?.generalInfo?.lastName ?? "",
+      email: "",
+      id: node?.applicantsIds?.[0] ?? "",
     },
   }));
 

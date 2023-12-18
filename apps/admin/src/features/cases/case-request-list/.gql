@@ -1,16 +1,19 @@
-query ProviderCompanyCaseRequests {
+query ProviderCompanyCaseRequests ($options: CaseQueryOptionsInput) {
   providerCompany {
-    caseRequests {
+    caseRequests(options: $options) {
       edges {
         node {
           applicantId
-          caseId
+          deadline
+          totalCost
           createdAt
+          caseId
           id
           providerCompanyId
           status
           updatedAt
           case {
+            description
             id
             name
             applicants {
@@ -18,6 +21,9 @@ query ProviderCompanyCaseRequests {
               lastName
               id
               email
+            }
+            familyInfo {
+              familyMembers
             }
           }
         }

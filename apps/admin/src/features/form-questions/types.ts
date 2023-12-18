@@ -29,6 +29,12 @@ export type FormQuestion = {
   documentName?: string | null;
 };
 
+export type Template = {
+  id: string;
+  name: string;
+  questionGroupIds: Array<string>;
+};
+
 export type FormQuestionGroupModel = {
   name: string;
   questions: FormQuestion[];

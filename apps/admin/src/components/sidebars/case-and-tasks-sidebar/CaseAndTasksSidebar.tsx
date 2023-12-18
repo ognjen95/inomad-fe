@@ -6,8 +6,8 @@ import TaskListWithCalendar from "~features/tasks/TaskListWithCalendar";
 
 const CaseAndTasksSidebar = () => (
   <div className="flex flex-col space-y-5 h-full overflow-hidden px-5 pt-5">
-    <div className="h-min-fit">
-      <Paper title="Case requests" titleClassName="text-gray-900">
+    {/* <div className="h-min-fit">
+      <Paper fullHeight title="Case requests" titleClassName="text-gray-900">
         <div className="flex flex-col space-y-5 flex-grow">
           <div className="flex flex-col space-y-2">
             <Text light variant={TextVariant.BODY2}>
@@ -29,7 +29,7 @@ const CaseAndTasksSidebar = () => (
           </Link>
         </div>
       </Paper>
-    </div>
+    </div> */}
     <TaskListWithCalendar />
   </div>
 );

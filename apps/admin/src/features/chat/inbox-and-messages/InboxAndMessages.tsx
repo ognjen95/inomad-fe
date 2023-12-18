@@ -23,7 +23,7 @@ const InboxAndMessages: FC = () => {
   if (loading || !userId) return null;
 
   return (
-    <div className="w-full p-5 h-screen ">
+    <div className="w-full h-screen ">
       <LazyChat
         appId={APP_ID}
         chatId={chatId}

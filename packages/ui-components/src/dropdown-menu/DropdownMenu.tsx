@@ -1,6 +1,6 @@
 import * as RadixDropdownMenu from "@radix-ui/react-dropdown-menu";
 import clsx from "clsx";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
 import DropdownItem from "./DropdownItem";
 import { CustomDropdownMenuItem, DropdownMenuItem } from "./types";
@@ -27,6 +27,7 @@ export type DropdownMenuProps = {
   isScrollable?: boolean;
   iconHover?: string;
   rounded?: boolean;
+  loading?: boolean;
 };
 
 const DropdownMenu: FC<DropdownMenuProps> = ({
@@ -44,10 +45,16 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
   iconHover,
   isScrollable = true,
   rounded,
+  loading,
 }) => {
   const [selectedItemLabel, setSelectedItemLabel] = useState<string>(
     items.length > 0 ? items[0].label : ""
   );
+
+  useEffect(() => {
+    if (items.length) setSelectedItemLabel(items[0].label);
+  }, [items]);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOnMenuItemClick = (shouldClose: boolean, itemLabel?: string) => {
@@ -82,7 +89,7 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
                 <Button
                   size={triggerButtonSize}
                   color={triggerButtonColor}
-                  leftIcon={{
+                  rightIcon={{
                     type: iconType,
                     fill: iconColor,
                     stroke: iconColor,
@@ -90,9 +97,11 @@ const DropdownMenu: FC<DropdownMenuProps> = ({
                   isActive={isOpen}
                   fullWidth
                 >
-                  <div className={triggerClassNames || ""}>
-                    {showSelectedLabel ? selectedItemLabel : label}
-                  </div>
+                  {loading ? (
+                    <Text color="white">Loading...</Text>
+                  ) : (
+                    <div>{showSelectedLabel ? selectedItemLabel : label}</div>
+                  )}
                 </Button>
               )}
             </div>

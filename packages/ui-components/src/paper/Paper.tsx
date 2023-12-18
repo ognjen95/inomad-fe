@@ -22,9 +22,13 @@ export type PaperProps = {
   rounded?: PaperRounded;
   hideTitlePadding?: boolean;
   titleTruncate?: boolean;
+  animateUp?: boolean;
+  container?: boolean;
+  actionEnd?: ReactNode;
 };
 
 const Paper: FCWithChildren<PaperProps> = ({
+  animateUp = false,
   children,
   fullHeight = false,
   fullWidth = false,
@@ -38,25 +42,31 @@ const Paper: FCWithChildren<PaperProps> = ({
   titleSize = TextVariant.HEADING6,
   action,
   allowShadowHover = false,
-  rounded = PaperRounded.XXL,
+  rounded = PaperRounded.XXXL,
   hideTitlePadding = false,
   titleTruncate = false,
+  container,
+  actionEnd = true,
 }) => (
   <div
     className={clsx(
-      "flex flex-col transition-all ease-in-out duration-300 z-10",
+      "flex flex-col transition-all ease-in-out duration-300 z-10 border",
       rounded,
-      color,
+      !container && color,
       {
-        "shadow-xs shadow-primary-200": showShadow && !allowShadowHover,
-        "shadow-xs shadow-primary-200 hover:shadow-sm hover:shadow-primary-300 transition-all ease-in-out duration-300":
-          allowShadowHover && showShadow,
+        "shadow-xs shadow-primary-100":
+          !container && showShadow && !allowShadowHover,
+        "shadow-xs shadow-primary-100 hover:shadow-sm hover:shadow-primary-300 transition-all ease-in-out duration-300":
+          !container && allowShadowHover && showShadow,
         "w-full": fullWidth,
         "h-full": fullHeight,
         "hover:bg-gray-100": allowHover,
-        "py-4 px-6": !noPadding,
+        "py-4 px-6": !container && !noPadding,
+        "p-6": container && !noPadding,
         "p-0": noPadding,
-        "border border-gray-50": color !== PaperColor.TRANSPARENT,
+        "border-gray-50": color !== PaperColor.TRANSPARENT,
+        "border-transparent": color === PaperColor.TRANSPARENT,
+        "animate-slideUpAndFade": animateUp,
       }
     )}
   >
@@ -64,22 +74,25 @@ const Paper: FCWithChildren<PaperProps> = ({
       <div
         className={clsx(
           {
-            "mb-3": !hideTitlePadding,
+            "mb-5": !hideTitlePadding,
+            "justify-between": actionEnd,
           },
-          "flex items-center justify-between w-full",
+          "flex items-center w-full",
           textWrapperClassName
         )}
       >
-        {title && (
-          <Text
-            truncate={titleTruncate}
-            variant={titleSize ?? TextVariant.HEADING6}
-            customClasses={titleClassName}
-          >
-            {title}
-          </Text>
-        )}
-        {action}
+        <div>
+          {title && (
+            <Text
+              truncate={titleTruncate}
+              variant={titleSize ?? TextVariant.HEADING6}
+              customClasses={titleClassName}
+            >
+              {title}
+            </Text>
+          )}
+        </div>
+        <div>{action}</div>
       </div>
     )}
     {children}

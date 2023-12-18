@@ -4,7 +4,7 @@ import { Paper, InputField, SelectField, RadioField } from "ui-components";
 import { Option } from "ui-components/src/select/types";
 
 import FileUploadInputField from "~components/file-upload-input-field";
-import { DocumentType, QuestionType } from "~graphql-api";
+import { QuestionType } from "~graphql-api";
 
 import { CaseStepsFormModel } from "./types";
 
@@ -12,35 +12,38 @@ export type CaseQuestionProps = {
   text: string;
   type: QuestionType;
   options?: Option[];
-  documentName?: string;
-  documentType?: DocumentType | undefined;
-  documentId?: string;
+  // documentName?: string;
+  // documentType?: DocumentType | undefined;
+  // documentId?: string;
   documentFileId?: string;
   control: Control<CaseStepsFormModel>;
   stepIndex: number;
   questionIndex: number;
+  isViewMode?: boolean;
 };
 
 const CaseQuestion: FC<CaseQuestionProps> = ({
   text,
   type,
   options = [],
-  documentName,
-  documentType,
-  documentId,
+  // documentName,
+  // documentType,
+  // documentId,
   documentFileId,
   control,
   stepIndex,
   questionIndex,
+  isViewMode = false,
 }) => {
   if (type === QuestionType.Text) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <InputField
           control={control}
           fieldName={`questionGroups.${stepIndex}.questions.${questionIndex}.answers.0`}
           placeholder="Type here..."
           label="Please type answer for this question"
+          readonly={isViewMode}
         />
       </Paper>
     );
@@ -48,7 +51,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   if (type === QuestionType.Select || type === QuestionType.Multiselect) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <SelectField
           control={control}
           fieldName={`questionGroups.${stepIndex}.questions.${questionIndex}.answers`}
@@ -67,7 +70,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   if (type === QuestionType.Radio) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <RadioField
           control={control}
           fieldName={`questionGroups.${stepIndex}.questions.${questionIndex}.answers.0`}
@@ -80,7 +83,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   // if (type === QuestionType.Checkbox) {
   //   return (
-  //     <Paper title={text}>
+  //     <Paper allowShadowHover title={text}>
   //       <div className="flex items-center space-x-5 py-2">
   //         {options.map((option) => (
   //           <CheckboxField onChange={() => {}} key={option} label={option} />
@@ -92,7 +95,7 @@ const CaseQuestion: FC<CaseQuestionProps> = ({
 
   if (type === QuestionType.File) {
     return (
-      <Paper title={text}>
+      <Paper allowShadowHover title={text} animateUp>
         <FileUploadInputField
           fileId={documentFileId}
           control={control}

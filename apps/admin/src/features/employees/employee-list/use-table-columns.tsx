@@ -19,7 +19,7 @@ const useTableColumns = (caseId?: string) => {
     columnHelper.accessor("id", {
       cell: () => <Avatar />,
       header: "Case Name",
-      size: 10,
+      size: 5,
     }),
     columnHelper.accessor("name", {
       cell: (cell) => (

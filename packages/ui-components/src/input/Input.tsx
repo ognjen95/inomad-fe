@@ -29,6 +29,7 @@ export type InputProps = {
   iconSize?: IconSize;
   customColors?: string;
   lightPlaceholder?: boolean;
+  readonly?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -50,7 +51,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       strokeColor,
       onIconClick,
       iconSize,
-      // border = true,
+      readonly,
       customColors,
       lightPlaceholder,
       ...props
@@ -94,6 +95,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <input
           ref={ref}
+          readOnly={readonly}
           className={clsx(
             {
               "placeholder-gray-200": lightPlaceholder,

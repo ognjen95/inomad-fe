@@ -1,34 +1,23 @@
-import cloneDeep from "lodash.clonedeep";
-import isEqual from "lodash.isequal";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  UseFieldArrayReturn,
-  UseFormReturn,
-  useFieldArray,
-} from "react-hook-form";
+import { useCallback, useEffect, useMemo } from "react";
+import { useFieldArray } from "react-hook-form";
 import { useForm } from "ui-components";
 
-import useStepper, { UseStepperReturn } from "~components/stepper/useStepper";
+import useStepper from "~components/stepper/useStepper";
 import {
-  QuestionType,
-  TestEntity,
   useCaseQestionsAndDocumentsQuery,
   useUpdateQuestionGroupMutation,
 } from "~graphql-api";
 import useFileUpload from "~hooks/useFileUpload";
 
 import { DEFAULT_VALUES } from "./constants";
-import { CaseStepsFormModel, Question, QuestionGroup } from "./types";
-import { answerGqlMapper, answerMapper } from "./utils";
-
-type UseCaseStepsReturn = {
-  form: UseFormReturn<CaseStepsFormModel>;
-  fieldArray: UseFieldArrayReturn<CaseStepsFormModel, "questionGroups", "id">;
-  onSubmit: () => void;
-  stepper: UseStepperReturn;
-  loadingUpdate?: boolean;
-  steps: QuestionGroup[];
-};
+import {
+  CaseStepsFormModel,
+  GeneralApplicantData,
+  Question,
+  UseCaseStepsReturn,
+} from "./types";
+import { answerGqlMapper, templateMapper } from "./utils";
+import { CaseStatus } from "../../../common/enums";
 
 const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
   const { data: customerCaseData, refetch } = useCaseQestionsAndDocumentsQuery({
@@ -53,48 +42,30 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
     name: "questionGroups",
   });
 
-  const [defaultQuestions, setDefaultQuestions] = useState<Question[]>([]);
-
-  const template = customerCaseData?.templates.edges[0].node;
-  const applicant = customerCaseData?.case?.applicants?.[0];
+  const template = customerCaseData?.templates.edges[0]?.node;
+  const familyInfo = customerCaseData?.case.familyInfo;
   const generalInfo = customerCaseData?.case?.generalInfo;
 
-  const templateMapper = useCallback(
-    (_template: TestEntity): CaseStepsFormModel["questionGroups"] =>
-      _template?.questionGroups?.map((step) => ({
-        id: step?.id ?? "",
-        name: step?.name ?? "",
-        questions:
-          step?.questions?.map((question) => ({
-            id: question?.id ?? "",
-            text: question?.text ?? "",
-            type: question?.type ?? "",
-            options:
-              question.options?.map((option) => ({
-                label: option,
-                value: option,
-              })) ?? [],
-            document: question.documentFileId
-              ? new File([], question.documentName ?? "", {
-                  type: question.documentFileId ?? "",
-                })
-              : undefined,
-            answers: answerMapper(question.answers ?? [], question.type)!,
-            documentName:
-              (question?.document?.name || question.documentName) ?? "",
-            documentType:
-              question?.document?.documentType || question.documentType,
-            documentId: (question?.document?.id || question.documentId) ?? "",
-            documentFileId:
-              (question?.document?.fileId || question.documentFileId) ?? "",
-          })) ?? [],
-      })) ?? [],
-    []
-  );
+
+  const generalApplicantData: GeneralApplicantData = {
+    firstName: generalInfo?.firstName ?? "",
+    middleName: generalInfo?.middleName ?? "",
+    lastName: generalInfo?.lastName ?? "",
+    email: generalInfo?.email ?? "",
+    phone: generalInfo?.phone ?? "",
+    birthday: generalInfo?.birthday ?? new Date(),
+    nationality: generalInfo?.nationality ?? "",
+    caseName: customerCaseData?.case.name ?? "",
+    caseStatus: customerCaseData
+      ? CaseStatus[customerCaseData!.case.status]
+      : null,
+    familyMembers: familyInfo ?? null,
+    caseDescription: customerCaseData?.case.description ?? "",
+  };
 
   const steps = useMemo<CaseStepsFormModel["questionGroups"]>(
     () => templateMapper(template!) ?? [],
-    [template, templateMapper]
+    [template]
   );
 
   const stepper = useStepper(steps.length);
@@ -103,105 +74,77 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
     if (steps?.length && !form.getValues("questionGroups").length) {
       form.reset({ questionGroups: steps });
     }
-  }, [form, steps]);
+  },
+    [form, steps,]
+  );
 
-  useEffect(() => {
-    const snapshot = cloneDeep(
-      form.getValues().questionGroups[stepper.activeStep - 1]
-    );
-
-    if (!snapshot?.questions || defaultQuestions.length) return;
-
-    setDefaultQuestions(snapshot?.questions ?? []);
-  }, [defaultQuestions.length, form, stepper.activeStep, steps]);
-
-  const refetcSteps = async (): Promise<QuestionGroup[]> => {
-    const { data: refetched } = await refetch({
-      caseId,
-      queryOptionsInput: {
-        caseId,
-      },
-    });
-
-    return templateMapper(refetched.templates.edges[0].node) ?? [];
-  };
-
-  const onSubmit = async () => {
+  const onSubmit = useCallback(async () => {
     const step = form.getValues().questionGroups[stepper.activeStep - 1];
-
-    if (stepper.activeStep === steps.length + 1 || loadingUpdate) return;
 
     if (stepper.activeStep === 0) {
       stepper.nextStep();
       return;
     }
 
-    console.log(step.questions, defaultQuestions);
-
-    if (
-      // IF removed fileId from File.type this will not work
-      isEqual(
-        step.questions.map((q) => ({
-          ...q,
-          document: {
-            type: q.document?.type,
-          },
-        })),
-        defaultQuestions.map((q) => ({
-          ...q,
-          document: {
-            type: q.document?.type,
-          },
-        }))
-      )
-    )
+    if (!Object.keys(form.formState.dirtyFields)?.length) {
+      console.log("dirty", Object.keys(form.formState.dirtyFields));
+      stepper.nextStep();
       return;
-
-    const flesForUpload: { file: File; questionId: string }[] = [];
-
-    step.questions?.forEach((question, index) => {
-      const shoulUploadChangedFile =
-        question.document &&
-        question.type === QuestionType.File &&
-        question.document.name !== defaultQuestions[index]?.documentName;
-
-      if (shoulUploadChangedFile) {
-        flesForUpload.push({
-          file: question.document!,
-          questionId: question.id,
-        });
-      }
-    });
-
-    const QuestionIdFileIdMap = new Map<string, string>();
-
-    if (flesForUpload.length) {
-      const urls = await getUrlsAndUpload(
-        flesForUpload.map((item) => item.file),
-        { maxRetries: 3 }
-      );
-
-      urls.forEach((urlLink, index) => {
-        const uploadFiles = flesForUpload[index];
-        QuestionIdFileIdMap.set(uploadFiles.questionId, urlLink?.id as string);
-      });
     }
 
-    await update({
+    if (stepper.activeStep === steps.length + 1 || loadingUpdate) return;
+
+    const questionIdFileIdMap = new Map<string, string>();
+
+    const changedFilesForUpload = step.questions.map((formQuestion) => {
+      if (!formQuestion?.document) return null;
+
+      if (formQuestion.document?.name === formQuestion?.documentName) return null;
+
+
+      questionIdFileIdMap.set(formQuestion.id, "");
+
+      return formQuestion;
+    }).filter(Boolean);
+
+
+    const urls = await getUrlsAndUpload(changedFilesForUpload.map((file) => file?.document!), { maxRetries: 5 });
+
+    urls.forEach((urlLink, index) => {
+      if (!urlLink) return;
+
+      const questionsWithFileChange = changedFilesForUpload[index];
+
+      questionIdFileIdMap.set(questionsWithFileChange?.id!, urlLink?.id);
+    });
+
+    const changeFileIdIfNeeded = (question: Question) => {
+      if (question.documentName === question.document?.name && question.documentFileId) {
+        return question.documentFileId;
+      }
+
+      if (questionIdFileIdMap.get(question.id)) {
+        return questionIdFileIdMap.get(question.id);
+      }
+
+      return ""
+    };
+
+    update({
       onCompleted: async () => {
-        const refetched = await refetcSteps();
-        setDefaultQuestions(cloneDeep(step.questions) ?? []);
+        const result = await refetch();
+
         form.reset({
-          questionGroups: refetched,
+          questionGroups: templateMapper(result.data.templates.edges[0].node) ?? [],
         });
+
         stepper.nextStep();
       },
       variables: {
         args: {
           id: step.id,
           questions: step.questions?.map((question) => ({
-            documentId:
-              QuestionIdFileIdMap.get(question.id) ?? question.documentFileId,
+            documentId: changeFileIdIfNeeded(question),
             text: question.text!,
             id: question.id,
             answers: answerGqlMapper(question.answers!, question.type!),
@@ -209,17 +152,15 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
         },
       },
     });
-  };
+  }, [
+    form,
+    getUrlsAndUpload,
+    loadingUpdate,
+    stepper,
+    steps.length,
+    update,
+  ]);
 
-  const generalApplicantData = {
-    firstName: applicant?.firstName ?? "",
-    middleName: applicant?.middleName ?? "",
-    lastName: applicant?.lastName ?? "",
-    email: applicant?.email ?? "",
-    phone: generalInfo?.phone ?? "",
-    birthday: generalInfo?.birthday ?? null,
-    nationality: generalInfo?.nationality ?? "",
-  };
 
   return {
     form,
@@ -228,6 +169,7 @@ const useCaseSteps = (caseId: string): UseCaseStepsReturn => {
     fieldArray,
     steps,
     loadingUpdate,
+    generalApplicantData,
   };
 };
 

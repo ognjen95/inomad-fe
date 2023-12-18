@@ -58,7 +58,7 @@ const Avatar: FC<AvatarProps> = ({
         width: `${avatarSize}px`,
       }}
       className={clsx(
-        "inline-flex rounded-full justify-center items-center cursor-pointer overflow-hidden",
+        "inline-flex rounded-2xl justify-center items-center cursor-pointer overflow-hidden",
         imageSrc ? "transparent" : "bg-primary-100"
       )}
     >

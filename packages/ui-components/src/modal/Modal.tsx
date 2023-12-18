@@ -92,7 +92,7 @@ const Modal: FCWithChildren<ModalProps> = ({
             )}
             <div
               className={clsx(
-                "h-screen w-[90vw] flex flex-col space-y-2 items-center",
+                "h-screen w-[90vw] flex flex-col space-y-2 items-center animate-slideDownAndFade",
                 {
                   "justify-center": !fullHeight,
                   "justify-start py-20": fullHeight,

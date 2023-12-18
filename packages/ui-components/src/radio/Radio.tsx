@@ -30,7 +30,7 @@ const Radio: FC<RadioProps> = ({
       onValueChange={onChange}
       className={clsx("flex gap-2 w-full", {
         "flex flex-wrap": !isLargeSize,
-        "flex justify-between w-full flex-wrap": isLargeSize,
+        "flex w-full flex-wrap": isLargeSize,
       })}
     >
       {options.map(({ value, label: content }) => (

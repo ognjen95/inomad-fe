@@ -1,4 +1,4 @@
-import { CaseStatus } from "src/common/enums";
+import { ApplicantFamilyMembers, CaseStatus } from "src/common/enums";
 import { UseModalReturn } from "ui-components/src/modal/useModal";
 
 export type CaseUserModel = {
@@ -6,6 +6,7 @@ export type CaseUserModel = {
   lastName: string;
   email: string;
   id: string;
+  nationality: string;
 };
 
 export type CaseListModel = {
@@ -14,7 +15,9 @@ export type CaseListModel = {
   status: CaseStatus;
   createdAt: string;
   applicant: CaseUserModel;
-  employee: CaseUserModel;
+  employee: Partial<CaseUserModel>;
+  description: string;
+  familyMembers: ApplicantFamilyMembers;
 };
 
 export type UseCaseListReturn = {

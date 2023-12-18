@@ -9,6 +9,8 @@ import {
   IconType,
   Input,
   Paper,
+  PaperColor,
+  PaperRounded,
   Progress,
   Tabs,
   Text,
@@ -23,8 +25,6 @@ import { colors } from "ui-components/src/config/tailwind-config";
 
 import CaseStatusBadge from "~components/badges/CaseStatusBadge";
 import FilterDropdown from "~components/filter-dropdown/FilterDropdown";
-import Calendar from "~features/tasks/common/Calendar";
-import CalendarAndTasks from "~features/tasks/common/CalendarAndTasks";
 import TaskListWithCalendar from "~features/tasks/TaskListWithCalendar";
 
 import ChatInput from "./chat-input/chat-input";
@@ -45,8 +45,8 @@ const Chat: FC<ChatProps> = ({ appId, chatId, senderId, chatAccessToken }) => (
     accessToken={chatAccessToken}
   >
     <ChannelProvider channelUrl={chatId}>
-      <div className="h-full flex space-x-5">
-        <Paper noPadding>
+      <div className="h-full flex">
+        <Paper noPadding rounded={PaperRounded.NONE}>
           <ChatList chatId={chatId} senderId={senderId} />
         </Paper>
         {chatId && chatAccessToken ? (
@@ -65,7 +65,7 @@ const Chat: FC<ChatProps> = ({ appId, chatId, senderId, chatAccessToken }) => (
             </Text>
           </div>
         )}
-        <Paper noPadding>
+        <Paper noPadding rounded={PaperRounded.NONE}>
           <div className="w-96 pt-3 h-full">
             <Tabs
               defaultTab="User"

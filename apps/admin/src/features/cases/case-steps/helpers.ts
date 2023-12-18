@@ -1,7 +1,6 @@
 import { CaseEntity, DocumentEntity } from "~graphql-api";
 
-import { DocumentList, QuestionGroup, QuestionStepsModel } from "./types";
-import { answerMapper } from "./utils";
+import { DocumentList } from "./types";
 
 export const caseDocumentsFactory = (
   documents: DocumentEntity[],

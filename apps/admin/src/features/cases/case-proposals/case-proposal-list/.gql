@@ -1,0 +1,17 @@
+query CaseProposalList ($options: CaseQueryOptionsInput) {
+    caseRequests(options: $options) {
+      edges {
+        node {
+          applicantId
+          createdAt
+          caseId
+          id
+          providerCompanyId
+          status
+          updatedAt
+          deadline
+          totalCost
+        }
+      }
+    }
+}

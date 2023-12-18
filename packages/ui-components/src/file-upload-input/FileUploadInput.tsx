@@ -114,7 +114,7 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
             tabIndex: 0,
             role: "button",
             className: clsx(
-              "border border-grey-200  rounded-2xl p-4 min-h-[78px] flex flex-col justify-center bg-white hover:bg-gray-50 hover:shadow-sm hover:shadow-primary-200 transition-all ease-in-out duration-200",
+              "border border-grey-200  rounded-2xl p-4 min-h-[78px] flex flex-col justify-center bg-white hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-200 transition-all ease-in-out duration-200",
               {
                 "w-[640px]": !fullWidth,
                 "w-full": fullWidth,
@@ -124,11 +124,9 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
               }
             ),
           })}
-          onClick={(e) => {
-            if (value) {
-              previewFile(e);
-            }
-          }}
+          {...(value && {
+            onClick: previewFile,
+          })}
         >
           {!value && (
             <div className="flex flex-col items-center gap-2 py-6">
@@ -198,16 +196,13 @@ const FileUploadInput: FC<FileUploadInputProps> = ({
                   )}
                 </div>
               </div>
-              <div className="pl-2 self-center">
+              <div className="pl-2 self-center" onClick={onReset}>
                 <IconButton
                   iconProps={{
                     type: IconType.TRASH_FULL,
                     size: IconSize.LARGE,
                     stroke: colors.red[500],
                   }}
-                  // type={IconType.TRASH_FULL}
-                  // size={IconSize.MEDIUM}
-                  // onClick={onReset}
                 />
               </div>
             </div>

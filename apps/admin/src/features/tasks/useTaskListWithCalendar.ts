@@ -13,10 +13,12 @@ import {
 
 import { TaskFormModel } from "./task-form/types";
 import useTaskForm from "./task-form/useTaskForm";
+import { capitalizeFirst } from "../../common/utils/string'utils";
 
 export type UseTaskListWithCalendarReturn = {
   tasks: Task[];
   loading: boolean;
+  taskDataLoading: boolean;
   preview: (task: Task) => void;
   create: SubmitHandler<TaskFormModel>;
   modal: UseModalReturn<Task>;
@@ -25,7 +27,7 @@ export type UseTaskListWithCalendarReturn = {
 
 const useTaskListWithCalendar = (): UseTaskListWithCalendarReturn => {
   const [createTask, { loading }] = useCreateTaskMutation();
-  const { data: tasksData } = useTasksQuery();
+  const { data: tasksData, loading: taskDataLoading } = useTasksQuery();
   const { form } = useTaskForm();
 
   const toast = useToastContext();
@@ -68,8 +70,8 @@ const useTaskListWithCalendar = (): UseTaskListWithCalendarReturn => {
     createTask({
       onCompleted: () => {
         const toastMessage = modal.params?.id
-          ? `${data.taskType.label.toLowerCase()} updated!`
-          : `New ${data.taskType.label.toLowerCase()} created!`;
+          ? `${capitalizeFirst(data.taskType.label)} updated`
+          : `New ${data.taskType.label.toLowerCase()} created`;
 
         toast.success(toastMessage);
         modal.close();
@@ -121,6 +123,7 @@ const useTaskListWithCalendar = (): UseTaskListWithCalendarReturn => {
   return {
     tasks,
     loading,
+    taskDataLoading,
     preview,
     create,
     modal,

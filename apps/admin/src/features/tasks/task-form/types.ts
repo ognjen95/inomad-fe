@@ -28,7 +28,7 @@ export type TaskFormModel = {
     label: string;
     value: TaskStatus;
   };
-  comments: Array<any>;
+  comments: Array<unknown>;
 };
 
 export type UseTaskFormReturn = {

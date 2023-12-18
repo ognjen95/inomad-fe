@@ -22,7 +22,14 @@ const useFamilyInfoForm: UseFamilyInfoForm = (
     defaultValues: {
       familyMembers: null,
       spouse: null,
-      children: null,
+      children: [
+        {
+          name: "",
+          middleName: "",
+          lastName: "",
+          birthday: new Date(),
+        },
+      ],
     },
   });
 
@@ -81,19 +88,23 @@ const useFamilyInfoForm: UseFamilyInfoForm = (
   };
 
   const removeChild = (index: number) => {
+    if (fields.length === 1) {
+      return;
+    }
+
     remove(index);
   };
 
   const onSubmit: SubmitHandler<FamilyInfoFormModel> = (data) => {
     if (!form.formState.isDirty) {
-      nextStep();
+      nextStep!();
       return;
     }
 
     editFamilyInfo({
       variables: {
         args: {
-          id: caseId,
+          id: caseId!,
           familyMembers: data.familyMembers,
           spouse: hasSpouse || hasPartner ? data.spouse : null,
           children: hasChildren ? data.children : null,

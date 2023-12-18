@@ -13,5 +13,6 @@ export enum PaperRounded {
   LARGE = "rounded-lg",
   XL = "rounded-xl",
   XXL = "rounded-2xl",
+  XXXL = "rounded-3xl",
   FULL = "rounded-full",
 }

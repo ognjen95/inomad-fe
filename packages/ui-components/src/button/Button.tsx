@@ -44,7 +44,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       type={formName ? "submit" : "button"}
       className={clsx(
-        "rounded-2xl transition-all ease-in-out duration-300",
+        "rounded-xl transition-all ease-in-out duration-300",
         COLOR_CLASS_MAPPER[type][color],
         SIZE_CLASS_MAPPER[type][size],
         {

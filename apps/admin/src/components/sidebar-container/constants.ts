@@ -29,39 +29,27 @@ export const MAIN_NAV_MAPPER: Record<UserRoles, Array<Nav>> = {
       text: "Messages",
       link: "/messages",
     },
-    {
-      iconType: IconType.CALENDAR,
-      text: "Calendar",
-      link: "/calendar",
-      fill: "white",
-    },
   ],
   [UserRoles.CUSTOMER]: [
+    {
+      iconType: IconType.FOLDER_DOCUMENT,
+      text: "My Case",
+      link: "/my-case",
+    },
     {
       iconType: IconType.USERS,
       text: "Providers",
       link: "/providers",
     },
     {
-      iconType: IconType.FOLDER_DOCUMENT,
-      text: "My Case",
-      link: "/my-case",
+      iconType: IconType.FILE_ADD,
+      text: "Proposals",
+      link: "/proposals",
     },
-    // {
-    //   iconType: IconType.FILE_DOCUMENT,
-    //   text: "Documents",
-    //   link: "/documents",
-    // },
     {
       iconType: IconType.MESSAGE,
       text: "Messages",
       link: "/messages",
-    },
-    {
-      iconType: IconType.CALENDAR,
-      text: "Calendar",
-      link: "/calendar",
-      fill: "white",
     },
   ],
   [UserRoles.ADMIN]: [],

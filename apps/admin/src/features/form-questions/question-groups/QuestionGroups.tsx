@@ -10,7 +10,6 @@ import {
   IconSize,
   TextVariant,
   Modal,
-  IconButton,
   Icon,
 } from "ui-components";
 import { colors } from "ui-components/src/config/tailwind-config";
@@ -19,7 +18,8 @@ import { UseModalReturn } from "ui-components/src/modal/useModal";
 import FilterDropdown from "~components/filter-dropdown/FilterDropdown";
 import { QuestionGroupEntity } from "~graphql-api";
 
-import GroupCard from "../cards/GroupCard";
+import SearchInput from "../../../components/search/SearchInput";
+import GroupCard from "../components/GroupCard";
 
 export type QuestionGroupsProps = {
   questionGroups: Array<QuestionGroupEntity>;
@@ -47,29 +47,15 @@ const QuestionGroups: FC<QuestionGroupsProps> = ({
   isCreationMode,
 }) => (
   <div className="flex flex-wrap px-2">
-    <div className="w-full flex items-center justify-between">
-      <div className="pl-5">
-        <Text variant={TextVariant.BODY1} bolded>
-          Selected: {selectedGroups.length}
-        </Text>
+      <div className="w-full flex justify-between items-center space-x-5 pb-3">
+        <div className='pl-5'>
+        <Text variant={TextVariant.HEADING5}>
+          Question group list {!!selectedGroups.length && `(${selectedGroups.length})`}
+        </Text>        </div>
+        <div className="flex justify-between items-center space-x-5">
+          <SearchInput placeholder="Search templates..." />
+        </div>
       </div>
-      <div className="w-96 flex justify-end items-center space-x-2 mb-3">
-        <Input
-          size={InputSize.SMALL}
-          iconType={IconType.SEARCH}
-          iconColor="transparent"
-          strokeColor={colors.gray[400]}
-          iconPlacement={IconPlacement.LEFT}
-          placeholder="Search..."
-        />
-        <FilterDropdown
-          items={[]}
-          onApplyClick={() => {}}
-          onCancelClick={() => {}}
-          onClearButtonClick={() => {}}
-        />
-      </div>
-    </div>
     {questionGroups?.map((group) => {
       if (selectedGroups.includes(group.id)) return null;
 

@@ -19,15 +19,7 @@ export type UseFileUploadReturn = {
     files: Array<File | null>,
     options?: UploadOptions
   ) => Promise<Array<IdAndLink | null>>;
-  uploadChangedFiles: (
-    files: FileUpload[],
-    options?: UploadOptions
-  ) => UploadChangedFilesReturn | null;
 };
-
-export type UploadChangedFilesReturn = Promise<
-  Array<IdAndLink | { id: null; link: null } | null>
->;
 
 export type FileUpload = {
   newFile: File;

@@ -1,5 +1,3 @@
-import { type } from "os";
-
 import { FC } from "react";
 
 import CaseStepCard from "~components/cards/CaseStepCard";
